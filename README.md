@@ -66,7 +66,7 @@ $yac-get('foo');
 ```
 或
 
-```
+```php
 Yac::set('foo', 'bar');
 Yac::get('foo');
 Yac::delete('foo');
