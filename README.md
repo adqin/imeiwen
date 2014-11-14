@@ -28,7 +28,6 @@ nginx nginx.conf
 
 ```
 apt-get install apache2 php5 mysql-server libapache2-mod-php5 php5-mysql php5-dev php5-gd
-
 ```
 
 ######3、php yac缓存
@@ -40,8 +39,8 @@ apt-get install apache2 php5 mysql-server libapache2-mod-php5 php5-mysql php5-de
 $/usr/bin/phpize5
 $./configure --with-php-config=/usr/bin/php-config5
 $make && make install
-
 ```
+
 3) 配置文件:
 $nano /etc/php5/mods-available/yac.ini 写入extension=yac.so
 
@@ -64,17 +63,19 @@ yac.enable_cli = 0 ; whether enable yac with cli, default 0
 $yac = new Yac();
 $yac->set('foo', 'bar');
 $yac-get('foo');
+```
+或
 
+```
 Yac::set('foo', 'bar');
 Yac::get('foo');
 Yac::delete('foo');
 Yac::flush();
 Yac::info();
-
 ```
 
 ######4、git常用命令与用法
-初始配置:
+1) 初始配置:
 
 ```
 git config --global user.name "Your Name Comes Here"  #配置使用git仓库的人员姓名
@@ -88,5 +89,11 @@ git config --global alias.st status
 git config --global alias.br branch  
 git config --global core.editor "mate -w"    # 设置Editor使用textmate  
 git config -1 #列举所有配置
+```
 
+2) 基本命令
+```
+git add .  # 添加新增
+git commit -a  # 提交所有更改
+git push --all  # 向仓库推送更新
 ```
