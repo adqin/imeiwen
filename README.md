@@ -54,3 +54,17 @@ Yac::get('foo');
 Yac::delete('foo');
 Yac::flush();
 Yac::info();
+
+4、git常用命令与用法
+初始配置:
+git config --global user.name "Your Name Comes Here"  #配置使用git仓库的人员姓名
+git config --global user.email you@yourdomain.example.com  #配置使用git仓库的人员email
+git config --global credential.helper cache   #配置到缓存 默认15分钟
+git config --global credential.helper 'cache --timeout=3600'    #修改缓存时间
+git config --global color.ui true  
+git config --global alias.co checkout  
+git config --global alias.ci commit  
+git config --global alias.st status  
+git config --global alias.br branch  
+git config --global core.editor "mate -w"    # 设置Editor使用textmate  
+git config -1 #列举所有配置
