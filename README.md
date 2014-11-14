@@ -94,6 +94,6 @@ git config -1 #列举所有配置
 2) 基本命令
 ```
 git add .  # 添加新增
-git commit -a  # 提交所有更改
+git commit -a -m 'update' # 提交所有更改
 git push --all  # 向仓库推送更新
 ```
