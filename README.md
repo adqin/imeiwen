@@ -1,9 +1,7 @@
 ### 你问问 - niwenwen.com
 ##### 常常问自己, 想要些什么？
-
----
-
 1图1文, so easy.
+--------------------------
 
 ######1、单入口模式
 
@@ -11,7 +9,7 @@ apache .htaccess
 
 ```
 RewriteEngine On
-RewriteBase /macaw
+RewriteBase /
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php?/$1 [L]
