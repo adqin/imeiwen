@@ -1,6 +1,8 @@
 <?php
-// 单例模式
-class Instance
+/**
+ * 单例模式基类.
+ */
+class CInstance
 {
      private static $_instance = array();
      
