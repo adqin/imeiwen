@@ -74,6 +74,15 @@ Yac::flush();
 Yac::info();
 ```
 
+7) zlib压缩与解压
+
+```php
+$previewData = json_encode($previewData);
+$output = rtrim(strtr(base64_encode(gzdeflate($previewData, 9)), '+/', '-_'), '=');
+
+$output = gzinflate(base64_decode(strtr($previewData, '-_', '+/')));
+```
+
 ######4、git常用命令与用法
 1) 初始配置:
 
@@ -100,3 +109,6 @@ git push --all #向仓库推送更新
 
 ######5、简单框架
 网站功能比较简单， 路由控制与分发、数据库操作、表单get/pub、简单的视图与模板、Yac缓存系统、 数据压缩。
+
+
+######6、图片裁剪 php5-imagick
