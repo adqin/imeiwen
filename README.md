@@ -72,6 +72,15 @@ Yac::flush();
 Yac::info();
 ```
 
+7) zlib压缩与解压
+
+```php
+$previewData = json_encode($previewData);
+$output = rtrim(strtr(base64_encode(gzdeflate($previewData, 9)), '+/', '-_'), '=');
+
+$output = gzinflate(base64_decode(strtr($previewData, '-_', '+/')));
+```
+
 ######4、git常用命令与用法
 1) 初始配置:
 
@@ -106,17 +115,28 @@ git push --all #向仓库推送更新
 
 3) 数据压缩，缓存到内存数据需要压缩存储。 
 
-```php
-$gz = gzdeflate($string, 9);
-$out = gzinflate($gz);
-```
 
-回归主题，就是简单。1图1文，记录下我们平凡的人生。
+######6、1图1文，就是简单， 结构简单，URL简单，所有的都简单。
 
-主题：
-日志
+日志（公共）
+
 古诗文
 诗歌
 好文收藏
+技术笔记
 
-说说
+######7、图片裁剪 php5-imagick
+
+######8、mysql数据库设计
+1图1文
+文：niwenwen.com/a2exv6
+用户：niwenwen.com/100
+
+分类：
+日志（公共）： 配图，标题，用户，内容，状态=发布/草稿， 发布时间，更新时间，是否推荐，浏览
+古诗文
+诗歌
+好文收藏
+技术笔记
+
+######9、收费制度，终身会员（100）
