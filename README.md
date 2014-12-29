@@ -1,6 +1,9 @@
 ### 你问问 - niwenwen.com
 ##### 常常问自己, 想要些什么？
-1图1文, so easy.
+
+1图1文, 参考meiriyiwen.com
+
+简单
 --------------------------
 
 ######1、单入口模式
@@ -59,19 +62,12 @@ yac.enable_cli = 0 #whether enable yac with cli, default 0
 
 ```php
 $yac = new Yac();
-$yac->set('foo', 'bar');
-$yac-get('foo');
+$yac->set('foo', 'bar'，$ttl);
+$yac->get('foo');
+$yac->delete('foo');
+$yac->flush();
+$yac->info();
 ```
-或
-
-```php
-Yac::set('foo', 'bar');
-Yac::get('foo');
-Yac::delete('foo');
-Yac::flush();
-Yac::info();
-```
-
 7) zlib压缩与解压
 
 ```php
@@ -94,7 +90,6 @@ git config --global alias.co checkout
 git config --global alias.ci commit  
 git config --global alias.st status  
 git config --global alias.br branch  
-git config --global core.editor "mate -w" #设置Editor使用textmate  
 git config -1 #列举所有配置
 ```
 
@@ -107,36 +102,15 @@ git push --all #向仓库推送更新
 ```
 
 ######5、简单框架
-网站功能比较简单， 路由控制与分发、数据库操作、表单get/pub、简单的视图与模板、Yac缓存系统、 数据压缩。
+网站功能简单，包括简单的路由与分发、数据库操作、表单get/post、简单的视图模板、Yac缓存系统、 数据压缩。
 
-1) 路由分发，几个简单url规则。 首页=/， 文章页=/t/100001,  文章发表=/publish, 文章编辑=/edit/100001,  图片上传=/upload
+1) 页面与路由。 首页=/， 日志页=/d3k9a4n8,  日志编辑与发布=/publish,  背景图上传=/upload
 
 2) Yac缓存， 配置，数据都保存到内存中。
 
 3) 数据压缩，缓存到内存数据需要压缩存储。 
 
 
-######6、1图1文，就是简单， 结构简单，URL简单，所有的都简单。
+######6、ajax实现
+http://www.byywee.com/page/M0/S523/523995.html
 
-日志（公共）
-
-古诗文
-诗歌
-好文收藏
-技术笔记
-
-######7、图片裁剪 php5-imagick
-
-######8、mysql数据库设计
-1图1文
-文：niwenwen.com/a2exv6
-用户：niwenwen.com/100
-
-分类：
-日志（公共）： 配图，标题，用户，内容，状态=发布/草稿， 发布时间，更新时间，是否推荐，浏览
-古诗文
-诗歌
-好文收藏
-技术笔记
-
-######9、收费注册制度，终身会员（100元），试用页面。
