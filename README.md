@@ -111,7 +111,7 @@ git push --all #向仓库推送更新
 3) 数据压缩，缓存到内存数据需要压缩存储。 
 
 
-######6、ajax实现
-http://www.byywee.com/page/M0/S523/523995.html
+######6、简单js框架
+http://zeptojs.com/
 
 ######7、茫茫的世界中容易迷失
