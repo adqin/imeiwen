@@ -1,10 +1,6 @@
 ### 你问问 - niwenwen.com
-##### 常常问自己, 想要些什么？
 
-1图1文, 参考meiriyiwen.com
-
-简单
---------------------------
+常常问自己
 
 ######1、单入口模式
 
@@ -16,14 +12,6 @@ RewriteBase /
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php?/$1 [L]
-```
-nginx nginx.conf
-
-```
-autoindex off;
-location / {
-    try_files $uri $uri/ /index.php?/$uri;
-}
 ```
 ######2、Ubuntu 安装 apache2 + php5 + mysql5
 
@@ -96,22 +84,19 @@ git config -1 #列举所有配置
 2) 基本命令
 
 ```
+git pull --all #拉取最新
 git add . #添加新增
 git commit -a -m 'update' #提交所有更改
 git push --all #向仓库推送更新
 ```
 
-######5、简单框架
-网站功能简单，包括简单的路由与分发、数据库操作、表单get/post、简单的视图模板、Yac缓存系统、 数据压缩。
-
-1) 页面与路由。 首页=/， 日志页=/d3k9a4n8,  日志编辑与发布=/publish,  背景图上传=/upload, 会员主页=/u/adqin, 登陆=/login, 注册=/reg
-
-2) Yac缓存， 配置，数据都保存到内存中。
-
-3) 数据压缩，缓存到内存数据需要压缩存储。 
-
-
-######6、简单js框架
+######4、简单js框架
 http://zeptojs.com/
 
-######7、茫茫的世界中容易迷失
+######5、唯一key计算
+
+```
+$key = hash('crc32b', time());
+```
+
+######6、
