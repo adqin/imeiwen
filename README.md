@@ -136,7 +136,7 @@ if (!$mail->send()) {
 
 ######7、qq企业邮箱, exmail.qq.com
 
-1)邮件注册确认，找回密码 service.niwenwen.com
+1)邮件注册确认，找回密码 service@niwenwen.com
 
-2)联系方式，contact.niwenwen.com
+2)联系方式，contact@niwenwen.com
          
