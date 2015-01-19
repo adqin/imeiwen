@@ -99,4 +99,44 @@ http://zeptojs.com/
 $key = hash('crc32b', time());
 ```
 
-######6、
+######6、邮件发送
+
+https://github.com/PHPMailer/PHPMailer
+
+```
+header("Content-type:text/html; charset=utf-8");
+
+require './PHPMailer/PHPMailerAutoload.php';
+
+$mail = new PHPMailer;
+$mail->SMTPDebug = 1;
+$mail->Charset = 'UTF-8';
+$mail->isSMTP();
+$mail->Host = 'smtp.exmail.qq.com';
+$mail->SMTPAuth = true;
+$mail->Username = 'service@niwenwen.com';
+$mail->Password = '******';
+$mail->SMTPSecure = 'ssl';
+$mail->Port = '465';
+
+$mail->From = 'service@niwenwen.com';
+$mail->FromName = '你问问';
+$mail->addAddress('2208576183@qq.com', '阿D');
+$mail->isHTML(true);
+
+$mail->Subject = '开始测试123';
+$mail->Body = '内容：123<b>it is ok!</b>';
+
+if (!$mail->send()) {
+    echo $mail->ErrorInfo;
+} else {
+    echo '发送成功';
+}
+```
+
+######7、qq企业邮箱, exmail.qq.com
+
+1)邮件注册确认，找回密码 service.niwenwen.com
+
+2)联系方式，contact.niwenwen.com
+         
