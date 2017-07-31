@@ -2,46 +2,23 @@
 
 ######1、单入口模式
 
-apache .htaccess
-
+nginx nginx.conf
 ```
-RewriteEngine On
-RewriteBase /
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php?/$1 [L]
-```
-######2、Ubuntu 安装 apache2 + php5 + mysql5
-
-```
-apt-get install apache2 php5 mysql-server libapache2-mod-php5 php5-mysql php5-dev php5-gd
-```
-
-######3、php yac缓存
-1) 下载: git clone https://github.com/laruence/yac.git
-
-2) phpize安装:
-
-```
-$/usr/bin/phpize5
-$./configure --with-php-config=/usr/bin/php-config5
-$make && make install
-```
-
-3) 配置文件:
-$nano /etc/php5/mods-available/yac.ini 写入extension=yac.so
-
-4) 创建连接: $ln -s ../../mods-available/yac.ini 21-yac.ini
-
-5) yac配置:
-
-```
-yac.enable = 1
-yac.keys_memory_size = 4M #4M can get 30K key slots, 32M can get 100K key slots
-yac.values_memory_size = 64M
-yac.compress_threshold = -1
-yac.enable_cli = 0 #whether enable yac with cli, default 0
-
+server {
+    listen 80;
+    root /home/www/wecms/public;
+    index index.html index.php;
+    server_name niwenwen.com;
+    location / {
+        autoindex off;
+        try_files $uri $uri /index.php?$args;
+    }
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        # With php7.0-fpm (or other unix sockets):
+        fastcgi_pass unix:/run/php/php7.0-fpm.sock;
+    }
+}
 ```
 
 6) yac用法:
