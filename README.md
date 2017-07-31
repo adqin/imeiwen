@@ -6,7 +6,7 @@ nginx nginx.conf
 ```
 server {
     listen 80;
-    root /home/www/wecms/public;
+    root /home/www/wecms/htdocs;
     index index.html index.php;
     server_name niwenwen.com;
     location / {
@@ -20,7 +20,7 @@ server {
     }
 }
 ```
-7) zlib压缩与解压
+######2、zlib压缩与解压
 
 ```php
 $previewData = json_encode($previewData);
@@ -29,7 +29,7 @@ $output = rtrim(strtr(base64_encode(gzdeflate($previewData, 9)), '+/', '-_'), '=
 $output = gzinflate(base64_decode(strtr($previewData, '-_', '+/')));
 ```
 
-######4、git常用命令与用法
+######3、git常用命令与用法
 1) 初始配置:
 
 ```
@@ -44,14 +44,10 @@ git config --global alias.st status
 git config --global alias.br branch  
 git config -1 #列举所有配置
 git branch dev #创建dev分之.
-```
-
-2) 基本命令
-
-```
+git add . #添加所有更新到待提交.
+git commit -a -m 'up' #提交更新.
+git push origin dev #本地分之推送到远程dev分之.
 git pull --all #拉取最新
-git add . #添加新增
-git commit -a -m 'update' #提交所有更改
 git push --all #向仓库推送更新
 ```
 
@@ -64,59 +60,10 @@ http://zeptojs.com/
 $key = hash('crc32b', time());
 ```
 
-######6、邮件发送
-
-https://github.com/PHPMailer/PHPMailer
-
+######6、本地文件缓存
 ```
-header("Content-type:text/html; charset=utf-8");
-
-require './PHPMailer/PHPMailerAutoload.php';
-
-$mail = new PHPMailer;
-$mail->SMTPDebug = 1;
-$mail->Charset = 'UTF-8';
-$mail->isSMTP();
-$mail->Host = 'smtp.exmail.qq.com';
-$mail->SMTPAuth = true;
-$mail->Username = 'service@niwenwen.com';
-$mail->Password = '******';
-$mail->SMTPSecure = 'ssl';
-$mail->Port = '465';
-
-$mail->From = 'service@niwenwen.com';
-$mail->FromName = '你问问';
-$mail->addAddress('2208576183@qq.com', '阿D');
-$mail->isHTML(true);
-
-$mail->Subject = '开始测试123';
-$mail->Body = '内容：123<b>it is ok!</b>';
-
-if (!$mail->send()) {
-    echo $mail->ErrorInfo;
-} else {
-    echo '发送成功';
-}
+file_put_contents();
+file_get_contents();
 ```
 
-######7、qq企业邮箱, exmail.qq.com
-
-1)邮件注册确认，找回密码 service@niwenwen.com
-
-2)联系方式，contact@niwenwen.com
-         
-
-######8、会员使用qq邮箱注册
-
-
-######9、数据表
-
-user_info 用户信息
-mail_link 邮件类型
-login
-用户使用qq邮箱注册，注册后需进入邮箱确认，忘记密码，可通过邮箱找回。
-确认注册，可发表日志。
-
-一篇日志，搭配一幅背景图。
-
-系统合理使用内存，热门日志/推荐日志，网站配置，背景图，活跃用户。
+######7、计算页面执行时间.
