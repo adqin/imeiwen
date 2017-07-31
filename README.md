@@ -20,17 +20,6 @@ server {
     }
 }
 ```
-
-6) yac用法:
-
-```php
-$yac = new Yac();
-$yac->set('foo', 'bar'，$ttl);
-$yac->get('foo');
-$yac->delete('foo');
-$yac->flush();
-$yac->info();
-```
 7) zlib压缩与解压
 
 ```php
@@ -54,6 +43,7 @@ git config --global alias.ci commit
 git config --global alias.st status  
 git config --global alias.br branch  
 git config -1 #列举所有配置
+git branch dev #创建dev分之.
 ```
 
 2) 基本命令
