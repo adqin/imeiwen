@@ -1,5 +1,4 @@
 nbproject/
-Backup/
-Caches/
-Vendor/
-Workerman/
+backup/
+caches/
+vendor/
