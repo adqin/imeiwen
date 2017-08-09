@@ -7,3 +7,11 @@ date_default_timezone_set('Asia/Shanghai');
 
 // 定义根目录.
 define('ROOT_PATH', realpath(__DIR__ . '/../'));
+
+require ROOT_PATH . '/vendor/autoload.php';
+
+Flight::route('/', function() {
+    echo 'hello world!';
+});
+
+Flight::start();
