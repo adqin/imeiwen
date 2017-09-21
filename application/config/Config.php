@@ -9,7 +9,7 @@ class Config {
      */
     public static $site = array(
         'site_name' => '你问问',
-        'site_note' => '我常常问自己，想要些什么？',
+        'site_note' => '常常问自己',
         'site_domain' => 'niwenwen.com',
     );
 
