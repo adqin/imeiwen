@@ -44,8 +44,7 @@ class Router {
 
         // 有前置操作, 优先执行前置.
         if (method_exists($c, '_before')) {
-            $before = 'before';
-            $c->$before();
+            $c->_before();
         }
 
         // 调用执行action.
@@ -58,6 +57,11 @@ class Router {
     private function getRouter() {
         // 获取uri参数.
         $uri = \filter_input(INPUT_SERVER, 'REQUEST_URI', \FILTER_SANITIZE_STRING);
+        
+        // 过滤query_string.
+        $tmp = explode('?', $uri);
+        $uri = $tmp[0];
+        
         // 斜线分隔.
         $tmp = explode('/', $uri);
         

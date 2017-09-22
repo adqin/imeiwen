@@ -15,8 +15,8 @@
             <p><input type="submit" name="login" value="确认登陆" class="button" /></p>
             </form>
         </div>
-        <script src="<?=$config['js_url']['lib']?>"></script>
-        <script src="<?=$config['js_url']['form']?>"></script>
+        <script src="<?= Config::$source['js_url']['lib']?>"></script>
+        <script src="<?=Config::$source['js_url']['form']?>"></script>
         <script>
             $(function(){
                $('form').submit(function(){

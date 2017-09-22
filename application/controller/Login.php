@@ -16,13 +16,13 @@ class Controller_Login extends Controller {
                 // 如果已经登录, 跳转到后台首页.
                 Common::redirect('/admin');
             }
-            $this->display('login');
+            $this->display('admin/login');
         }
-        
+
         // 是否被锁定.
-        $lock_file = APP_PATH . 'lock/lock.lock';
+        $lock_file = CACHE_PATH . 'lock.lock';
         if (file_exists($lock_file)) {
-            Common::ajaxReturnFalse('登陆失败次数过多, 已被锁定');
+            Common::ajaxReturnFalse('登陆失败次数过多, 已锁定');
         }
 
         $user = $this->getPost('user');
@@ -33,34 +33,35 @@ class Controller_Login extends Controller {
         }
 
         // 配置的登录账号与密码.
-        $cfg_user = Config::$admin('admin_user');
-        $cfg_passwd = Config::$admin('admin_pwd');
+        $cfg_user = Backend::$admin['username'];
+        $cfg_passwd = Backend::$admin['passwd'];
 
         if (hash('md5', $user) != $cfg_user || hash('md5', $passwd) != $cfg_passwd) {
-            $login_error_times = $this->cache()->get('login.lock');
-            if (empty($login_error_times)) {
-                $login_error_times = 0;
+            $login_times = Cache::getByFile('login.times');
+            if (empty($login_times)) {
+                $login_times = 0;
             }
 
-            $login_error_times++;
-            if ($login_error_times > 7) {
+            $login_times++;
+            if ($login_times > 7) {
+                // 登录失败次数操过7次, 锁定登录.
                 file_put_contents($lock_file, 'locked@' . date('Y-m-d H:i:s', time()));
             } else {
-                $this->cache()->set('login.lock', $login_error_times);
+                // 更新登录失败次数.
+                Cache::setByFile('login.times', $login_times);
             }
 
-            $return['message'] = '登陆账号与秘密错误';
-            $this->ajax_out($return);
+            // 登录失败次数置0.
+            Cache::setByFile('login.times', 0);
+            Common::ajaxReturnFalse('登陆账号或登录密码有误');
         }
 
         // 登陆成功，设置cookie
-        $cookie_key = config::instance()->get('login_flag');
-        $cookie_value = config::instance()->get('login_value');
-        common::set_cookie($cookie_key, $cookie_value, time() + 604800);
+        $cookie_key = Backend::$admin['login_flag'];
+        $cookie_value = Backend::$admin['login_value'];
+        $this->setCookie($cookie_key, $cookie_value, time() + 604800);
 
-        $return['error'] = 0;
-        $return['message'] = '登陆成功';
-        $this->ajax_out($return);
+        Common::ajaxReturnSuccess('登录成功');
     }
 
 }

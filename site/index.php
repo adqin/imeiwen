@@ -13,7 +13,7 @@ define('ROOT_PATH', realpath(__DIR__ . '/../'));
 // 定义网站应用文件目录.
 define('APP_PATH', ROOT_PATH . '/application/');
 // 定义网站缓存文件目录.
-define('CACHE_PATH', ROOT_PATH . '/cache/');
+define('CACHE_PATH', ROOT_PATH . '/application/cache/');
 
 // 加载应用入口文件.
 require APP_PATH . 'App.php';

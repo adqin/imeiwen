@@ -8,9 +8,9 @@ class Config {
      * 网站信息.
      */
     public static $site = array(
-        'site_name' => '你问问',
-        'site_note' => '常常问自己',
-        'site_domain' => 'niwenwen.com',
+        'name' => '你问问',
+        'note' => '常常问自己',
+        'domain' => 'niwenwen.com',
     );
 
     /**

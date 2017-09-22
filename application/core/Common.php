@@ -83,7 +83,7 @@ class Common {
             if ($i == $page_now) {
                 $page_show .= '<span class="page_now">' . $i . '</span>';
             } else {
-                $page_show .= '<a href="' . $base_url . '/' . $i . '">' . $i . '</a>';
+                $page_show .= '<a href="' . $base_url . '?page=' . $i . '">' . $i . '</a>';
             }
         }
         $page_show .= '</p>';

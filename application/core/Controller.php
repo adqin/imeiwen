@@ -73,7 +73,7 @@ class Controller {
      */
     protected function setCookie($key, $value, $expireTime = 7200, $path = '/') {
         $value = json_encode($value);
-        setcookie($key, $value, time() + $expireTime, $path);
+        setcookie($key, $value, time() + $expireTime, $path, "", false, true);
     }
 
     /**
@@ -89,8 +89,8 @@ class Controller {
      * 判断是否登陆后台.
      */
     protected function adminIslogin() {
-        $login_flag = Config::$admin['login_flag'];
-        $login_value = Config::$admin['login_value'];
+        $login_flag = Backend::$admin['login_flag'];
+        $login_value = Backend::$admin['login_value'];
 
         if ($login_value != $this->getCookie($login_flag)) {
             return false;

@@ -10,17 +10,18 @@ class Db {
 
     /**
      * 单例模式.
+     * @return Db
      */
     public static function instance() {
         // 如果未数据库未连接.
         if (!static::$conn) {
-            static::$conn = new mysqli(Config::$database['host'], Config::$database['user'], Config::$database['passwd'], Config::$database['dbname']);
+            static::$conn = new mysqli(Backend::$database['host'], Backend::$database['user'], Backend::$database['passwd'], Backend::$database['dbname']);
             if (mysqli_connect_errno()) {
                 printf("数据库连接失败: %s\n", mysqli_connect_error());
                 exit;
             }
 
-            if (!static::$conn->set_charset(Config::$database['charset'])) {
+            if (!static::$conn->set_charset(Backend::$database['charset'])) {
                 printf("数据库转换编码失败: %s\n", static::$conn->error);
                 exit;
             }
