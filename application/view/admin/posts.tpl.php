@@ -13,7 +13,7 @@
                 <h3>文章列表</h3>
                 <form name="search" method="post" action="" style="margin: 0 0 30px;">
                     <input type="text" name="keyword" value="<?= $keyword; ?>" style="padding: 4px 0;" />
-                    <input type="submit" value="搜索" />
+                    <input type="submit" value="搜索" class="button" />
                 </form>
                 <?php if (!empty($data_list)): ?>
                     <ul>

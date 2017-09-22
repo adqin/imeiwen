@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 管理后台登录.
  */
@@ -13,8 +14,8 @@ class Controller_Login extends Controller {
         // 如果非表单提交, 显示页面.
         if (!$this->isPost()) {
             if ($this->adminIslogin()) {
-                // 如果已经登录, 跳转到后台首页.
-                Common::redirect('/admin');
+                // 如果已经登录, 跳转到后台文章列表页.
+                Common::redirect('/admin/posts');
             }
             $this->display('admin/login');
         }
@@ -51,11 +52,11 @@ class Controller_Login extends Controller {
                 Cache::setByFile('login.times', $login_times);
             }
 
-            // 登录失败次数置0.
-            Cache::setByFile('login.times', 0);
             Common::ajaxReturnFalse('登陆账号或登录密码有误');
         }
 
+        // 登录失败次数置0.
+        Cache::setByFile('login.times', 0);
         // 登陆成功，设置cookie
         $cookie_key = Backend::$admin['login_flag'];
         $cookie_value = Backend::$admin['login_value'];

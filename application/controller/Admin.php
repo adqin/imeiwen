@@ -162,6 +162,15 @@ class Controller_Admin extends Controller {
             return $post_id;
         }
     }
+    
+    /**
+     * 注销后台登录.
+     */
+    public function action_logout() {
+        $cookie_key = Backend::$admin['login_flag'];
+        $this->setCookie($cookie_key, '', time() - 100);
+        Common::redirect('/admin/index');
+    }
 
     /**
      * 判断是否登陆.
