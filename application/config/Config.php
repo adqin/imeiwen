@@ -1,6 +1,11 @@
 <?php
+
 /**
- * 系统配置类.
+ * 系统配置.
+ */
+
+/**
+ * Class Config.
  */
 class Config {
 
@@ -9,23 +14,22 @@ class Config {
      */
     public static $site = array(
         'name' => '你问问',
-        'note' => '常常问自己',
+        'note' => '我常常问自己',
+        'title' => '',
+        'keywords' => '',
+        'description' => '',
         'domain' => 'niwenwen.com',
     );
 
     /**
-     * js/css资源.
+     * 数据库配置.
      */
-    public static $source = array(
-        'js_url' => array(
-            'lib' => 'http://st.niwenwen.com/jquery.js',
-            'form' => 'http://st.niwenwen.com/jquery.form.js',
-        ),
-        'css_url' => array(
-            'lib' => 'http://st.niwenwen.com/mui.css',
-            'style' => '/source/front.css',
-            'back' => '/source/backend.css',
-        ),
+    public static $database = array(
+        'host' => 'localhost',
+        'user' => 'root',
+        'passwd' => 'adqin1001',
+        'dbname' => 'wecms',
+        'charset' => 'utf8',
     );
 
 }
