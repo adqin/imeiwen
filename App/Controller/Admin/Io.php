@@ -16,7 +16,11 @@ class Io extends \Controller\Base {
      * 登录后台.
      */
     public function login() {
-        $this->display('admin/login');
+        if ($this->isPost()) {
+            print_r($_POST);exit;
+        } else {
+            $this->display('admin/login');
+        }
     }
     
     /**

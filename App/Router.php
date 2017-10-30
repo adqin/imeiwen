@@ -63,6 +63,7 @@ class Router {
                 break;
             case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
                 // 405 Method Not Allowed.
+                \Common::noPage('提交操作不允许, 请联系管理员');
                 break;
             case FastRoute\Dispatcher::FOUND:
                 $handlerArr = explode('@', $routeInfo[1]);
@@ -72,6 +73,9 @@ class Router {
                 break;
         }
 
+        print_r($routeInfo);exit;
+        echo $className;exit;
+        
         $class = new $className($vars);
         if (!method_exists($class, $methodName)) {
             // 404 not found.

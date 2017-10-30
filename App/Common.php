@@ -16,7 +16,7 @@ class Common {
      * 
      * @return void
      */
-    public static function noPage() {
+    public static function noPage($msg = '') {
         header('HTTP/1.1 404 Not Found');
         header('status: 404 Not Found');
 
