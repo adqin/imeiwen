@@ -1,0 +1,11 @@
+{
+    "name": "Wecms",
+    "description": "Site of niwenwen.com", 
+    "config": {
+        "vendor-dir": "Vendor"
+    },
+    "require": {
+        "qiniu/php-sdk": "^7.2",
+        "nikic/fast-route": "^1.2"
+    }
+}

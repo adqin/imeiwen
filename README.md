@@ -3,7 +3,7 @@
 ```
 server {
     listen 80;
-    root /home/www/wecms/htdocs;
+    root /home/www/wecms/site;
     index index.html index.php;
     server_name niwenwen.com;
     location / {
@@ -37,3 +37,27 @@ git push origin dev #本地分之推送到远程dev分之.
 git pull --all #拉取最新
 git push --all #向仓库推送更新
 ```
+###### composer qiniu sdk.
+```
+composer require qiniu/php-sdk
+```
+
+###### layui.
+```
+http://www.layui.com/
+```
+
+###### url定义.
+```
+imeiwen.org/index.html = 首页(生成的静态页面)
+imeiwen.org/new = 最新发布 （发布时间）
+imeiwen.org/hot = 热门文章 （浏览次数）
+imeiwen.org/popular = 受欢迎的（根据用户收藏的量来，可后期开发）
+imeiwen.org/random = 随机看看（从数据库中取1000条，缓存1小时，然后随机打乱展示20条）
+imeiwen.org/meiriyiwen = 每日一文, 根据微信订阅号来处理.
+imeiwen.org/a2d3b4f7 = 一篇文章.
+imeiwen.org/topic/libaideshi = 一个主题.
+imeiwen.org/topic/yu
+imeiwen.org/collection 我的收藏, 绑定微信号.
+
+###### 后台管理.

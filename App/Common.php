@@ -1,15 +1,20 @@
 <?php
+
 /**
  * 公共函数库.
+ * 
+ * @author aic <41262633@qq.com>
  */
 
 /**
- * Class Common Tool.
+ * Class Common.
  */
 class Common {
 
     /**
      * 404 not found.
+     * 
+     * @return void
      */
     public static function noPage() {
         header('HTTP/1.1 404 Not Found');
@@ -21,6 +26,10 @@ class Common {
 
     /**
      * ajax输出.
+     * 
+     * @param mixed $input 输入参数.
+     * 
+     * @return void
      */
     public static function ajaxOut($input) {
         die(json_encode($input));
@@ -88,14 +97,6 @@ class Common {
         }
         $page_show .= '</p>';
         return $page_show;
-    }
-
-    /**
-     * 获取新的文章id.
-     */
-    public static function getPostid() {
-        $key = microtime(true);
-        return hash('crc32', $key);
     }
 
     /**

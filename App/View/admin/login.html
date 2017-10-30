@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html style="background-color: #F2F2F2">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <title>后台登录</title>
+        <link rel="stylesheet" href="/layui/css/layui.css">
+    </head>
+    <body>
+        <div class="layui-container" style="margin-top: 100px; width: 400px; padding: 0; background-color: #fff;">
+            <h3 style="background-color: #2F4056; padding: 8px 0; text-align: center; font-size: 20px; color: #F0F0F0;">后台登录</h3>
+            <div class="layui-form layui-form-pane" style="margin-top: 15px; padding: 15px;">
+                <form name="login" method="post" action="/admin/login">
+                    <div class="layui-form-item">
+                        <label for="admin_name" class="layui-form-label">账号</label>
+                        <div class="layui-input-inline">
+                            <input id="admin_name" name="admin_name" required="" lay-verify="required" autocomplete="off" class="layui-input" type="text" />
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label for="admin_passwd" class="layui-form-label">密码</label>
+                        <div class="layui-input-inline">
+                            <input id="admin_passwd" name="admin_passwd" required="" lay-verify="required" autocomplete="off" class="layui-input" type="password" />
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <button class="layui-btn" lay-filter="*" lay-submit="">立即登录</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- 你的HTML代码 -->
+
+        <script src="/layui/layui.js"></script>
+        <script>
+            //一般直接写在一个js文件中
+            layui.use(['layer', 'form'], function () {
+                var layer = layui.layer
+                        , form = layui.form;
+
+                layer.msg('Hello World');
+            });
+        </script> 
+    </body>
+</html>

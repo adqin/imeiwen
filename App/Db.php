@@ -1,6 +1,13 @@
 <?php
+
 /**
- * 数据库操作类.
+ * 数据库操作封装.
+ * 
+ * @author aic <41262633@qq.com>
+ */
+
+/**
+ * Class Db.
  */
 class Db {
 
@@ -15,13 +22,13 @@ class Db {
     public static function instance() {
         // 如果未数据库未连接.
         if (!static::$conn) {
-            static::$conn = new mysqli(Backend::$database['host'], Backend::$database['user'], Backend::$database['passwd'], Backend::$database['dbname']);
+            static::$conn = new mysqli(\Config::$database['host'], \Config::$database['user'], \Config::$database['passwd'], \Config::$database['dbname']);
             if (mysqli_connect_errno()) {
                 printf("数据库连接失败: %s\n", mysqli_connect_error());
                 exit;
             }
 
-            if (!static::$conn->set_charset(Backend::$database['charset'])) {
+            if (!static::$conn->set_charset(\Config::$database['charset'])) {
                 printf("数据库转换编码失败: %s\n", static::$conn->error);
                 exit;
             }
@@ -29,7 +36,7 @@ class Db {
 
         // 如果数据库对象未实例化.
         if (!static::$instance) {
-            static::$instance = new Db();
+            static::$instance = new \Db();
         }
 
         return static::$instance;
@@ -62,6 +69,18 @@ class Db {
     public function count($sql) {
         $rs = $this->getSimple($sql);
         return is_null($rs) ? 0 : $rs;
+    }
+    
+    /**
+     * 查询记录是否存在.
+     * 
+     * @param string $sql 查询的sql语句.
+     * 
+     * @return boolean.
+     */
+    public function exists($sql) {
+        $rs = $this->getRow($sql);
+        return $rs ? true : false;
     }
 
     /**
