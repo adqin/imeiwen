@@ -1,22 +1,36 @@
 <?php
 
 /**
- * 文章后台管理.
+ * 文章列表与发布.
  * 
  * @author aic <41262633@qq.com>
  */
 
 namespace Controller\Admin;
 
+/**
+ * Class Post.
+ */
 class Post extends \Controller\Admin\Init {
 
-    public function __construct($vals = array()) {
-        parent::__construct($vals);
-        print_r($this->param);
+    /**
+     * 构造函数.
+     */
+    public function __construct() {
+        parent::__construct();
     }
 
+    /**
+     * 新发布文章.
+     * 
+     * @return void
+     */
     public function add() {
-        
+        if (\Common::isPost()) {
+            
+        } else {
+            $this->display('admin/post/add');
+        }
     }
 
 }

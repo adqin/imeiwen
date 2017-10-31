@@ -1,0 +1,56 @@
+<div class="layui-header">
+    <div class="layui-logo">爱美文网后台管理</div>
+    <!-- 头部区域（可配合layui已有的水平导航） -->
+    <ul class="layui-nav layui-layout-left">
+        <li class="layui-nav-item"><a href="/admin/index">后台首页</a></li>
+        <li class="layui-nav-item"><a href="/admin/setting/system">系统配置</a></li>
+        <li class="layui-nav-item">
+            <a href="javascript:;">文章发布</a>
+            <dl class="layui-nav-child">
+                <dd><a href="/admin/post/add">美文</a></dd>
+                <dd><a href="/admin/page/edit">单页</a></dd>
+            </dl>
+        </li>
+        <li class="layui-nav-item">
+            <a href="javascript:;">网站更新</a>
+            <dl class="layui-nav-child">
+                <dd><a href="/admin/update/index">首页更新</a></dd>
+                <dd><a href="/admin/update/keywords">词库更新</a></dd>
+                <dd><a href="/admin/update/route">路由更新</a></dd>
+            </dl>
+        </li>
+    </ul>
+    <ul class="layui-nav layui-layout-right">
+        <li class="layui-nav-item">
+            <a href="javascript:;">
+                <img src="http://st.niwenwen.com/touxiang.jpg" class="layui-nav-img">
+                阿D
+            </a>
+        </li>
+        <li class="layui-nav-item"><a href="/admin/logout">退出</a></li>
+    </ul>
+</div>
+
+<div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+        <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+        <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+            <li class="layui-nav-item layui-nav-itemed">
+                <a class="" href="javascript:;">文章列表</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="/admin/post/list">所有文章</a></dd>
+                    <dd><a href="/admin/post/list?from=weixin">每日一文</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">主题列表</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="javascript:;">关键词</a></dd>
+                    <dd><a href="javascript:;">作者</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="/admin/page/index">单页列表</a></li>
+            <li class="layui-nav-item"><a href="/" target="_blank">查看首页</a></li>
+        </ul>
+    </div>
+</div>

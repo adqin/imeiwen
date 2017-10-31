@@ -101,7 +101,7 @@ class Router {
             return ucfirst($val);
         }, $uriArr);
 
-        $class = str_replace('/', '\\', '//Controller' . implode('//', $tmp));
+        $class = str_replace('/', '\\', '/Controller' . implode('/', $tmp));
 
         return ['class' => $class, 'method' => $method];
     }
