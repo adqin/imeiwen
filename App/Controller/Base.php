@@ -67,15 +67,6 @@ class Base {
     }
 
     /**
-     * 判断是否是post提交操作.
-     * 
-     * @return boolean.
-     */
-    protected function isPost() {
-        return isset($_SERVER["REQUEST_METHOD"]) && $_SERVER["REQUEST_METHOD"] == 'POST' ? true : false;
-    }
-
-    /**
      * 获取表单提交的数据(post).
      * 
      * @param string $key 表单名.

@@ -17,7 +17,8 @@ class Db {
 
     /**
      * 单例模式.
-     * @return Db
+     * 
+     * @return \Db
      */
     public static function instance() {
         // 如果未数据库未连接.
@@ -44,6 +45,10 @@ class Db {
 
     /**
      * 查询一条记录.
+     * 
+     * @param string $sql 查询的sql.
+     * 
+     * @return array.
      */
     public function getRow($sql) {
         $this->query($sql);
@@ -53,6 +58,10 @@ class Db {
 
     /**
      * 查询一条记录一个字段的值.
+     * 
+     * @param string $sql 查询的sql.
+     * 
+     * @return mixed.
      */
     public function getSimple($sql) {
         $row = $this->getRow($sql);
@@ -65,6 +74,10 @@ class Db {
 
     /**
      * 查询记录条数.
+     * 
+     * @param string $sql 查询的sql.
+     * 
+     * @return integer.
      */
     public function count($sql) {
         $rs = $this->getSimple($sql);
@@ -85,6 +98,10 @@ class Db {
 
     /**
      * 查询列.
+     * 
+     * @param string $sql 查询的sql.
+     * 
+     * @return array.
      */
     public function getColumn($sql) {
         $this->query($sql);
@@ -97,6 +114,11 @@ class Db {
 
     /**
      * 查询返回多条记录.
+     * 
+     * @param string $sql 查询的sql.
+     * @param string $key 返回数组索引.
+     * 
+     * @return array.
      */
     public function getList($sql, $key = '') {
         $this->query($sql);
@@ -107,7 +129,7 @@ class Db {
 
         // 如果指定以某键值返回.
         if ($key && $arr) {
-            return Common::getArrByKey($arr, $key);
+            return \Common::getArrByKey($arr, $key);
         }
 
         return $arr;
@@ -115,6 +137,10 @@ class Db {
 
     /**
      * 用于插入或更新操作.
+     * 
+     * @param string $sql 更新的sql.
+     * 
+     * @return boolean.
      */
     public function execute($sql) {
         $this->query($sql);
@@ -127,6 +153,8 @@ class Db {
 
     /**
      * 执行sql的错误记录.
+     * 
+     * @return string.
      */
     public function getError() {
         return static::$conn->error;
@@ -134,6 +162,10 @@ class Db {
 
     /**
      * 执行sql.
+     * 
+     * @param string $sql 操作的sql语句.
+     * 
+     * @return void
      */
     private function query($sql) {
         $this->res = static::$conn->query($sql);

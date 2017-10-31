@@ -57,13 +57,12 @@ class Router {
                 $className = $result['class'];
                 $methodName = $result['method'];
                 if (!$className || !$methodName) {
-                    // 404 not found.
-                    \Common::noPage();
+                    \Common::showErrorMsg("URI: {$uri}, 类文件或方法未定义, 请联系管理员");
                 }
                 break;
             case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
                 // 405 Method Not Allowed.
-                \Common::noPage('提交操作不允许, 请联系管理员');
+                \Common::showErrorMsg("URI: {$uri}, 提交操作未被授权, 请联系管理员");
                 break;
             case FastRoute\Dispatcher::FOUND:
                 $handlerArr = explode('@', $routeInfo[1]);
@@ -72,14 +71,11 @@ class Router {
                 $methodName = $handlerArr[1];
                 break;
         }
-
-        print_r($routeInfo);exit;
-        echo $className;exit;
         
         $class = new $className($vars);
         if (!method_exists($class, $methodName)) {
             // 404 not found.
-            \Common::noPage();
+            \Common::showErrorMsg("URI: {$uri}, ACTION: {$methodName}未定义, 请联系管理员");
         }
         
         $class->$methodName();

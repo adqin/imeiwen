@@ -14,13 +14,16 @@ class Common {
     /**
      * 404 not found.
      * 
+     * @param string $message 提示信息.
+     * @param string $returnUrl 跳转网址.
+     * 
      * @return void
      */
-    public static function noPage($msg = '') {
+    public static function noPage($message = '', $returnUrl = '') {
         header('HTTP/1.1 404 Not Found');
         header('status: 404 Not Found');
 
-        echo '<div class="noPage"><h3>访问错误, 页面不存在</h3><p><a href="/">返回首页</a></p></div>';
+        require TPL_PATH . '_404.html';
         exit;
     }
 
@@ -37,6 +40,10 @@ class Common {
 
     /**
      * ajax返回正确.
+     * 
+     * @param string $message 提示信息.
+     * 
+     * @return void
      */
     public static function ajaxReturnSuccess($message = '') {
         $return = array(
@@ -48,6 +55,10 @@ class Common {
 
     /**
      * ajax返回失败.
+     * 
+     * @param string $message 提示信息.
+     * 
+     * @return void
      */
     public static function ajaxReturnFalse($message = '') {
         $return = array(
@@ -58,7 +69,44 @@ class Common {
     }
 
     /**
+     * 错误提示.
+     * 
+     * @param string $message 错误提示信息.
+     * 
+     * @return void
+     */
+    public static function showErrorMsg($message = '') {
+        if (static::isAjaxRequest()) {
+            static::ajaxReturnFalse($message);
+        } else {
+            static::noPage($message);
+        }
+    }
+
+    /**
+     * 判断是否是post提交操作.
+     * 
+     * @return boolean.
+     */
+    public static function isPost() {
+        return isset($_SERVER["REQUEST_METHOD"]) && $_SERVER["REQUEST_METHOD"] === 'POST' ? true : false;
+    }
+
+    /**
+     * 判断是否是ajax请求.
+     * 
+     * @return boolean.
+     */
+    public static function isAjaxRequest() {
+        return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest' ? true : false;
+    }
+
+    /**
      * 页面跳转.
+     * 
+     * @param string $url 页面跳转url.
+     * 
+     * @return void
      */
     public static function redirect($url) {
         header("Location: $url");
@@ -67,40 +115,12 @@ class Common {
     }
 
     /**
-     * 简单分页.
-     */
-    public static function pageShow($total_count = 0, $page_now = 1, $base_url = '/', $page_size = 20) {
-        if (!$total_count || !$page_size) {
-            return '';
-        }
-
-        $total_page = ceil($total_count / $page_size);
-        if ($total_page == 1) {
-            return '';
-        }
-
-        if (!$page_now) {
-            $page_now = 1;
-        }
-
-        if ($page_now > $total_page) {
-            $page_now = $total_page;
-        }
-
-        $page_show = '<p class="page_show">' . "共计{$total_page}页{$total_count}篇文章 ";
-        for ($i = 1; $i <= $total_page; $i++) {
-            if ($i == $page_now) {
-                $page_show .= '<span class="page_now">' . $i . '</span>';
-            } else {
-                $page_show .= '<a href="' . $base_url . '?page=' . $i . '">' . $i . '</a>';
-            }
-        }
-        $page_show .= '</p>';
-        return $page_show;
-    }
-
-    /**
-     * 数组以某个键值返回.
+     * 数组以某个键值为索引返回.
+     * 
+     * @param array $arr 原始数组值.
+     * @param string $key 返回数组索引键.
+     * 
+     * @return array.
      */
     public static function getArrByKey($arr = array(), $key = '') {
         $return = array();
