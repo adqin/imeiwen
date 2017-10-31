@@ -43,8 +43,11 @@ composer require qiniu/php-sdk
 ```
 
 ###### layui.
-```
 http://www.layui.com/
+
+```
+通过git获取最新版本.
+git clone https://github.com/sentsin/layui.git
 ```
 
 ###### url定义.
