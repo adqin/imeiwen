@@ -11,7 +11,7 @@
             <?php require TPL_PATH . 'admin/header.html'; ?>
             <div class="layui-body">
                 <!-- 内容主体区域 -->
-                <div style="padding: 15px;">
+                <div class="layui-form" style="padding: 15px;">
                     <fieldset class="layui-elem-field">
                         <legend>文章发布</legend>
                         <div class="layui-field-box">
@@ -33,7 +33,8 @@
                                 <div class="layui-form-item">
                                     <label class='layui-form-label'>配图</label>
                                     <div class='layui-input-block'>
-                                        <p style="margin: 5px 0"><img src="http://st.niwenwen.com/touxiang.jpg" width="150" /></p>
+                                        <input type="hidden" name="image_url" id="image_url" value="">
+                                        <p style="margin: 5px 0"><img src="http://st.niwenwen.com/touxiang.jpg" width="200" id="image_view" /></p>
                                         <button type="button" class="layui-btn" id="upload">
                                             <i class="layui-icon">&#xe67c;</i>上传图片
                                         </button>
@@ -92,7 +93,7 @@
 
                                 <div class="layui-form-item">
                                     <div class="layui-input-block" style="padding: 20px 0;">
-                                        <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                                        <button class="layui-btn" lay-submit lay-filter="*">立即提交</button>
                                         <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                                     </div>
                                 </div>
@@ -106,9 +107,29 @@
         </div>
         <script src="/layui/dist/layui.js"></script>
         <script>
-            //JavaScript代码区域
-            layui.use(['element', 'form'], function () {
-                var element = layui.element, form = layui.form;
+            layui.use(['element', 'form', 'upload', 'jquery'], function () {
+                var element = layui.element, form = layui.form, upload = layui.upload, $ = layui.$;
+                var uploader = upload.render({
+                    elem: '#upload',
+                    auto: false,
+                    exts: 'jpg|jpeg|png',
+                    field: 'image',
+                    size: 200,
+                    drag: false,
+                    choose: function (obj) {
+                        obj.preview(function (index, file, result) {
+                            $('#image_view').attr('src', result);
+                            $('#image_url').val(result);
+                        });
+                    },
+                });
+                
+                form.on('submit(*)', function(data) {
+                   $.post('/admin/post/add', data.field, function (result) {
+                       
+                   });
+                   return false;
+                });
             });
         </script>
     </body>

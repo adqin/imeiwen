@@ -149,22 +149,6 @@ class Base {
     }
 
     /**
-     * 获取新的文章id.
-     * 
-     * @return string.
-     */
-    protected function getPostid() {
-        $key = microtime(true);
-        $post_id = hash('crc32b', $key); // crc32b 快于crc32.
-        if (\Db::instance()->exists("select `id` from `post` where `post_id` = '$post_id'")) {
-            // 如果数据库里已存在, 递归调用重新生成post_id.
-            return $this->getPostid();
-        } else {
-            return $post_id;
-        }
-    }
-
-    /**
      * 析构函数.
      */
     public function __destruct() {

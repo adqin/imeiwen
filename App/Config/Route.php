@@ -1,45 +1,11 @@
 <?php
 
-/**
- * 系统配置.
- * 
- * @author aic <41262633@qq.com>
- */
+namespace Config;
 
-/**
- * Class Config.
- */
-class Config {
+class Route {
 
     /**
-     * 网站信息.
-     * 
-     * @var array.
-     */
-    public static $site = array(
-        'name' => '爱美文网',
-        'note' => '美文/诗歌/古诗词精品收藏',
-        'title' => '',
-        'keywords' => '',
-        'description' => '',
-        'domain' => 'imeiwen.org',
-    );
-
-    /**
-     * 数据库配置.
-     * 
-     * @var array.
-     */
-    public static $database = array(
-        'host' => 'localhost',
-        'user' => 'root',
-        'passwd' => 'adqin1001',
-        'dbname' => 'imeiwen',
-        'charset' => 'utf8',
-    );
-    
-    /**
-     *路由规则.
+     * 路由规则.
      * 
      * @var array. 
      */

@@ -27,7 +27,10 @@ class Post extends \Controller\Admin\Init {
      */
     public function add() {
         if (\Common::isPost()) {
-            
+            //print_r($_POST);
+            $img_data = base64_decode(explode(',', $_POST['image_url'])[1]);
+            print_r(getimagesizefromstring($img_data));
+            echo strlen($img_data);
         } else {
             $this->display('admin/post/add');
         }

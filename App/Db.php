@@ -23,13 +23,13 @@ class Db {
     public static function instance() {
         // 如果未数据库未连接.
         if (!static::$conn) {
-            static::$conn = new mysqli(\Config::$database['host'], \Config::$database['user'], \Config::$database['passwd'], \Config::$database['dbname']);
+            static::$conn = new mysqli(\Config\Db::$database['host'], \Config\Db::$database['user'], \Config\Db::$database['passwd'], \Config\Db::$database['dbname']);
             if (mysqli_connect_errno()) {
                 printf("数据库连接失败: %s\n", mysqli_connect_error());
                 exit;
             }
 
-            if (!static::$conn->set_charset(\Config::$database['charset'])) {
+            if (!static::$conn->set_charset(\Config\Db::$database['charset'])) {
                 printf("数据库转换编码失败: %s\n", static::$conn->error);
                 exit;
             }
@@ -133,6 +133,33 @@ class Db {
         }
 
         return $arr;
+    }
+    
+    /**
+     * 开始事务, 并且不自动提交.
+     * 
+     * @return boolean.
+     */
+    public function startTransactions() {
+        return static::$conn->autocommit(false);
+    }
+    
+    /**
+     * 提交事务.
+     * 
+     * @return boolean.
+     */
+    public function commit() {
+        return static::$conn->commit();
+    }
+    
+    /**
+     * 回滚事务.
+     * 
+     * @return boolean.
+     */
+    public function rollback() {
+        return static::$conn->rollback();
     }
 
     /**

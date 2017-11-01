@@ -18,7 +18,7 @@ class Router {
      */
     public static function route() {
         $dispatcher = FastRoute\cachedDispatcher(function(FastRoute\RouteCollector $r) {
-            $rules = \Config::$routeRules; // 配置的路由规则.
+            $rules = \Config\Route::$routeRules; // 配置的路由规则.
             foreach ($rules as $route => $rule) {
                 // 默认为GET提交.
                 $methods = isset($rule['method']) && $rule['method'] ? (array) $rule['method'] : ['GET'];

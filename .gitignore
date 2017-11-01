@@ -2,3 +2,5 @@
 /nbproject
 /Vendor
 /Site/layui
+/App/Config/Db.php
+/App/Config/Qiniu.php

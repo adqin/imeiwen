@@ -15,9 +15,32 @@ class App {
      * 应用开始.
      */
     public static function start() {
+        // 初始化.
+        static::init();
+        
         // 自动加载.
-        self::autoload();
+        static::autoload();
+        
+        // 路由加载.
         \Router::route();
+    }
+    
+    /**
+     * 初始化.
+     */
+    public static function init() {
+        // 需手动创建Caches目录.
+        if (!file_exists(CACHE_PATH)) {
+            exit('请创建Caches目录');
+        }
+        
+        if (!file_exists(APP_PATH . '/Config/Db.php')) {
+            exit('请配置Db');
+        }
+        
+        if (!file_exists(APP_PATH . '/Config/Qiniu.php')) {
+            exit('请配置七牛');
+        }
     }
 
     /**
