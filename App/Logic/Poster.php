@@ -42,6 +42,9 @@ class Poster {
 
         // 验证与获取image_data.
         $this->getImageData();
+        
+        // 保存.
+        $this->save();
     }
 
     /**
@@ -101,7 +104,18 @@ class Poster {
             return true;
         }
         
+        $local = CACHE_PATH . $this->post_id;
+        file_put_contents($local, $this->image_data);
+        $save = $this->post_id . '.jpg';
         
+        $uploader = new \Logic\Uploader();
+        if (!$uploader->upload($local, $save)) {
+            // 返回的文件名为空, 表示上传失败.
+            return false;
+        }
+        
+        $this->image_url = $save;
+        return true;
     }
 
     /**

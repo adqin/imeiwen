@@ -27,10 +27,20 @@ class Post extends \Controller\Admin\Init {
      */
     public function add() {
         if (\Common::isPost()) {
-            //print_r($_POST);
-            $img_data = base64_decode(explode(',', $_POST['image_url'])[1]);
-            print_r(getimagesizefromstring($img_data));
-            echo strlen($img_data);
+            $param['title'] = $this->getPost('title');
+            $param['author'] = $this->getPost('author');
+            $param['image_url'] = $this->getPost('image_url');
+            $param['content'] = $this->getPost('content');
+            $param['long_title'] = $this->getPost('long_title');
+            $param['keywords'] = $this->getPost('keywords');
+            $param['description'] = $this->getPost('description');
+            $param['weixin_url'] = $this->getPost('weixin_url');
+            $param['weixin_up_date'] = $this->getPost('weixin_up_date');
+            $param['status'] = $this->getPost('status');
+            
+            $poster = new \Logic\Poster($id = 0, $param);
+            $poster->add();
+            exit;
         } else {
             $this->display('admin/post/add');
         }
