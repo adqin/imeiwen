@@ -2,6 +2,6 @@
 /nbproject
 /Vendor
 /Site/layui
-/App/Config
+/App/Config/*
 !/App/Config/System.php
 !/App/Config/Route.php
