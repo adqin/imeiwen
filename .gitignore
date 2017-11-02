@@ -1,5 +1,5 @@
-App/Config/Db.php
-App/Config/Qiniu.php
+/App/Config/Db.php
+/App/Config/Qiniu.php
 /Caches
 /nbproject
 /Vendor
