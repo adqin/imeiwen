@@ -32,6 +32,8 @@ class Poster {
 
     /**
      * 新增文章.
+     * 
+     * @return void
      */
     public function add() {
         // 新增文章, 先获取新的post_id.
@@ -49,8 +51,15 @@ class Poster {
 
     /**
      * 编辑更新.
+     * 
+     * @return void
      */
     public function edit() {
+        // 如果编辑的信息为空.
+        if (!$this->info) {
+            \Common::ajaxReturnFalse('编辑的文章信息为空');
+        }
+
         // 对参数进行验证.
         $this->validParam();
 
@@ -63,6 +72,8 @@ class Poster {
 
     /**
      * 保存更新数据.
+     * 
+     * @return void
      */
     private function save() {
         if (!\Db::instance()->startTransactions()) {
@@ -257,7 +268,8 @@ class Poster {
         if (empty($this->info)) {
             \Common::ajaxReturnFalse("post: {$this->id}, 更新的文章不存在");
         }
-        $this->post_id = $this->param['post_id'] = $this->info['post_id'];
+        $this->post_id = $this->info['post_id'];
+        $this->param['post_id'] = $this->info['post_id'];
     }
 
     /**
