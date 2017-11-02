@@ -42,13 +42,15 @@ class Common {
      * ajax返回正确.
      * 
      * @param string $message 提示信息.
+     * @param array $data 附加的数据.
      * 
      * @return void
      */
-    public static function ajaxReturnSuccess($message = '') {
+    public static function ajaxReturnSuccess($message = '', $data = array()) {
         $return = array(
             'error' => 0,
             'message' => $message,
+            'data' => $data,
         );
         static::ajaxOut($return);
     }

@@ -25,7 +25,7 @@ class Uploader {
         $this->bucket = \Config\Qiniu::$bucket;
         $this->auth = new Auth($this->accessKey, $this->secretKey);
     }
-    
+
     /**
      * 上传到七牛.
      * 
@@ -46,4 +46,5 @@ class Uploader {
             return '';
         }
     }
+
 }

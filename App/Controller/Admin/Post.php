@@ -35,15 +35,22 @@ class Post extends \Controller\Admin\Init {
             $param['keywords'] = $this->getPost('keywords');
             $param['description'] = $this->getPost('description');
             $param['weixin_url'] = $this->getPost('weixin_url');
-            $param['weixin_up_date'] = $this->getPost('weixin_up_date');
+            $param['weixin_up_datetime'] = $this->getPost('weixin_up_datetime');
             $param['status'] = $this->getPost('status');
-            
+
             $poster = new \Logic\Poster($id = 0, $param);
             $poster->add();
-            exit;
         } else {
             $this->display('admin/post/add');
         }
+    }
+    
+    /**
+     * 编辑更新文章.
+     */
+    public function edit() {
+        $id = $this->getGet('id');
+        var_dump($id);
     }
 
 }

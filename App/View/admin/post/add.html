@@ -79,7 +79,7 @@
                                 <div class="layui-form-item">
                                     <label class='layui-form-label'>微信文章发布日期</label>
                                     <div class='layui-input-block'>
-                                        <input type="text" name="weixin_up_date" placeholder="请输入微信文章发布日期" autocomplete="off" class="layui-input">
+                                        <input type="text" name="weixin_up_datetime" placeholder="请输入微信文章发布日期, 格式2017-11-01" autocomplete="off" class="layui-input">
                                     </div>
                                 </div>
 
@@ -107,8 +107,8 @@
         </div>
         <script src="/layui/dist/layui.js"></script>
         <script>
-            layui.use(['element', 'form', 'upload', 'jquery'], function () {
-                var element = layui.element, form = layui.form, upload = layui.upload, $ = layui.$;
+            layui.use(['element', 'form', 'upload', 'jquery', 'layer'], function () {
+                var element = layui.element, form = layui.form, upload = layui.upload, $ = layui.$, layer = layui.layer;
                 var uploader = upload.render({
                     elem: '#upload',
                     auto: false,
@@ -126,7 +126,19 @@
                 
                 form.on('submit(*)', function(data) {
                    $.post('/admin/post/add', data.field, function (result) {
-                       
+                       result = $.parseJSON(result);
+                       if (result.error == 0) {
+                           layer.open({
+                              content: result.message,
+                              icon: 6,
+                              yes: function (index, layero) {
+                                  layer.close(index);
+                                  window.location.href = '/admin/post/edit?id=' + result.data.id;
+                              }
+                           });
+                       } else {
+                           layer.alert(result.message, {icon: 5});
+                       }
                    });
                    return false;
                 });

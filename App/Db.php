@@ -83,7 +83,7 @@ class Db {
         $rs = $this->getSimple($sql);
         return is_null($rs) ? 0 : $rs;
     }
-    
+
     /**
      * 查询记录是否存在.
      * 
@@ -134,7 +134,61 @@ class Db {
 
         return $arr;
     }
+
+    /**
+     * 通过主键id更新Db.
+     * 
+     * @param string $table 更新表名.
+     * @param array $param 更新参数.
+     * @param array $id 更新的主键id.
+     * 
+     * @return boolean.
+     */
+    public function updateById($table = '', $param = array(), $id = 0) {
+        if (empty($table) || empty($param) || !is_array($param) || !$id) {
+            \Common::ajaxReturnFalse('update db, 参数不符合要求');
+        }
+
+        $where = "`id` = '$id'";
+        $sql = "update `{$table}` set ";
+        $upItem = [];
+        foreach ($param as $k => $v) {
+            $upItem[] = "`$k` = '$v'";
+        }
+        $upItemString = implode(',', $upItem);
+
+        $sql .= "$upItemString where $where";
+        //echo $sql;
+
+        return $this->execute($sql);
+    }
     
+    /**
+     * 新写入记录.
+     * 
+     * @param string $table 更新表.
+     * @param array $param 更新参数.
+     * 
+     * @return integer.
+     */
+    public function insert($table = '', $param = array()) {
+        if (!$table || !is_array($param) || !$param) {
+            \Common::ajaxReturnFalse('insert db, 更新参数有误');
+        }
+        
+        $sql = "insert `$table`";
+        
+        $keys = array_keys($param);
+        $sql .= "(`" . implode("`,`", $keys) . "`) values('" . implode("','", $param) . "')";
+        //echo $sql;
+        
+        if ($this->execute($sql)) {
+            return static::$conn->insert_id;
+        } else {
+            return 0;
+        }
+    }
+
     /**
      * 开始事务, 并且不自动提交.
      * 
@@ -143,7 +197,7 @@ class Db {
     public function startTransactions() {
         return static::$conn->autocommit(false);
     }
-    
+
     /**
      * 提交事务.
      * 
@@ -152,7 +206,7 @@ class Db {
     public function commit() {
         return static::$conn->commit();
     }
-    
+
     /**
      * 回滚事务.
      * 

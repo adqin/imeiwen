@@ -42,7 +42,7 @@ class Poster {
 
         // 验证与获取image_data.
         $this->getImageData();
-        
+
         // 保存.
         $this->save();
     }
@@ -56,6 +56,9 @@ class Poster {
 
         // 验证与获取image_data.
         $this->getImageData();
+
+        // 保存.
+        $this->save();
     }
 
     /**
@@ -82,7 +85,7 @@ class Poster {
             // 清理本地缓存图片.
             $this->cleanLocalImage();
             // 返回成功提示.
-            \Common::ajaxReturnSuccess("更新文章成功");
+            \Common::ajaxReturnSuccess("更新文章成功", ['id' => $this->id]);
         } catch (\Exception $e) {
             // 回滚事务.
             \Db::instance()->rollback();
@@ -92,7 +95,45 @@ class Poster {
             \Common::ajaxReturnFalse($e->getMessage());
         }
     }
-    
+
+    /**
+     * 保存更新Db.
+     * 
+     * @return boolean.
+     */
+    private function saveDb() {
+        $param = array(
+            'post_id' => $this->post_id,
+            'title' => $this->param['title'],
+            'author' => $this->param['author'],
+            'content' => $this->param['content'],
+            'long_title' => $this->param['long_title'],
+            'keywords' => $this->param['keywords'] ? str_replace('，', ',', $this->param['keywords']) : '', // 替换中文逗号为英文.
+            'description' => $this->param['description'],
+            'weixin_url' => $this->param['weixin_url'],
+            'weixin_up_datetime' => $this->param['weixin_up_datetime'] ? strtotime($this->param['weixin_up_datetime']) : 0, // 转换为时间戳, 方便排序.
+            'status' => $this->param['status'],
+        );
+
+        if ($this->id) {
+            $param['update_time'] = time();
+        } else {
+            $param['input_time'] = $param['update_time'] = time();
+        }
+
+        if ($this->image_url) {
+            $param['image_url'] = $this->image_url;
+            $param['image_up_time'] = time();
+        }
+
+        if ($this->id) {
+            return \Db::instance()->updateById('post', $param, $this->id);
+        } else {
+            $this->id = \Db::instance()->insert('post', $param);
+            return $this->id;
+        }
+    }
+
     /**
      * 图片更新上传.
      * 
@@ -103,23 +144,25 @@ class Poster {
             // 没有新传图, 直接返回.
             return true;
         }
-        
+
         $local = CACHE_PATH . $this->post_id;
         file_put_contents($local, $this->image_data);
         $save = $this->post_id . '.jpg';
-        
+
         $uploader = new \Logic\Uploader();
         if (!$uploader->upload($local, $save)) {
             // 返回的文件名为空, 表示上传失败.
             return false;
         }
-        
+
         $this->image_url = $save;
         return true;
     }
 
     /**
      * 对入参做基本的验证.
+     * 
+     * @return void
      */
     private function validParam() {
         $fields = array(
@@ -132,7 +175,7 @@ class Poster {
             'keywords' => '关键词',
             'description' => '简要描述',
             'weixin_url' => '微信文章URL',
-            'weixin_up_date' => '微信文章发布日期',
+            'weixin_up_datetime' => '微信文章发布日期',
             'status' => '状态',
         );
 
@@ -173,22 +216,41 @@ class Poster {
             }
         }
 
-        // 验证文章是否重复.
-        $id = $this->id;
+        // 验证文章是否重复(标题+作者).
         $title = $this->param['title'];
         $author = $this->param['author'];
         $where = "`title` = '$title' and `author` = '$author'";
-        if ($id) {
-            $where .= " and `id` <> '$id'";
+        if ($this->id) {
+            $where .= " and `id` <> '$this->id'";
         }
 
         if (\Db::instance()->exists("select `id` from `post` where $where")) {
-            \Common::ajaxReturnFalse("author: {$author}, title: {$title} 文章已存在, 不要重复发布");
+            \Common::ajaxReturnFalse("author: {$author}, title: {$title} 文章已发布过, 不要重复发布");
+        }
+
+        // 验证微信文章发布日期.
+        if ($this->param['weixin_up_datetime']) {
+            $time = strtotime($this->param['weixin_up_datetime']);
+            if (date('Y-m-d', $time) != $this->param['weixin_up_datetime']) {
+                \Common::ajaxReturnFalse('微信文章发布日期格式有误');
+            }
+
+            // 验证微信文章发布日期是否重复, 每日一文, 每天只能一篇文章.
+            $where = "`weixin_up_datetime` = '$time'";
+            if ($this->id) {
+                $where .= " and `id` <> '$this->id'";
+            }
+
+            if (\Db::instance()->exists("select `id` from `post` where $where")) {
+                \Common::ajaxReturnFalse("每日一文/微信文章发布日期: {$this->param['weixin_up_datetime']}已发布过, 不要重复发布");
+            }
         }
     }
 
     /**
      * 查询旧的文章信息.
+     * 
+     * @return void
      */
     private function getInfo() {
         $this->info = \Db::instance()->getRow("select `id`, `post_id`, `title`, `author`, `image_url`, `content`, `long_title`, `keywords`, `description` from `post` where `id` = '$this->id'");
@@ -200,6 +262,8 @@ class Poster {
 
     /**
      * 验证配图与格式化数据.
+     * 
+     * @return void
      */
     private function getImageData() {
         if ($this->param['image_url']) {
@@ -239,10 +303,22 @@ class Poster {
     }
 
     /**
+     * 清理本地的临时图片文件.
+     * 
+     * @return void
+     */
+    private function cleanLocalImage() {
+        $local = CACHE_PATH . $this->post_id;
+        if (file_exists($local)) {
+            unlink($local);
+        }
+    }
+
+    /**
      * 析构函数.
      */
     public function __destruct() {
-        unset($this->param, $this->image_data);
+        unset($this->param, $this->info, $this->image_data);
     }
 
 }

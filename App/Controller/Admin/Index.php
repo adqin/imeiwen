@@ -15,8 +15,8 @@ class Index extends \Controller\Admin\Init {
      * 
      * @param mixed $vals 附加的参数.
      */
-    public function __construct($vals = array()) {
-        parent::__construct($vals);
+    public function __construct() {
+        parent::__construct();
     }
 
     /**
