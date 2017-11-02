@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <title>文章列表 - 爱美文网</title>
+        <link rel="stylesheet" href="/layui/dist/css/layui.css">
+    </head>
+    <body class="layui-layout-body">
+        <div class="layui-layout layui-layout-admin">
+            <?php require TPL_PATH . 'admin/header.html'; ?>
+            <div class="layui-body">
+                <!-- 内容主体区域 -->
+                <table lay-even lay-skin="row" lay-size="lg" class="layui-table" lay-data="{height: 600, url: '/admin/post/index', page: true, id: 'post_list'}" lay-filter="post_list">
+                    <thead>
+                        <tr>
+                            <th lay-data="{field: 'id', width: 80, sort: true}">ID</th>
+                            <th lay-data="{field: 'author', width: 80}">作者</th>
+                            <th lay-data="{field:'title', width:177}">标题</th>
+                            <th lay-data="{field:'weixin_up_datetime', width:177}">微信发布日期</th>
+                            <th lay-data="{field:'status', width:80}">状态</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <?php require TPL_PATH . 'admin/footer.html'; ?>
+        </div>
+        <script src="/layui/dist/layui.js"></script>
+        <script>
+            layui.use(['element', 'form', 'jquery', 'layer', 'table'], function () {
+                var element = layui.element, form = layui.form, $ = layui.$, layer = layui.layer, table = layui.table;
+                form.on('submit(*)', function (data) {
+                    return false;
+                });
+            });
+        </script>
+    </body>
+</html>

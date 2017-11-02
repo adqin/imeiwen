@@ -19,6 +19,15 @@ class Post extends \Controller\Admin\Init {
     public function __construct() {
         parent::__construct();
     }
+    
+    /**
+     * 文章列表.
+     * 
+     * @return void
+     */
+    public function index() {
+        $this->display('admin/post/index');
+    }
 
     /**
      * 新发布文章.
