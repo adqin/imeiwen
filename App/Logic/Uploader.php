@@ -35,7 +35,7 @@ class Uploader {
      * @return string.
      */
     public function upload($local, $save) {
-        $token = $this->auth->uploadToken($this->bucket);
+        $token = $this->auth->uploadToken($this->bucket, $save);
         $uploadMgr = new UploadManager();
         list($ret, $err) = $uploadMgr->putFile($token, $save, $local);
         if (is_null($err)) {
