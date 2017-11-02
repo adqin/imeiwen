@@ -1,6 +1,5 @@
-/App/Config
-!/App/Config/System.php
-!/App/Config/Route.php
+App/Config/Db.php
+App/Config/Qiniu.php
 /Caches
 /nbproject
 /Vendor
