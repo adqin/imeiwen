@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <title>单页列表 - 爱美文网</title>
+        <link rel="stylesheet" href="/layui/dist/css/layui.css">
+        <style type="text/css">
+            .layui-table-cell {
+                height: auto !important;
+            }
+            .page_item {
+                text-decoration: underline #009688 dashed !important;
+            }
+        </style>
+    </head>
+    <body class="layui-layout-body">
+        <div class="layui-layout layui-layout-admin">
+            <?php require TPL_PATH . 'admin/header.html'; ?>
+            <div class="layui-body">
+                <div style="width: 430px; padding: 10px;">
+                    <!-- 内容主体区域 -->
+                    <fieldset class="layui-elem-field">
+                        <legend>单页列表</legend>
+                        <div style="padding: 0px 10px 5px 20px;">
+                            <table id="data_list" lay-filter="data_list"></table>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <?php require TPL_PATH . 'admin/footer.html'; ?>
+        </div>
+        <script src="/layui/dist/layui.js"></script>
+        <script>
+            layui.use(['element', 'table'], function () {
+                var element = layui.element, table = layui.table;
+                table.render({
+                    elem: '#data_list',
+                    height: 'auto',
+                    page: false,
+                    loading: true,
+                    id: 'data_list',
+                    url: '/admin/page/search',
+                    limit: 100,
+                    method: 'post',
+                    cols: [[
+                            {field: 'id', title: 'ID', width: 80},
+                            {field: 'title', title: '标题', width: 200},
+                            {field: 'op_string', title: '操作', width: 150}
+                        ]]
+                });
+            });
+        </script>
+    </body>
+</html>

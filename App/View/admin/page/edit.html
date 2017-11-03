@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <title>单页编辑更新 - 爱美文网</title>
+        <link rel="stylesheet" href="/layui/dist/css/layui.css">
+    </head>
+    <body class="layui-layout-body">
+        <div class="layui-layout layui-layout-admin">
+            <?php require TPL_PATH . 'admin/header.html'; ?>
+            <div class="layui-body">
+                <!-- 内容主体区域 -->
+                <div style="padding: 15px;">
+                    <fieldset class="layui-elem-field">
+                        <legend>单页编辑更新</legend>
+                        <div class="layui-field-box">
+                            <form class="layui-form" style="width: 800px;">
+                                <div class="layui-form-item">
+                                    <label class='layui-form-label'>ID</label>
+                                    <div style="padding: 10px 15px;">
+                                        <input type="hidden" name="id" value="<?=$info['id']?>">
+                                        <?=$info['id'] . ' : ' . $info['identify']?>
+                                    </div>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <label class='layui-form-label'>标题</label>
+                                    <div class='layui-input-block'>
+                                        <input type="text" name="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input" value="<?=$info['title']?>">
+                                    </div>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <label class='layui-form-label'>内容</label>
+                                    <div class='layui-input-block'>
+                                        <textarea name="content" rows="20" required lay-verify="required" placeholder="请输入单页内容" class="layui-textarea"><?=$info['content']?></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <div class="layui-input-block" style="padding: 20px 0;">
+                                        <button class="layui-btn" lay-submit lay-filter="*" id="submit">立即提交</button>
+                                        <button type="reset" class="layui-btn layui-btn-primary" id="reset">重置</button>
+                                        <a href="/admin/page/index" class="layui-btn layui-btn-normal">返回列表</a>
+                                    </div>
+                                </div>
+
+                                </form>
+                            </div>
+                    </fieldset>
+            </div>
+        </div>
+        <?php require TPL_PATH . 'admin/footer.html'; ?>
+    </div>
+    <script src="/layui/dist/layui.js"></script>
+    <script>
+        layui.use(['element', 'form', 'jquery', 'layer'], function () {
+            var element = layui.element, form = layui.form, $ = layui.$, layer = layui.layer;
+
+            form.on('submit(*)', function (data) {
+                $('#submit').addClass('layui-btn-disabled').html('提交中...');
+                $('#result').addClass('layui-btn-disabled');
+                $.post('/admin/page/edit', data.field, function (result) {
+                    result = $.parseJSON(result);
+                    if (result.error == 0) {
+                        layer.open({
+                            content: result.message,
+                            icon: 6,
+                            yes: function (index, layero) {
+                                $('#submit').removeClass('layui-btn-disabled').html('立即提交');
+                                $('#result').removeClass('layui-btn-disabled');
+                                layer.close(index);
+                            }
+                        });
+                    } else {
+                        $('#submit').removeClass('layui-btn-disabled').html('立即提交');
+                        $('#result').removeClass('layui-btn-disabled');
+                        layer.alert(result.message, {icon: 5});
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
+</body>
+</html>
