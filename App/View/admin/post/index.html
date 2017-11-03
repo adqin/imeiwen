@@ -5,24 +5,65 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <title>文章列表 - 爱美文网</title>
         <link rel="stylesheet" href="/layui/dist/css/layui.css">
+        <style type="text/css">
+            .layui-table-cell {
+                height: auto !important;
+            }
+            .post_item, .weixin_url {
+                text-decoration: underline #009688 dashed !important;
+            }
+        </style>
     </head>
     <body class="layui-layout-body">
         <div class="layui-layout layui-layout-admin">
             <?php require TPL_PATH . 'admin/header.html'; ?>
             <div class="layui-body">
-                <!-- 内容主体区域 -->
-                <table lay-even lay-skin="row" lay-size="lg" class="layui-table" lay-data="{height: 600, url: '/admin/post/index', page: true, id: 'post_list'}" lay-filter="post_list">
-                    <thead>
-                        <tr>
-                            <th lay-data="{field: 'id', width: 80, sort: true}">ID</th>
-                            <th lay-data="{field: 'author', width: 80}">作者</th>
-                            <th lay-data="{field:'title', width:177}">标题</th>
-                            <th lay-data="{field:'weixin_up_datetime', width:177}">微信发布日期</th>
-                            <th lay-data="{field:'status', width:80}">状态</th>
-                            <th>操作</th>
-                        </tr>
-                    </thead>
-                </table>
+                <div style="width: 95%; padding: 10px;">
+                    <!-- 内容主体区域 -->
+                    <fieldset class="layui-elem-field">
+                        <legend>文章列表</legend>
+                        <form class="layui-form layui-form-pane" style="padding: 20px 1px 1px 20px;">
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">文章标题</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="title" class="layui-input" placeholder="文章标题|模糊匹配" />
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">文章作者</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="author" class="layui-input" placeholder="文章作者" />
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">每日一文？</label>
+                                    <div class="layui-input-inline">
+                                        <input type="checkbox" name="isMryw" lay-skin="switch" lay-text="是|不限">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">文章状态</label>
+                                    <div class="layui-input-inline">
+                                        <select name="status">
+                                            <option value="">全部</option>
+                                            <option value="1">显示</option>
+                                            <option value="0">隐藏</option>
+                                        </select>     
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <button class="layui-btn" lay-submit lay-filter="*">查询</button></div>
+                            </div>
+                        </form>
+                        <div style="padding: 0px 10px 5px 20px;">
+                            <table id="data_list" lay-filter="data_list"></table>
+                        </div>
+                    </fieldset>
+                </div>
             </div>
             <?php require TPL_PATH . 'admin/footer.html'; ?>
         </div>
@@ -30,9 +71,36 @@
         <script>
             layui.use(['element', 'form', 'jquery', 'layer', 'table'], function () {
                 var element = layui.element, form = layui.form, $ = layui.$, layer = layui.layer, table = layui.table;
+                $('form')[0].reset();
+                table.render({
+                    elem: '#data_list',
+                    height: 'auto',
+                    page: true,
+                    loading: true,
+                    id: 'data_list',
+                    url: '/admin/post/search',
+                    method: 'post',
+                    limits: [20, 50],
+                    limit: 20,
+                    cols: [[
+                            {field: 'id', title: 'ID', width: 80},
+                            {field: 'thumb', title: '封面图', width: 150},
+                            {field: 'title', title: '标题', width: 200},
+                            {field: 'author', title: '作者', width: 120},
+                            {field: 'keywords', title: '关键词', width: 200},
+                            {field: 'weixin_string', 'title': '微信发布/每日一文', width: 150},
+                            {field: 'status', title: '状态', width: 90},
+                            {field: 'op_string', title: '操作', width: 150}
+                        ]]
+                });
+
                 form.on('submit(*)', function (data) {
+                    table.reload('data_list', {
+                        where: data.field
+                    });
                     return false;
                 });
+
             });
         </script>
     </body>

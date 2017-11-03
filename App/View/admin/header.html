@@ -47,21 +47,9 @@
 <div class="layui-side layui-bg-black">
     <div class="layui-side-scroll">
         <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-        <ul class="layui-nav layui-nav-tree"  lay-filter="left-nav">
-            <li class="layui-nav-item layui-nav-itemed">
-                <a class="" href="javascript:;">文章列表</a>
-                <dl class="layui-nav-child">
-                    <dd><a href="/admin/post/index">所有文章</a></dd>
-                    <dd><a href="/admin/post/index?from=weixin">每日一文</a></dd>
-                </dl>
-            </li>
-            <li class="layui-nav-item">
-                <a href="javascript:;">主题列表</a>
-                <dl class="layui-nav-child">
-                    <dd><a href="javascript:;">关键词</a></dd>
-                    <dd><a href="javascript:;">作者</a></dd>
-                </dl>
-            </li>
+        <ul class="layui-nav layui-nav-tree">
+            <li class="layui-nav-item"><a href="/admin/post/index">文章列表</a></li>
+            <li class="layui-nav-item"><a href="/admin/topic/index">主题列表</a></li>
             <li class="layui-nav-item"><a href="/admin/page/index">单页列表</a></li>
             <li class="layui-nav-item"><a href="/" target="_blank">网站首页</a></li>
         </ul>

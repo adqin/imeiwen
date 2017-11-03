@@ -19,7 +19,7 @@ class Post extends \Controller\Admin\Init {
     public function __construct() {
         parent::__construct();
     }
-    
+
     /**
      * 文章列表.
      * 
@@ -93,6 +93,86 @@ class Post extends \Controller\Admin\Init {
             $this->assign('info', $info);
             $this->display('admin/post/edit');
         }
+    }
+
+    /**
+     * 文章列表搜索数据.
+     * 
+     * @return void
+     */
+    public function search() {
+        $page = $this->getPost('page');
+        $page = $page ? $page : 1;
+        $limit = $this->getPost('limit');
+        $limit = $limit ? $limit : 20;
+
+        // 查询条件.
+        $title = $this->getPost('title');
+        $author = $this->getPost('author');
+        $isMryw = $this->getPost('isMryw');
+        $status = $this->getPost('status');
+
+        $where = "1=1";
+        $order = "order by `id` desc";
+        if ($title) {
+            $where .= " and `title` like '%$title%'";
+        }
+        if ($author) {
+            $where .= " and `author` = '$author'";
+        }
+        if ($isMryw == 'on') {
+            $where .= " and `weixin_up_datetime` > 0";
+            $order = "order by `weixin_up_datetime` desc";
+        }
+        if ($status !== '') {
+            $where .= " and `status` = '$status'";
+        }
+
+        // 计算总的条数.
+        $count = \Db::instance()->count("select count(`id`) from `post` where $where");
+        $return = array(
+            'code' => 0,
+            'msg' => '',
+            'count' => $count,
+            'data' => array(),
+        );
+
+        if ($count) {
+            $offset = ($page - 1) * $limit;
+            $sql = "select * from `post` where $where $order limit $limit offset $offset";
+            $return['data'] = $this->formatSearchData(\Db::instance()->getList($sql));
+        }
+
+        \Common::ajaxOut($return);
+    }
+
+    /**
+     * 文章列表搜索数据格式化.
+     * 
+     * @param array $data 源数据.
+     * 
+     * @return array.
+     */
+    private function formatSearchData($data = array()) {
+        if (!$data) {
+            return $data;
+        }
+
+        $return = array();
+        foreach ($data as $d) {
+            $return[] = array(
+                'id' => $d['id'],
+                'thumb' => $d['image_url'] ? '<img src="' . \Config\Qiniu::$domain . $d['image_url'] . '?imageView2/2/w/200/' . $d['image_up_time'] . '" width="200">' : '',
+                'title' => '<a href="/post/' . $d['post_id'] . '" class="post_item" target="_blank">' . $d['title'] . '</a>',
+                'author' => $d['author'],
+                'keywords' => $d['keywords'],
+                'status' => $d['status'] ? '显示' : '隐藏',
+                'weixin_string' => $d['weixin_up_datetime'] ? '<a href="' . $d['weixin_url'] . '" class="weixin_url" target="_blank">' . date('Y-m-d', $d['weixin_up_datetime']) : '',
+                'op_string' => '<a href="/admin/post/edit?id=' . $d['id'] . '" class="layui-btn">修改<i class="layui-icon">&#xe642;</i></a>',
+            );
+        }
+
+        return $return;
     }
 
 }

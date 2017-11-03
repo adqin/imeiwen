@@ -15,7 +15,7 @@
                     <fieldset class="layui-elem-field">
                         <legend>文章编辑更新</legend>
                         <div class="layui-field-box">
-                            <div class="layui-form" style="width: 800px;">
+                            <form class="layui-form" style="width: 800px;">
                                 <div class="layui-form-item">
                                     <label class='layui-form-label'>文章ID</label>
                                     <div style="padding: 10px 15px;">
@@ -115,12 +115,13 @@
 
                                 <div class="layui-form-item">
                                     <div class="layui-input-block" style="padding: 20px 0;">
-                                        <button class="layui-btn" lay-submit lay-filter="*" id="submit">立即提交</button>
+                                        <button class="layui-btn" lay-submit lay-filter="*" id="submit"><i class="layui-icon">&#xe609;</i>提交</button>
                                         <button type="reset" class="layui-btn layui-btn-primary" id="reset">重置</button>
+                                        <a class="layui-btn layui-btn-normal" href="/admin/post/index"><i class="layui-icon">&#xe65c;</i>返回列表</a>
                                     </div>
                                 </div>
 
-                            </div>
+                            </form>
                         </div>
                     </fieldset>
                 </div>
