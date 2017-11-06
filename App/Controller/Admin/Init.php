@@ -18,7 +18,7 @@ class Init extends \Controller\Base {
 
         if (!$this->isLogin()) {
             // 如果未登录, 跳转到登录页.
-            \Common::redirect('/admin/login');
+            \Common::redirect('/admin/io/login');
         }
     }
 

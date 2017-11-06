@@ -21,9 +21,6 @@ class Route {
         '/topic/{identify:\w+}' => ['handler' => 'Topic@index'], // 主题.
         '/collection' => ['handler' => 'Collection@index', 'method' => ['GET', 'POST']], // 我的收藏.
         '/page/{id:\w+}' => ['handler' => 'Page@index'], // 单页.
-        '/admin/login' => ['handler' => 'Admin\\Io@login', 'method' => ['GET', 'POST']], // 后台登录.
-        '/admin/logout' => ['handler' => 'Admin\\Io@logout'], // 后台注销登录.
-        '/admin/index' => ['handler' => 'Admin\\Index@index'], // 后台首页.
     );
 
 }

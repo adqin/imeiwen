@@ -56,6 +56,7 @@ class Router {
                 $result = static::getSelfRouteInfo($uri);
                 $className = $result['class'];
                 $methodName = $result['method'];
+                $vars = $result['vars'];
                 if (!$className || !$methodName) {
                     \Common::showErrorMsg("URI: {$uri}, 类文件或方法未定义, 请联系管理员");
                 }
@@ -71,13 +72,13 @@ class Router {
                 $methodName = $handlerArr[1];
                 break;
         }
-        
+
         $class = new $className($vars);
         if (!method_exists($class, $methodName)) {
             // 404 not found.
             \Common::showErrorMsg("URI: {$uri}, ACTION: {$methodName}未定义, 请联系管理员");
         }
-        
+
         $class->$methodName();
     }
 
@@ -94,16 +95,38 @@ class Router {
             return ['class' => '', 'method' => ''];
         }
 
-        $uriArr = explode('/', $uri);
-        $method = strtolower(array_pop($uriArr)); // 转化为小写.
-        // 首字母大写.
-        $tmp = array_map(function($val) {
-            return ucfirst($val);
-        }, $uriArr);
+        $uriArr = array();
+        $group = ''; // 是否有分组, Controller/$group.
+        // 先格式化处理$uri.
+        $tmp = explode('/', $uri);
+        $num = 0;
+        foreach ($tmp as $t) {
+            $t = trim($t);
+            if ($t) {
+                $t = ucfirst(strtolower($t)); // 将首字母转为大写.
+                if (!$num && file_exists(APP_PATH . 'Controller/' . $t . '/')) {
+                    $group = $t;
+                } else {
+                    $uriArr[] = $t;
+                }
+                $num ++;
+            }
+        }
+        if (!isset($uriArr[0])) {
+            $uriArr[0] = 'Index';
+        }
+        if (!isset($uriArr[1])) {
+            $uriArr[1] = 'Index';
+        }
 
-        $class = str_replace('/', '\\', '/Controller' . implode('/', $tmp));
+        $controller = $uriArr[0];
+        $method = strtolower($uriArr[1]);
+        unset($uriArr[0], $uriArr[1]);
+        $vars = $uriArr ? array_values($uriArr) : array();
 
-        return ['class' => $class, 'method' => $method];
+        $class = $group ? str_replace('/', '\\', '/Controller/' . $group . '/' . $controller) : str_replace('/', '\\', '/Controller/' . $controller);
+
+        return ['class' => $class, 'method' => $method, 'vars' => $vars];
     }
 
 }
