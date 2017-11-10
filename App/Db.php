@@ -162,7 +162,34 @@ class Db {
 
         return $this->execute($sql);
     }
-    
+
+    /**
+     * 通过指定条件更新表记录.
+     * 
+     * @param string $table 更新表.
+     * @param array $param 更新参数.
+     * @param string $where 更新条件.
+     * 
+     * @return boolean.
+     */
+    public function updateByWhere($table = '', $param = array(), $where = '') {
+        if (empty($table) || empty($param) || !is_array($param) || !$where || !is_string($where)) {
+            \Common::ajaxReturnFalse('update db, 参数不符合要求');
+        }
+        
+        $sql = "update `{$table}` set ";
+        $upItem = [];
+        foreach ($param as $k => $v) {
+            $upItem[] = "`$k` = '$v'";
+        }
+        $upItemString = implode(',', $upItem);
+
+        $sql .= "$upItemString where $where";
+        //echo $sql;
+
+        return $this->execute($sql);
+    }
+
     /**
      * 新写入记录.
      * 
@@ -175,13 +202,13 @@ class Db {
         if (!$table || !is_array($param) || !$param) {
             \Common::ajaxReturnFalse('insert db, 更新参数有误');
         }
-        
+
         $sql = "insert `$table`";
-        
+
         $keys = array_keys($param);
         $sql .= "(`" . implode("`,`", $keys) . "`) values('" . implode("','", $param) . "')";
         //echo $sql;
-        
+
         if ($this->execute($sql)) {
             return static::$conn->insert_id;
         } else {

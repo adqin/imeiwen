@@ -43,7 +43,7 @@
             layui.use(['jquery', 'form', 'layer'], function () {
                 var $ = layui.$, form = layui.form, layer = layui.layer;
                 form.on('submit(*)', function (data) {
-                    $.post('/admin/login', data.field, function (result) {
+                    $.post('/admin/io/login', data.field, function (result) {
                         result = $.parseJSON(result);
                         if (result.error == 0) {
                             layer.open({

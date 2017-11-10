@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <title>关键词库数据更新 - 爱美文网</title>
+        <link rel="stylesheet" href="/layui/dist/css/layui.css">
+        <style type="text/css">
+            p {
+                margin: 5px;
+                padding: 5px;
+                line-height: 26px;
+            }
+        </style>
+    </head>
+    <body class="layui-layout-body">
+        <div class="layui-layout layui-layout-admin">
+            <?php require TPL_PATH . 'admin/header.html'; ?>
+            <div class="layui-body">
+                <div style="width: 600px; padding: 10px;">
+                    <!-- 内容主体区域 -->
+                    <fieldset class="layui-elem-field">
+                        <legend><?php if ($type == 'post'): ?>文章表扫描<?php else: ?>关键词库扫描<?php endif; ?></legend>
+                        <p>更新当前页：<?=$page?>, 共<?=$totalPage?>页</p>
+                        <?php if($rows): ?>
+                            <p>更新记录</p>
+                            <?php foreach($rows as $row): ?>
+                            <p>id: <?=$row['id']?>, <?=$row['title']?></p>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <p>更新结束</p>
+                        <?php endif; ?>
+                    </fieldset>
+                    <input type="hidden" id="page" value="<?=$page?>">
+                    <input type="hidden" id="type" value="<?=$type?>">
+                    <input type="hidden" id="totalPage" value="<?=$totalPage?>">
+                </div>
+            </div>
+            <?php require TPL_PATH . 'admin/footer.html'; ?>
+        </div>
+        <script src="/layui/dist/layui.js"></script>
+        <script>
+            layui.use(['element', 'jquery'], function () {
+                var element = layui.element, $ = layui.$;
+                
+                var page = $('#page').val();
+                var type = $('#type').val();
+                var totalPage = $('#totalPage').val();
+                var nextPage = page + 1;
+                
+                if (type === 'post' && nextPage > totalPage) {
+                    type = 'topic';
+                    nextPage = 1;
+                }
+                
+                if (nextPage <= totalPage) {
+                    var url = '/admin/update/keywords?type=' + type + '&page=' + page;
+                    window.location.href = url;
+                }
+            });
+        </script>
+    </body>
+</html>

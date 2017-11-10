@@ -71,7 +71,7 @@
                                 <div class="layui-form-item">
                                     <label class='layui-form-label'>关键词</label>
                                     <div class='layui-input-block'>
-                                        <input type="text" name="keywords" placeholder="请输入关键词, 多个以','分隔" autocomplete="off" class="layui-input" value="<?=$info['keywords']?>">
+                                        <input type="text" name="keywords" placeholder="请输入关键词, 多个以','分隔" autocomplete="off" class="layui-input" value="<?=trim($info['keywords'], ',')?>">
                                     </div>
                                 </div>
 

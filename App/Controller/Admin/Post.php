@@ -165,7 +165,7 @@ class Post extends \Controller\Admin\Init {
                 'thumb' => $d['image_url'] ? '<img src="' . \Config\Qiniu::$domain . $d['image_url'] . '?imageView2/2/w/200/' . $d['image_up_time'] . '" width="200">' : '',
                 'title' => '<a href="/post/' . $d['post_id'] . '" class="post_item" target="_blank">' . $d['title'] . '</a>',
                 'author' => $d['author'],
-                'keywords' => $d['keywords'],
+                'keywords' => trim($d['keywords'], ','),
                 'status' => $d['status'] ? '显示' : '隐藏',
                 'weixin_string' => $d['weixin_up_datetime'] ? '<a href="' . $d['weixin_url'] . '" class="weixin_url" target="_blank">' . date('Y-m-d', $d['weixin_up_datetime']) : '',
                 'op_string' => '<a href="/admin/post/edit?id=' . $d['id'] . '" class="layui-btn">修改<i class="layui-icon">&#xe642;</i></a>',

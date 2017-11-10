@@ -119,7 +119,7 @@ class Poster {
             'author' => $this->param['author'],
             'content' => $this->param['content'],
             'long_title' => $this->param['long_title'],
-            'keywords' => $this->param['keywords'] ? str_replace('，', ',', $this->param['keywords']) : '', // 替换中文逗号为英文.
+            'keywords' => $this->param['keywords'] ? $this->formatKeywords($this->param['keywords']) : '', // 替换中文逗号为英文.
             'description' => $this->param['description'],
             'weixin_url' => $this->param['weixin_url'],
             'weixin_up_datetime' => $this->param['weixin_up_datetime'] ? strtotime($this->param['weixin_up_datetime']) : 0, // 转换为时间戳, 方便排序.
@@ -296,6 +296,31 @@ class Poster {
 
             $this->image_data = $image_data;
         }
+    }
+    
+    /**
+     * 格式化处理关键词.
+     * 
+     * @param string $keywords 录入的关键词.
+     * 
+     * @return string.
+     */
+    private function formatKeywords($keywords = '') {
+        $keywords = str_replace('，', ',', $keywords);
+        
+        $return = [];
+        $arr = explode(',', $keywords);
+        
+        foreach ($arr as $r) {
+            $r = trim($r);
+            if ($r) {
+                $return[] = $r;
+            }
+        }
+        
+        $return = array_unique($return);
+        
+        return $return ? ',' . implode(',', $return) . ',' : '';
     }
 
     /**
