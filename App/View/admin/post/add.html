@@ -86,8 +86,12 @@
                                 <div class="layui-form-item">
                                     <label class='layui-form-label'>状态</label>
                                     <div class='layui-input-block'>
-                                        <input type="radio" name="status" value="0" title="隐藏" checked>
-                                        <input type="radio" name="status" value="1" title="显示">
+                                        <select name="status">
+                                            <option value="">全部</option>
+                                            <option value="1">显示</option>
+                                            <option value="0">隐藏</option>
+                                            <option value="2">推荐</option>
+                                        </select>
                                     </div>
                                 </div>
 
@@ -98,10 +102,9 @@
                                     </div>
                                 </div>
 
-                            </form>
-                        </div>
+                            </div>
                     </fieldset>
-                </div>
+                </form>
             </div>
             <?php require TPL_PATH . 'admin/footer.html'; ?>
         </div>

@@ -3,15 +3,6 @@
     <!-- 头部区域（可配合layui已有的水平导航） -->
     <ul class="layui-nav layui-layout-left">
         <li class="layui-nav-item"><a href="/admin/index">后台首页</a></li>
-        <li class="layui-nav-item">
-            <a href="javascript:;">网站配置</a>
-            <dl class="layui-nav-child">
-                <dd><a href="/admin/setting/system">站点信息</a></dd>
-                <dd><a href="/admin/setting/db">数据库</a></dd>
-                <dd><a href="/admin/setting/qiniu">七牛</a></dd>
-                <dd><a href="/admin/setting/route">路由规则</a></dd>
-            </dl>
-        </li>
         
         <li class="layui-nav-item">
             <a href="javascript:;">内容发布</a>
@@ -26,9 +17,6 @@
             <dl class="layui-nav-child">
                 <dd><a href="/admin/update/index">首页更新</a></dd>
                 <dd><a href="/admin/update/keywords">词库更新</a></dd>
-                <dd><a href="/admin/update/route">路由更新</a></dd>
-                <dd><a href="/admin/update/route">随机数据更新</a></dd>
-                <dd><a href="/admin/update/route">所有文章更新</a></dd>
             </dl>
         </li>
     </ul>
@@ -46,12 +34,14 @@
 
 <div class="layui-side layui-bg-black">
     <div class="layui-side-scroll">
-        <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+        <!-- 左侧导航区域（可配合layui已有的垂直导航）-->
         <ul class="layui-nav layui-nav-tree">
-            <li class="layui-nav-item"><a href="/admin/post/index">文章列表</a></li>
-            <li class="layui-nav-item"><a href="/admin/topic/index">主题列表</a></li>
-            <li class="layui-nav-item"><a href="/admin/page/index">单页列表</a></li>
-            <li class="layui-nav-item"><a href="/" target="_blank">网站首页</a></li>
+            <li class="layui-nav-item"><a href="/admin/post/add"><i class="layui-icon" style="font-size: 16px; color: #009688;">&#xe61f;</i>发布文章</a></li>
+            <li class="layui-nav-item"><a href="/admin/post/index"><i class="layui-icon" style="font-size: 16px; color: #009688;">&#xe60a;</i>文章列表</a></li>
+            <li class="layui-nav-item"><a href="/admin/topic/index"><i class="layui-icon" style="font-size: 16px; color: #009688;">&#xe60a;</i>主题列表</a></li>
+            <li class="layui-nav-item"><a href="/admin/page/add"><i class="layui-icon" style="font-size: 16px; color: #009688;">&#xe61f;</i>创建单页</a></li>
+            <li class="layui-nav-item"><a href="/admin/page/index"><i class="layui-icon" style="font-size: 16px; color: #009688;">&#xe60a;</i>单页列表</a></li>
+            <li class="layui-nav-item"><a href="/" target="_blank"><i class="layui-icon" style="font-size: 16px; color: #009688;">&#xe68e;</i>网站首页</a></li>
         </ul>
     </div>
 </div>

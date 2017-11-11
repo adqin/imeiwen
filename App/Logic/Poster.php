@@ -203,7 +203,7 @@ class Poster {
         }
 
         $status = $this->param['status'];
-        if (!in_array($status, array('0', '1'))) {
+        if (!in_array($status, array('0', '1', '2'))) {
             \Common::ajaxReturnFalse("status:状态 值有误, 不符合规范");
         }
 
