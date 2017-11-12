@@ -19,9 +19,11 @@ class Index extends \Controller\Base {
      * @return void
      */
     public function index() {
+        $rows = \Db::instance()->getList("select `post_id`, `title`, `author`, `image_url`, `image_up_time`,`description` from `post`");
+        $this->assign('rows', $rows);
         $this->display('index');
     }
-    
+
     /**
      * 随机看看.
      */
