@@ -25,6 +25,7 @@
             .thumb {
                 overflow: hidden;
                 border-bottom: 1px solid #d2d2d2;
+                background-color: #2F4056;
             }
             .title,.note {
                 padding: 3px;
@@ -102,7 +103,7 @@
                 <?php foreach($rows as $r): ?>
                 <div class="layui-col-md6">
                     <div class="item">
-                        <div class="thumb"><img src="<?=\Config\Qiniu::$domain . $r['image_url']?>?imageView2/2/w/600/<?=$r['image_up_time']?>"></div>
+                        <div class="thumb"><img src="" data-src="<?=\Config\Qiniu::$domain . $r['image_url']?>?imageView2/2/w/600/<?=$r['image_up_time']?>"></div>
                         <div class="text">
                             <div class="title"><a href="/post/<?=$r['post_id']?>" target="_blank"><?=$r['title']?></a></div>
                             <div class="note"><a href="/post/<?=$r['post_id']?>" target="_blank"><?=$r['description']?></a></div>
@@ -145,11 +146,18 @@
                 $('.thumb > img').width(iw);
                 $('#loading').hide();
                 $('#content').show();
+                
+                $('.thumb > img').each(function(i) {
+                   var img = $(this).attr('data-src');
+                   $(this).attr('src', img);
+                });
 
-                $('window').resize(function () {
-                    var iw = $('.item').first().width();
-                    alert(iw);
-                    var th = tw * 0.5;
+                $(window).resize(function () {
+                    iw = $('.item').first().width();
+                    tw = iw;
+                    th = tw * 0.5;
+                    $('.thumb').width(tw);
+                    $('.thumb').height(th);
                     $('.thumb > img').width(iw);
                 });
             });
