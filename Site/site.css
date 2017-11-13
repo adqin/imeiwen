@@ -1,0 +1,54 @@
+.layui-nav-item a {
+    font-size: 18px !important;
+}
+#quote-note {
+    font-size: 16px;
+    color: #999;
+}
+#loading {
+    margin: 30px auto;
+    text-align: center;
+    font-size: 18px;
+    line-height: 26px;
+}
+.item {
+    border: 1px solid #d2d2d2;
+}
+.thumb {
+    overflow: hidden;
+    border-bottom: 1px solid #d2d2d2;
+    background-color: #2F4056;
+}
+.title,.note {
+    padding: 3px;
+    margin: 5px;
+}
+.note {
+    min-height: 60px;
+}
+.note a {
+    color: #999;
+}
+.note a:hover {
+    color: #666;
+}
+.author {
+    color: #666;
+    padding: 3px 3px 5px 3px;
+    margin: 5px 5px 8px 5px;
+}
+#footer {
+    margin: 30px 0;
+    text-align: center;
+    font-size: 16px;
+}
+#copyright {
+    color: #666;
+    padding: 5px;
+}
+#foot-nav {
+    padding: 5px;
+}
+#foot-nav a {
+    font-size: 16px !important;
+}
