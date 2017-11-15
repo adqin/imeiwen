@@ -14,21 +14,55 @@ namespace Controller;
 class Index extends \Controller\Base {
 
     /**
-     * 首页推荐.
+     * 推荐文章.
      * 
      * @return void
      */
-    public function index() {
-        $rows = \Db::instance()->getList("select `post_id`, `title`, `author`, `image_url`, `image_up_time`,`description` from `post`");
-        $this->assign('rows', $rows);
+    public function recommend() {
+        // 推荐文章.
+        $list = \Logic\Homer::getCachePosts('recommend', 43200, true);
+        $this->assign('list', $list);
+        $this->assign('menu_key', 'recommend');
         $this->display('home/recommend');
     }
 
     /**
-     * 随机看看.
+     * 最近更新文章.
+     * 
+     * @return void
+     */
+    public function recent() {
+        // 最近更新.
+        $list = \Logic\Homer::getCachePosts('recent', 43200, false);
+        $this->assign('list', $list);
+        $this->assign('menu_key', 'recent');
+        $this->display('home/recent');
+    }
+
+    /**
+     * 最近更新文章.
+     * 
+     * @return void
+     */
+    public function popular() {
+        // 最近更新.
+        $list = \Logic\Homer::getCachePosts('popular', 43200, true);
+        $this->assign('list', $list);
+        $this->assign('menu_key', 'popular');
+        $this->display('home/popular');
+    }
+
+    /**
+     * 最近更新文章.
+     * 
+     * @return void
      */
     public function random() {
-        
+        // 最近更新.
+        $list = \Logic\Homer::getCachePosts('random', 43200, true);
+        $this->assign('list', $list);
+        $this->assign('menu_key', 'random');
+        $this->display('home/random');
     }
 
 }

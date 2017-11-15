@@ -219,7 +219,7 @@ class Poster {
                 \Common::ajaxReturnFalse('文章配图必须上传');
             }
 
-            $required = array('long_title', 'keywords', 'description');
+            $required = array('description');
             foreach ($required as $k) {
                 if (empty($this->param[$k])) {
                     \Common::ajaxReturnFalse("{$k}:{$fields[$k]} 值不能为空");

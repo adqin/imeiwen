@@ -51,11 +51,11 @@ class Homer {
                 case 'recommend':
                     $return = static::getRecommendPost();
                     break;
-                case 'new':
-                    $return = static::getNewPost();
+                case 'recent':
+                    $return = static::getRecentPost();
                     break;
-                case 'hot':
-                    $return = static::getHotPost();
+                case 'popular':
+                    $return = static::getPopularPost();
                     break;
                 case 'random':
                     $return = static::getRandomPost();
@@ -68,7 +68,7 @@ class Homer {
             file_put_contents($file, json_encode($return));
         }
 
-        return $return;
+        return static::getArrDataByNum($return, $shuffle);
     }
 
     /**
@@ -86,8 +86,8 @@ class Homer {
      * 
      * @return array.
      */
-    private static function getNewPost() {
-        $sql = "select * from `post` where `status` in('1', '2') order by `update_time` desc limit 10";
+    private static function getRecentPost() {
+        $sql = "select * from `post` where `status` in('1', '2') order by `update_time` desc limit 12";
         return \Db::instance()->getList($sql);
     }
 
@@ -96,8 +96,8 @@ class Homer {
      * 
      * @return array.
      */
-    private static function getHotPost() {
-        $sql = "select p.* from `post` as p, `page_view` as v where `p.post_id` = `v.post_id` and `p.status` in('1', '2') order by `v.views` desc limit 50";
+    private static function getPopularPost() {
+        $sql = "select p.* from `post` as p, `page_view` as v where `p.post_id` = `v.post_id` and `p.status` in('1', '2') order by `v.views` desc limit 100";
         return \Db::instance()->getList($sql);
     }
 
@@ -109,6 +109,34 @@ class Homer {
     private static function getRandomPost() {
         $sql = "select * from `post` where `status` in('1', '2') order by rand() limit 100";
         return \Db::instance()->getList($sql);
+    }
+    
+    /**
+     * 返回数组指定的数量.
+     * 
+     * @param array $list 原始数组.
+     * @param boolean $shuffle 是否打乱.
+     * 
+     * @return array.
+     */
+    private static function getArrDataByNum($list = array(), $shuffle = true) {
+        if (!$list) {
+            return [];
+        }
+        
+        if (count($list) <= 12) {
+            return $list;
+        }
+        
+        $return = [];
+        if ($shuffle) {
+            shuffle($list);
+        }
+        for ($i =0; $i < 12; $i++) {
+            $return[] = $list[$i];
+        }
+        
+        return $return;
     }
 
 }

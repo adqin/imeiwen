@@ -10,9 +10,8 @@ class Route {
      * @var array. 
      */
     public static $routeRules = array(
-        '/index' => ['handler' => 'Index@index'], // 动态首页.
-        '/new' => ['handler' => 'Index@new'], // 最近发布.
-        '/hot' => ['handler' => 'Index@hot'], // 热门文章.
+        '/' => ['handler' => 'Index@recommend'], // 推荐文章.
+        '/recent' => ['handler' => 'Index@recent'], // 最近发布.
         '/popular' => ['handler' => 'Index@popular'], // 受欢迎的.
         '/random' => ['handler' => 'Index@random'], // 随机看看.
         '/meiriyiwen[/{page:\d+}]' => ['handler' => 'Index@meiriyiwen'], // 每日一文.

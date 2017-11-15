@@ -14,6 +14,10 @@
 #quote-note {
     font-size: 16px;
     color: #999;
+    line-height: 26px;
+}
+#quote-note p {
+    width: 96%;
 }
 #loading {
     margin: 30px auto;
@@ -34,7 +38,8 @@
     margin: 5px;
 }
 .note {
-    min-height: 60px;
+    min-height: 66px;
+    line-height: 20px;
 }
 .note a {
     color: #999;
