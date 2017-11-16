@@ -64,5 +64,15 @@ class Index extends \Controller\Base {
         $this->assign('menu_key', 'random');
         $this->display('home/random');
     }
+    
+    /**
+     * 每日一文.
+     */
+    public function mryw() {
+        $sql = "select * from `post` where `weixin_up_datetime` > 0 and `status` in('1','2') order by `weixin_up_datetime` desc";
+        $list = \Db::instance()->getList($sql);
+        $this->assign('list', $list);
+        $this->display('home/mryw');
+    }
 
 }

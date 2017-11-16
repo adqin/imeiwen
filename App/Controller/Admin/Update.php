@@ -52,6 +52,26 @@ class Update extends \Controller\Admin\Init {
         $this->assign('rows', $rows);
         $this->display('admin/update/keywords');
     }
+    
+    /**
+     * 清理下缓存.
+     * 
+     * @return void.
+     */
+    public function cleancache() {
+        if (file_exists(CACHE_PATH . 'cache.random')) {
+            unlink(CACHE_PATH . 'cache.random');
+        }
+        if (file_exists(CACHE_PATH . 'cache.recent')) {
+            unlink(CACHE_PATH . 'cache.recent');
+        }
+        if (file_exists(CACHE_PATH . 'cache.recommend')) {
+            unlink(CACHE_PATH . 'cache.recommend');
+        }
+        
+        $this->assign('message', '缓存清理完成');
+        $this->display('admin/mid');
+    }
 
     /**
      * 更新Db.
