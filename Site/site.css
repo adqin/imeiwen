@@ -19,11 +19,10 @@
 #quote-note p {
     width: 96%;
 }
-#loading {
-    margin: 30px auto;
-    text-align: center;
-    font-size: 18px;
-    line-height: 26px;
+select {
+    padding: 3px 10px;
+    font-size: 14px;
+    color: #999;
 }
 .item {
     border: 1px solid #d2d2d2;
@@ -47,10 +46,20 @@
 .note a:hover {
     color: #666;
 }
+.author-date {
+    position: relative;
+}
 .author {
     color: #666;
     padding: 3px 3px 5px 3px;
     margin: 5px 5px 8px 5px;
+}
+.date {
+    color: #999;
+    font-size: 16px;
+    position: absolute;
+    top: 3px;
+    right: 20px;
 }
 #footer {
     margin: 30px 0;

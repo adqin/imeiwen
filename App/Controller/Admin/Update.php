@@ -70,7 +70,46 @@ class Update extends \Controller\Admin\Init {
         }
         
         $this->assign('message', '缓存清理完成');
-        $this->display('admin/mid');
+        $this->display('admin/middle');
+    }
+    
+    /**
+     * 每日一文数据更新.
+     */
+    public function meiriyiwen() {
+        $list = \Db::instance()->getList("select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`description`,`weixin_up_datetime` from `post` where `weixin_up_datetime` > 0 and `status` in('1','2') order by `weixin_up_datetime` desc");
+        $dates = $info = $default = [];
+        
+        $i = 0;
+        foreach ($list as $r) {
+            if ($i < 30) {
+                $default[] = $r; // 默认30天.
+            }
+            
+            $year = date('Y', $r['weixin_up_datetime']); // 年
+            $month = date('m', $r['weixin_up_datetime']); // 月
+            
+            $dates[$year.$month] = $year. '年' . $month . '月';
+            $info[$year][$month][] = $r;
+            
+            $i++;
+        }
+        
+        $cacheDir = CACHE_PATH . 'mryw';
+        if (!file_exists($cacheDir)) {
+            mkdir($cacheDir, 0777);
+        }
+        
+        file_put_contents($cacheDir . '/cache.dates', json_encode($dates));
+        file_put_contents($cacheDir . '/cache.default', json_encode($default));
+        foreach ($info as $y => $ms) {
+            foreach ($ms as $m => $i) {
+                file_put_contents($cacheDir . '/cache.' . $y . $m, json_encode($i));
+            }
+        }
+        
+        $this->assign('message', '每日一文数据更新完成');
+        $this->display('admin/middle');
     }
 
     /**

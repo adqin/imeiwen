@@ -1,16 +1,22 @@
-layui.use(['layer', 'jquery', 'element'], function () {
-    var layer = layui.layer, $ = layui.$, element = layui.element;
+layui.use(['layer', 'jquery', 'element', 'form'], function () {
+    var layer = layui.layer, $ = layui.$, element = layui.element, form = layui.form;
     imgResize();
     lazyRender();
-    
+
     // 浏览器窗口大小发生变化.
     $(window).resize(function () {
         imgResize();
     });
-    
+
     // 懒加载.
     $(window).on('scroll', function () {
         lazyRender();
+    });
+
+    $('#change-weix-uptime').change(function () {
+        date = $(this).val();
+        url = date ? '/meiriyiwen/' + date : '/meiriyiwen';
+        window.location.href = url;
     });
 
     function imgResize() {
@@ -21,7 +27,7 @@ layui.use(['layer', 'jquery', 'element'], function () {
         $('.thumb').height(th);
         $('.thumb > a > img').width(iw);
     }
-    
+
     function lazyRender() {
         $('.thumb > a > img').each(function () {
             if (checkShow($(this)) && !isLoaded($(this))) {
@@ -48,4 +54,5 @@ layui.use(['layer', 'jquery', 'element'], function () {
     function loadImg($img) {
         $img.attr('src', $img.attr('data-src')); // 加载就是把自定义属性中存放的真实的src地址赋给src属性
     }
+
 });

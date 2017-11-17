@@ -23,7 +23,7 @@ class Index extends \Controller\Base {
         $list = \Logic\Homer::getCachePosts('recommend', 43200, true);
         $this->assign('list', $list);
         $this->assign('menu_key', 'recommend');
-        $this->display('home/recommend');
+        $this->display('home/index');
     }
 
     /**
@@ -44,19 +44,6 @@ class Index extends \Controller\Base {
      * 
      * @return void
      */
-    public function popular() {
-        // 最近更新.
-        $list = \Logic\Homer::getCachePosts('popular', 43200, true);
-        $this->assign('list', $list);
-        $this->assign('menu_key', 'popular');
-        $this->display('home/popular');
-    }
-
-    /**
-     * 最近更新文章.
-     * 
-     * @return void
-     */
     public function random() {
         // 最近更新.
         $list = \Logic\Homer::getCachePosts('random', 43200, true);
@@ -67,6 +54,25 @@ class Index extends \Controller\Base {
     
     /**
      * 每日一文.
+     */
+    public function meiriyiwen() {
+        $date = isset($this->param['date']) && $this->param['date'] ? $this->param['date'] : '';
+        $cacheDir = CACHE_PATH . 'mryw';
+        $dates = file_get_contents($cacheDir . '/cache.dates');
+        $dates = $dates ? json_decode($dates, true) : array();
+        
+        $list = $date ? file_get_contents($cacheDir . '/cache.' . $date) : file_get_contents($cacheDir . '/cache.default');
+        $list = $list ? json_decode($list, true) : array();
+        
+        $this->assign('date', $date);
+        $this->assign('dates', $dates);
+        $this->assign('list', $list);
+        $this->assign('menu_key', 'meiriyiwen');
+        $this->display('home/meiriyiwen');
+    }
+
+        /**
+     * 每日一文(adqin.github.io).
      */
     public function mryw() {
         $sql = "select * from `post` where `weixin_up_datetime` > 0 and `status` in('1','2') order by `weixin_up_datetime` desc";
