@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <title><?=$info['title']?> | <?=$info['author']?> - 爱美文网</title>
+        <meta name="keywords" content="爱美文,爱美文网,<?=$info['keywords']?>">
+        <meta name="description" content="<?=$info['description']?>">
+        <link rel="shortcut icon" href="/favicon.png?2" type="image/x-icon" />
+        <link rel="stylesheet" href="/layui/dist/css/layui.css">
+        <link rel="stylesheet" href="/post.css">
+    </head>
+    <body>
+        <!-- 你的HTML代码 -->
+        <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+        <!--[if lt IE 9]>
+          <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+          <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <div class="layui-container">
+            <div class="layui-row">
+                <div class="layui-col-md2">&nbsp;</div>
+                <div class="layui-col-md8" id="post-item">
+                    <div class="title"><h2><?=$info['title']?></h2></div>
+                    <hr>
+                    <div class="author-indexlink">
+                        <div class="date"><?=date('Y-m-d', $info['update_time'])?></div>
+                        <div class="author"><?=$info['author']?></div>
+                        <div class="index-link"><a href="/" title="返回爱美文网首页">爱美文网</a></div>
+                        <div class="post-image"><img width="760" src="<?=\Config\Qiniu::$domain . $info['image_url']?>?imageView2/2/w/780/<?=$info['image_up_time']?>" id="post-image-id"></div>
+                        <div class="post-content"><?=nl2br($info['content'])?></div>
+                    </div>
+                </div>
+                <div class="layui-col-md2">&nbsp;</div>
+            </div>
+        </div>
+        <script src="/layui/dist/layui.js"></script>
+        <script src="/post.js"></script>
+    </body>
+</html>

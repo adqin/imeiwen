@@ -84,9 +84,9 @@ class PostItemer {
             'author' => $info['author'],
             'image_url' => $info['image_url'],
             'image_up_time' => $info['image_up_time'],
-            'content' => $this->formatContent($info['content']),
+            'content' => $info['content'],
             'keywords' => trim($info['keywords'], ','),
-            'description' => $info['description'],
+            'description' => $this->cleanString($info['description']),
             'input_time' => $info['input_time'],
             'update_time' => $info['update_time'],
             'weixin_url' => $info['weixin_url'],
@@ -147,26 +147,17 @@ class PostItemer {
     }
 
     /**
-     * 格式化处理文章内容, 将换行替换为p标签.
+     * 对数据进行清理.
      * 
-     * @param string $content 原内容.
+     * @param string 清理入参.
      * 
      * @return string.
      */
-    private function formatContent($content = '') {
-        $return = '';
-
-        if ($content) {
-            $tmp = explode("\n", $content);
-            foreach ($tmp as $t) {
-                $t = trim($t);
-                if ($t) {
-                    $return .= "<p>" . $t . "</p>";
-                }
-            }
-        }
-
-        return $return;
+    private function cleanString($string = '') {
+        $string = strip_tags($string);
+        $string = trim($string);
+        $string = str_replace("\n", "", $string);
+        return $string;
     }
 
     /**

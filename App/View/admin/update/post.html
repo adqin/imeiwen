@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        <title>关键词库数据更新 - 爱美文网</title>
+        <title>全站文章缓存更新 - 爱美文网</title>
         <link rel="stylesheet" href="/layui/dist/css/layui.css">
         <style type="text/css">
             p {
@@ -20,19 +20,18 @@
                 <div style="width: 600px; padding: 10px;">
                     <!-- 内容主体区域 -->
                     <fieldset class="layui-elem-field">
-                        <legend><?php if ($type == 'post'): ?>文章表扫描<?php else: ?>关键词库扫描<?php endif; ?></legend>
+                        <legend>文章表扫描</legend>
                         <p>更新当前页：<?=$page?>, 共<?=$totalPage?>页, 共<?=$totalCount?>条记录</p>
                         <?php if($rows): ?>
                             <p>更新记录</p>
                             <?php foreach($rows as $row): ?>
-                            <p>id: <?=$row['id']?>, <?=$row['title']?></p>
+                            <p>post_id: <?=$row['post_id']?>, <?=$row['title']?>, <?=$row['author']?></p>
                             <?php endforeach; ?>
                         <?php else: ?>
                             <p>更新结束</p>
                         <?php endif; ?>
                     </fieldset>
                     <input type="hidden" id="page" value="<?=$page?>">
-                    <input type="hidden" id="type" value="<?=$type?>">
                     <input type="hidden" id="totalPage" value="<?=$totalPage?>">
                     <input type="hidden" id="nextPage" value="<?=$nextPage?>">
                 </div>
@@ -45,17 +44,11 @@
                 var element = layui.element, $ = layui.$;
                 
                 var page = $('#page').val();
-                var type = $('#type').val();
                 var totalPage = $('#totalPage').val();
                 var nextPage = $('#nextPage').val();
                 
-                if (type === 'post' && nextPage > totalPage) {
-                    type = 'topic';
-                    nextPage = 1;
-                }
-                
                 if (nextPage <= totalPage) {
-                    var url = '/admin/update/keywords?type=' + type + '&page=' + nextPage;
+                    var url = '/admin/update/post?page=' + nextPage;
                     window.location.href = url;
                 }
             });

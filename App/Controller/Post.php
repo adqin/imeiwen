@@ -22,7 +22,10 @@ class Post extends \Controller\Base {
         $post_id = isset($this->param['post_id']) && $this->param['post_id'] ? $this->param['post_id'] : '';        
         $itemer = new \Logic\PostItemer($post_id);
         $info = $itemer->get();
+        //var_dump($info);
         
+        $this->assign('info', $info);
+        $this->display('home/post');
     }
 
 }
