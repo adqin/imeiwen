@@ -14,7 +14,7 @@ class Route {
         '/recent' => ['handler' => 'Index@recent'], // 最近发布.
         '/random' => ['handler' => 'Index@random'], // 随机看看.
         '/meiriyiwen[/{date:\w+}]' => ['handler' => 'Index@meiriyiwen'], // 每日一文.
-        '/{post_id:\w+}.html' => ['handler' => 'Item@index'], // 文章页.
+        '/post/{post_id:\w+}' => ['handler' => 'Post@item'], // 文章详情页.
         '/pageView' => ['handler' => 'Index@view'], // 文章浏览次数更新.
         '/topic/{identify:\w+}' => ['handler' => 'Topic@index'], // 主题.
         '/collection' => ['handler' => 'Collection@index', 'method' => ['GET', 'POST']], // 我的收藏.

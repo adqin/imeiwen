@@ -34,6 +34,7 @@
                     <input type="hidden" id="page" value="<?=$page?>">
                     <input type="hidden" id="type" value="<?=$type?>">
                     <input type="hidden" id="totalPage" value="<?=$totalPage?>">
+                    <input type="hidden" id="nextPage" value="<?=$nextPage?>">
                 </div>
             </div>
             <?php require TPL_PATH . 'admin/footer.html'; ?>
@@ -46,7 +47,7 @@
                 var page = $('#page').val();
                 var type = $('#type').val();
                 var totalPage = $('#totalPage').val();
-                var nextPage = page + 1;
+                var nextPage = $('#nextPage').val();
                 
                 if (type === 'post' && nextPage > totalPage) {
                     type = 'topic';
@@ -54,7 +55,7 @@
                 }
                 
                 if (nextPage <= totalPage) {
-                    var url = '/admin/update/keywords?type=' + type + '&page=' + page;
+                    var url = '/admin/update/keywords?type=' + type + '&page=' + nextPage;
                     window.location.href = url;
                 }
             });

@@ -23,6 +23,7 @@ class Update extends \Controller\Admin\Init {
         // 更新的当前页.
         $page = $this->getGet('page');
         $page = $page ? $page : 1;
+        $nextPage = $page + 1;
 
         $type = $this->getGet('type');
         $type = $type ? $type : 'post'; // post or topic.
@@ -49,6 +50,7 @@ class Update extends \Controller\Admin\Init {
         $this->assign('page', $page);
         $this->assign('type', $type);
         $this->assign('totalPage', $totalPage);
+        $this->assign('nextPage', $nextPage);
         $this->assign('rows', $rows);
         $this->display('admin/update/keywords');
     }
@@ -110,6 +112,15 @@ class Update extends \Controller\Admin\Init {
         
         $this->assign('message', '每日一文数据更新完成');
         $this->display('admin/middle');
+    }
+    
+    /**
+     * 更新文章缓存.
+     * 
+     * @return void
+     */
+    public function post() {
+        
     }
 
     /**

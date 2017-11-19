@@ -95,6 +95,11 @@ class Poster {
 
             // 清理本地缓存图片.
             $this->cleanLocalImage();
+            
+            // 更新文章缓存.
+            $itemer = new \Logic\PostItemer($this->post_id, true);
+            $itemer->get();
+            
             // 返回成功提示.
             \Common::ajaxReturnSuccess("更新文章成功", ['id' => $this->id]);
         } catch (\Exception $e) {

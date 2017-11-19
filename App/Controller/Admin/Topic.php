@@ -85,7 +85,8 @@ class Topic extends \Controller\Admin\Init {
             'data' => array(),
         );
 
-        $sql = "select * from `topic` where $where $order";
+        $offset = ($page -1) * $limit;
+        $sql = "select * from `topic` where $where $order limit $limit offset $offset";
         $return['data'] = $this->formatSearchData(\Db::instance()->getList($sql));
 
         \Common::ajaxOut($return);
