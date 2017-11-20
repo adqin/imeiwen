@@ -149,7 +149,11 @@ class PostItemer {
         
         // 推荐文章最多取10条.
         if (count($return['tj']) > 10) {
-            $tmp = array_rand($return['tj'], 10);
+            $tmp = [];
+            shuffle($return['tj']);
+            for ($i = 0; $i < 10; $i++) {
+                $tmp[] = $return['tj'][$i];
+            }
             $return['tj'] = $tmp;
         }
         

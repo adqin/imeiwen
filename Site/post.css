@@ -68,8 +68,8 @@
     font-style: italic;
 }
 .footer {
-    margin: 40px 0px 5px 0;
-    font-size: 16px;
+    margin: 40px 0px 0px 0px;
+    font-size: 14px;
 }
 .copyright {
     color: #666;
@@ -79,5 +79,5 @@
     padding: 5px;
 }
 .foot-nav a {
-    font-size: 16px !important;
+    font-size: 14px !important;
 }
