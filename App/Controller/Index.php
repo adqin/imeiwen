@@ -51,7 +51,7 @@ class Index extends \Controller\Base {
         $this->assign('menu_key', 'random');
         $this->display('home/random');
     }
-    
+
     /**
      * 每日一文.
      */
@@ -60,10 +60,10 @@ class Index extends \Controller\Base {
         $cacheDir = CACHE_PATH . 'mryw';
         $dates = file_get_contents($cacheDir . '/cache.dates');
         $dates = $dates ? json_decode($dates, true) : array();
-        
+
         $list = $date ? file_get_contents($cacheDir . '/cache.' . $date) : file_get_contents($cacheDir . '/cache.default');
         $list = $list ? json_decode($list, true) : array();
-        
+
         $this->assign('date', $date);
         $this->assign('dates', $dates);
         $this->assign('list', $list);
@@ -71,7 +71,7 @@ class Index extends \Controller\Base {
         $this->display('home/meiriyiwen');
     }
 
-        /**
+    /**
      * 每日一文(adqin.github.io).
      */
     public function mryw() {
@@ -79,6 +79,46 @@ class Index extends \Controller\Base {
         $list = \Db::instance()->getList($sql);
         $this->assign('list', $list);
         $this->display('home/mryw');
+    }
+
+    /**
+     * 文章浏览次数.
+     * 
+     * @return void
+     */
+    public function pageview() {
+        $post_id = $this->getGet('post_id');
+        if (!$post_id || strlen($post_id) != 8) {
+            echo '';
+            exit;
+        }
+
+        if (!\Db::instance()->exists("select `id` from `post` where `post_id` = '$post_id'")) {
+            echo '';
+            exit;
+        }
+
+        $row = \Db::instance()->getRow("select `id`,`views` from `page_view` where `post_id` = '$post_id'");
+        if (!$row) {
+            $param = [
+                'post_id' => $post_id,
+                'views' => 1,
+                'latest_time' => time(),
+            ];
+            \Db::instance()->insert('page_view', $param);
+            echo '1';
+            exit;
+        } else {
+            $id = $row['id'];
+            $views = $row['views'] + 1;
+            $param = [
+                'views' => $views,
+                'latest_time' => time(),
+            ];
+            \Db::instance()->updateById('page_view', $param, $id);
+            echo $views;
+            exit;
+        }
     }
 
 }

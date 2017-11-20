@@ -22,20 +22,95 @@
             <div class="layui-row">
                 <div class="layui-col-md2">&nbsp;</div>
                 <div class="layui-col-md8" id="post-item">
+                    <!--文章id-->
+                    <div id="post_id" style="display: none"><?=$info['post_id']?></div>
+                    <!--文章标题-->
                     <div class="title"><h2><?=$info['title']?></h2></div>
                     <hr>
+                    <!--文章发布日期/作者-->
                     <div class="author-indexlink">
-                        <div class="date"><?=date('Y-m-d', $info['update_time'])?></div>
+                        <div class="date"><?=date('Y-m-d', $info['input_time'])?></div>
                         <div class="author"><?=$info['author']?></div>
                         <div class="index-link"><a href="/" title="返回爱美文网首页">爱美文网</a></div>
-                        <div class="post-image"><img width="760" src="<?=\Config\Qiniu::$domain . $info['image_url']?>?imageView2/2/w/780/<?=$info['image_up_time']?>" id="post-image-id"></div>
-                        <div class="post-content"><?=nl2br($info['content'])?></div>
+                        <div class="views">阅读<span id="page_view"><?=$info['page_view']?></span></div>
+                    </div>
+                    <!--文章配图-->
+                    <div class="post-image">
+                        <div class="image-loading">
+                            图片加载中...
+                        </div>
+                        <img id="post-image-id"  src="" data-attr="<?=\Config\Qiniu::$domain . $info['image_url']?>?imageView2/2/w/780/<?=$info['image_up_time']?>">
+                    </div>
+                    <!--文章正文-->
+                    <div class="post-content"><?=nl2br($info['content'])?></div>
+                    <!--分享按钮-->
+                    <div class="share">分享到：
+                        <div class="bdsharebuttonbox" data-tag="share_1">
+                            <a class="bds_tsina" data-cmd="tsina"></a>
+                            <a class="bds_weixin" data-cmd="weixin"></a>
+                            <a class="bds_qzone" data-cmd="qzone"></a>
+                            <a class="bds_sqq" data-cmd="sqq"></a>
+                            <a class="bds_baidu" data-cmd="baidu"></a>
+                            <a class="bds_bdysc" data-cmd="bdysc"></a>
+                            <a class="bds_douban" data-cmd="douban"></a>
+                            <a class="bds_copy" data-cmd="copy"></a>
+                            <a class="bds_more" data-cmd="more"></a>
+                        </div>
+                    </div>
+                    <!--推荐阅读-->
+                    <?php if($info['relation']['tj']): ?>
+                    <fieldset class="layui-elem-field layui-field-title" id="tj-read-container">
+                        <legend>推荐阅读</legend>
+                        <div class="tj-read">
+                            <ul>
+                                <?php foreach($info['relation']['tj'] as $r): ?>
+                                <li><a href="/post/<?=$r['post_id']?>" title="<?=$r['title']?> | <?=$r['author']?>"><?=$r['title']?> - <?=$r['author']?></a></li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+                    </fieldset>
+                    <?php endif; ?>
+                    <!--更多关联文章-->
+                    <div class="more-read" style="display: none">
+                        <?php foreach($info['relation']['all'] as $r): ?>
+                        <p><a href="/post/<?=$r['post_id']?>"><?=$r['title']?> - <?=$r['author']?></a></p>
+                        <?php endforeach; ?>
+                    </div>
+
+                    <div class="footer">
+                        <div class="copyright">&copy;2017 <a href="/">imeiwen.org</a></div>
+                        <div class="foot-nav layui-breadcrumb" lay-separator=" ">
+                            <a href="/">推荐</a>
+                            <a href="/new">最新</a>
+                            <a href="/hot">热门</a>
+                            <a href="/random">随机</a>
+                            <a href="/topiclist">主题</a>
+                            <a href="/meiriyiwen">每日一文</a>
+                            <a href="">微信订阅</a>
+                            <a href="">关于爱美文</a>
+                            <a href="">关于我</a>
+                        </div>
                     </div>
                 </div>
-                <div class="layui-col-md2">&nbsp;</div>
             </div>
+            <div class="layui-col-md2">&nbsp;</div>
         </div>
         <script src="/layui/dist/layui.js"></script>
         <script src="/post.js"></script>
+        <script>
+            window._bd_share_config = {
+                common: {
+                    bdText: "<?=$info['description']?>" + "《" + "<?=$info['title']?>" + "》" + "<?=$info['author']?>",
+                    bdDesc: "<?=$info['description']?>",
+                    bdUrl: "http://imeiwen.org/post/<?=$info['post_id']?>",
+                    bdPic: "<?=\Config\Qiniu::$domain . $info['image_url']?>?imageView2/2/w/780/<?=$info['image_up_time']?>"
+                },
+                share: [{
+                        "bdSize": 32
+                    }]
+            }
+            with (document)
+                0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion=' + ~(-new Date() / 36e5)];
+        </script>
     </body>
 </html>

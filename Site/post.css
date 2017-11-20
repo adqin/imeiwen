@@ -1,20 +1,24 @@
 .title {
-    margin: 50px 0 12px 0;
+    margin: 30px 0 12px 0;
 }
 .title h2 {
     font-size: 24px;
     font-weight: 400;
 }
-.date, .author, .index-link {
+.date, .author, .index-link, .views {
     display: inline-block;
 }
-.date, .author {
+.date, .author, .views {
     color: #8c8c8c;
     font-size: 16px;
     margin-right: 8px;
 }
+#page_view {
+    font-style: italic;
+}
 .index-link {
     font-size: 16px;
+    margin-right: 8px;
 }
 .index-link a {
     color: #607fa6;
@@ -22,10 +26,58 @@
 .post-image {
     margin: 30px 0 30px 0;
 }
+.image-loading {
+    text-align: center;
+    min-height: px;
+    padding-top: 60px;
+    padding-bottom: 10px;
+    font-size: 16px;
+    color: #8c8c8c;
+}
 .post-content {
     color: #3e3e3e;
     font-size: 16px;
     word-wrap: break-word;
-    line-height: 26px;
-    min-height: 350px;
+    line-height: 30px;
+}
+.share {
+    margin-top: 30px;
+    font-size: 16px;
+    color: #607fa6;
+}
+#tj-read-container {
+    margin: 40px 0;
+}
+#tj-read-container legend {
+    font-size: 18px;
+    color: #607fa6;
+}
+.tj-read {
+    font-size: 16px;
+    line-height: 28px;
+}
+.tj-read a {
+    color: #666;
+}
+.tj-read ul {
+    margin: 10px 0 10px 16px;
+    color: #666;
+}
+.tj-read ul li {
+    list-style-type: disc;
+    font-style: italic;
+}
+.footer {
+    margin: 40px 0px 5px 0;
+    font-size: 16px;
+}
+.copyright {
+    color: #666;
+    padding: 5px;
+}
+.foot-nav {
+    padding: 5px;
+}
+.foot-nav a {
+    font-size: 16px !important;
 }

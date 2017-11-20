@@ -92,7 +92,7 @@ class PostItemer {
             'weixin_url' => $info['weixin_url'],
             'weixin_up_datetime' => $info['weixin_up_datetime'],
             'page_view' => $view ? $view['views'] : 0,
-            'relation' => $relation ? $relation : [],
+            'relation' => $relation,
         ];
 
         $this->info = $return;
@@ -132,10 +132,13 @@ class PostItemer {
         $post_ids = array_unique($tmp);
 
         // 查询文章.
-        $return = [];
+        $return = [
+            'all' => [],
+            'tj' => [],
+        ];
         if ($post_ids) {
             $where = "`post_id` in('" . implode("','", $post_ids) . "') and `status` in('1','2') and `post_id` <> '$this->post_id'";
-            $rs = \Db::instance()->getList("select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`description`,`status` from `post` where $where");
+            $rs = \Db::instance()->getList("select `post_id`,`title`,`author`,`status` from `post` where $where");
             foreach ($rs as $r) {
                 $return['all'][] = $r;
                 if ($r['status'] == 2) {
@@ -143,6 +146,13 @@ class PostItemer {
                 }
             }
         }
+        
+        // 推荐文章最多取10条.
+        if (count($return['tj']) > 10) {
+            $tmp = array_rand($return['tj'], 10);
+            $return['tj'] = $tmp;
+        }
+        
         return $return;
     }
 

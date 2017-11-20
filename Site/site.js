@@ -1,5 +1,5 @@
-layui.use(['layer', 'jquery', 'element', 'form'], function () {
-    var layer = layui.layer, $ = layui.$, element = layui.element, form = layui.form;
+layui.use(['jquery', 'element', 'form'], function () {
+    var $ = layui.$, element = layui.element, form = layui.form;
     imgResize();
     lazyRender();
 
