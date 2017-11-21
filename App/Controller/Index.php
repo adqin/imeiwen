@@ -27,6 +27,19 @@ class Index extends \Controller\Base {
     }
 
     /**
+     * 热门浏览.
+     * 
+     * @return void
+     */
+    public function hot() {
+        // 热门文章.
+        $list = \Logic\Homer::getCachePosts('hot', 43200, false);
+        $this->assign('list', $list);
+        $this->assign('menu_key', 'hot');
+        $this->display('home/hot');
+    }
+
+    /**
      * 最近更新文章.
      * 
      * @return void

@@ -11,16 +11,34 @@ layui.use(['jquery', 'element'], function () {
     var post_id = $('#post_id').html();
     $.get('/index/pageview', {post_id: post_id}, function (re) {
         if (re) {
-            $('#page_view').html(re);
+            $('#page_view').html(re).show();
+        }
+        if (re > 10) {
+            $('.views').show();
         }
     });
 
     function itemSet() {
+        var mw = $('#post-item').width();
+        var ww = $(window).width();
+        var qrcode_w = ((ww - mw) / 2);
+        $('.qrcode').hide();
+        if (qrcode_w >= 180) {
+            $('.qrcode').css("right", (qrcode_w - 180));
+            $('.qrcode').show();
+        }
+
         var w = $('.post-image').width();
         var post_w = w * 0.96;
-        $('#post-image-id').width(w);
-        $('#post-image-id').attr('src', $('#post-image-id').attr('data-attr'));
-        $('.image-loading').hide();
         $('.post-content').width(post_w);
+
+        $('#post-image-id').width(w);
+        var post_img_url = $('#post-image-id').attr('data-attr');
+        var img = new Image();
+        img.src = post_img_url;
+        img.onload = function () {
+            $('#post-image-id').attr('src', post_img_url);
+            $('.image-loading').hide();
+        }
     }
 });

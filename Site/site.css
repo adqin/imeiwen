@@ -61,6 +61,20 @@ select {
     top: 3px;
     right: 20px;
 }
+#page-content-div {
+    min-height: 600px;
+    margin: 40px 0;
+}
+#page-content {
+    color: #3e3e3e;
+    font-size: 16px;
+    word-wrap: break-word;
+    line-height: 28px;
+    padding: 5px;
+}
+#page-content img {
+    border: 1px solid #3e3e3e;
+}
 #footer {
     margin: 30px 0;
     text-align: center;

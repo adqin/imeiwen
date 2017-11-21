@@ -140,7 +140,7 @@ class Base {
             // 过滤两边空格.
             $data = trim($data);
             // 过滤html标签.
-            $data = strip_tags($data);
+            $data = strip_tags($data, '<a><div><p><img>');
             // 使用反斜线引用字符串.
             $data = addslashes($data);
         }

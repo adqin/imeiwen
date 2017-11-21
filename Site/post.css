@@ -30,9 +30,10 @@
     text-align: center;
     min-height: px;
     padding-top: 60px;
-    padding-bottom: 10px;
+    padding-bottom: 60px;
     font-size: 16px;
     color: #8c8c8c;
+    border: 1px dashed #8c8c8c;
 }
 .post-content {
     color: #3e3e3e;
@@ -49,8 +50,9 @@
     margin: 40px 0;
 }
 #tj-read-container legend {
-    font-size: 18px;
+    font-size: 20px;
     color: #607fa6;
+    font-weight: 400;
 }
 .tj-read {
     font-size: 16px;
@@ -67,17 +69,24 @@
     list-style-type: disc;
     font-style: italic;
 }
+.qrcode {
+    line-height: 24px;
+    color: #8c8c8c;
+    text-align: center;
+    display: none;
+    position: fixed;
+    top: 10px;
+    right: 0px;
+    border: 1px solid #d9dadc;
+    background-color: #fff;
+    width: 140px;
+    padding: 16px;
+}
 .footer {
-    margin: 40px 0px 0px 0px;
-    font-size: 14px;
+    margin: 40px 0px 20px 0px;
+    font-size: 16px;
 }
 .copyright {
     color: #666;
     padding: 5px;
-}
-.foot-nav {
-    padding: 5px;
-}
-.foot-nav a {
-    font-size: 14px !important;
 }

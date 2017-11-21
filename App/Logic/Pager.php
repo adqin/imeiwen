@@ -41,6 +41,7 @@ class Pager {
 
         $this->id = \Db::instance()->insert('single_page', $param);
         if ($this->id) {
+            \Logic\Homer::getCachePage($this->param['identify'], true);
             \Common::ajaxReturnSuccess('更新单页成功', ['id' => $this->id]);
         }
 
@@ -63,6 +64,7 @@ class Pager {
             \Common::ajaxReturnFalse('update db失败');
         }
 
+        \Logic\Homer::getCachePage($this->param['identify'], true);
         \Common::ajaxReturnSuccess('更新单页成功', ['id' => $this->id]);
     }
 
