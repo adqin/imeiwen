@@ -243,6 +243,13 @@ class Poster {
         if (\Db::instance()->exists("select `id` from `post` where $where")) {
             \Common::ajaxReturnFalse("author: {$author}, title: {$title} 文章已发布过, 不要重复发布");
         }
+        
+        if ($this->param['description']) {
+            $len = strlen($this->param['description']);
+            if ($len < 200 || $len > 350) {
+                \Common::ajaxReturnFalse("文章简介长度应在200-350个字符长度内");
+            }
+        }
 
         // 验证微信文章发布日期.
         if ($this->param['weixin_up_datetime']) {

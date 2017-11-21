@@ -123,7 +123,10 @@ class Post extends \Controller\Admin\Init {
         if ($isMryw == 'on') {
             $where .= " and `weixin_up_datetime` > 0";
             $order = "order by `weixin_up_datetime` desc";
+        } else {
+            $where .= " and `weixin_up_datetime` = 0";
         }
+        
         if ($status !== '') {
             $where .= " and `status` = '$status'";
         }
