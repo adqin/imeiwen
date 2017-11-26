@@ -113,17 +113,18 @@ class Post extends \Controller\Admin\Init {
         $status = $this->getPost('status');
 
         $where = "1=1";
-        $order = "order by `id` desc";
+        $order = "order by `update_time` desc";
         if ($title) {
             $where .= " and `title` like '%$title%'";
         }
         if ($author) {
             $where .= " and `author` = '$author'";
         }
-        if ($isMryw == 'on') {
+        if ($isMryw == 1) {
             $where .= " and `weixin_up_datetime` > 0";
             $order = "order by `weixin_up_datetime` desc";
-        } else {
+        }
+        if ($isMryw == 2) {
             $where .= " and `weixin_up_datetime` = 0";
         }
         

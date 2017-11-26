@@ -84,7 +84,7 @@ class Homer {
         $cache_file = $cache_dir . 'cache.' . $page_id;
         $from_db = false;
         $return = [];
-        
+
         if ($force_reload) {
             // 强制从数据库中获取.
             $from_db = true;
@@ -99,7 +99,7 @@ class Homer {
                 $from_db = true;
             }
         }
-        
+
         if ($from_db) {
             // 需要从数据库中获取.
             $return = \Db::instance()->getRow("select * from `single_page` where `identify` = '$page_id'");
@@ -109,11 +109,11 @@ class Homer {
             }
             file_put_contents($cache_file, json_encode($return));
         }
-        
+
         if (!$return) {
             \Common::showErrorMsg("页面: {$page_id}, 内容为空");
         }
-        
+
         return $return;
     }
 
@@ -133,8 +133,10 @@ class Homer {
      * @return array.
      */
     private static function getRecentPost() {
-        $sql = "select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`description` from `post` where `status` in('1', '2') order by `input_time` desc limit 12";
-        return \Db::instance()->getList($sql);
+        $sql = "select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`description` from `post` where `status` in('1', '2') order by `update_time` desc limit 13";
+        $return = \Db::instance()->getList($sql);
+        unset($return[0]);
+        return array_values($return);
     }
 
     /**
