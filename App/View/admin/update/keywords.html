@@ -44,10 +44,10 @@
             layui.use(['element', 'jquery'], function () {
                 var element = layui.element, $ = layui.$;
                 
-                var page = $('#page').val();
+                var page = parseInt($('#page').val());
                 var type = $('#type').val();
-                var totalPage = $('#totalPage').val();
-                var nextPage = $('#nextPage').val();
+                var totalPage = parseInt($('#totalPage').val());
+                var nextPage = parseInt($('#nextPage').val());
                 
                 if (type === 'post' && nextPage > totalPage) {
                     type = 'topic';

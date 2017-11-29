@@ -61,7 +61,7 @@ class Update extends \Controller\Admin\Init {
      * 
      * @return void.
      */
-    public function cleancache() {
+    public function cleanData() {
         if (file_exists(CACHE_PATH . 'cache.random')) {
             unlink(CACHE_PATH . 'cache.random');
         }
@@ -71,6 +71,9 @@ class Update extends \Controller\Admin\Init {
         if (file_exists(CACHE_PATH . 'cache.recommend')) {
             unlink(CACHE_PATH . 'cache.recommend');
         }
+        
+        $sql = "delete from `topic` where `count` = 0";
+        \Db::instance()->execute($sql);
 
         $this->assign('message', '缓存清理完成');
         $this->display('admin/middle');
