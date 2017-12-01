@@ -13,7 +13,7 @@ layui.use(['jquery', 'element'], function () {
         if (re) {
             $('#page_view').html(re).show();
         }
-        if (re > 10) {
+        if (re > 200) {
             $('.views').show();
         }
     });

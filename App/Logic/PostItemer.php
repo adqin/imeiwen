@@ -134,27 +134,25 @@ class PostItemer {
         // 查询文章.
         $return = [
             'all' => [],
-            'tj' => [],
+            'kz' => [],
         ];
         if ($post_ids) {
             $where = "`post_id` in('" . implode("','", $post_ids) . "') and `status` in('1','2') and `post_id` <> '$this->post_id'";
             $rs = \Db::instance()->getList("select `post_id`,`title`,`author`,`status` from `post` where $where");
             foreach ($rs as $r) {
                 $return['all'][] = $r;
-                if ($r['status'] == 2) {
-                    $return['tj'][] = $r;
-                }
+                $return['kz'][] = $r;
             }
         }
         
         // 推荐文章最多取10条.
-        if (count($return['tj']) > 10) {
+        if (count($return['kz']) > 10) {
             $tmp = [];
-            shuffle($return['tj']);
+            shuffle($return['kz']);
             for ($i = 0; $i < 10; $i++) {
-                $tmp[] = $return['tj'][$i];
+                $tmp[] = $return['kz'][$i];
             }
-            $return['tj'] = $tmp;
+            $return['kz'] = $tmp;
         }
         
         return $return;

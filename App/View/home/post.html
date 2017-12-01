@@ -32,7 +32,7 @@
                         <div class="date"><?=date('Y-m-d', $info['input_time'])?></div>
                         <div class="author"><?=$info['author']?></div>
                         <div class="index-link"><a href="/" title="返回爱美文网首页">爱美文网</a></div>
-                        <div class="views"<?php if($info['page_view'] <= 10): ?> style="display: none;"<?php endif; ?>>阅读(<span id="page_view"><?=$info['page_view']?></span>)</div>
+                        <div class="views"<?php if($info['page_view'] <= 200): ?> style="display: none;"<?php endif; ?>>阅读(<span id="page_view"><?=$info['page_view']?></span>)</div>
                     </div>
                     <!--文章配图-->
                     <div class="post-image">
@@ -58,12 +58,12 @@
                         </div>
                     </div>
                     <!--推荐阅读-->
-                    <?php if($info['relation']['tj']): ?>
+                    <?php if($info['relation']['kz']): ?>
                     <fieldset class="layui-elem-field layui-field-title" id="tj-read-container">
                         <legend>推荐阅读</legend>
                         <div class="tj-read">
                             <ul>
-                                <?php foreach($info['relation']['tj'] as $r): ?>
+                                <?php foreach($info['relation']['kz'] as $r): ?>
                                 <li><a href="/post/<?=$r['post_id']?>" title="<?=$r['title']?> | <?=$r['author']?>"><?=$r['title']?> - <?=$r['author']?></a></li>
                                 <?php endforeach; ?>
                             </ul>
@@ -93,7 +93,7 @@
         <script>
             window._bd_share_config = {
                 common: {
-                    bdText: "<?=$info['description']?>" + "《" + "<?=$info['title']?>" + "》" + "<?=$info['author']?>",
+                    bdText: "<?=$info['description']?>" + "<?=$info['author']?>-" + "《" + "<?=$info['title']?>" + "》",
                     bdDesc: "<?=$info['description']?>",
                     bdUrl: "http://imeiwen.org/post/<?=$info['post_id']?>",
                     bdPic: "<?=\Config\Qiniu::$domain . $info['image_url']?>?imageView2/2/w/780/<?=$info['image_up_time']?>"
