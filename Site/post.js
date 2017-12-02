@@ -1,5 +1,5 @@
-layui.use(['jquery', 'element'], function () {
-    var $ = layui.$, element = layui.element;
+layui.use(['jquery', 'element', 'util'], function () {
+    var $ = layui.$, element = layui.element, util = layui.util;
     itemSet();
 
     // 浏览器窗口大小发生变化.
@@ -15,6 +15,14 @@ layui.use(['jquery', 'element'], function () {
         }
         if (re > 200) {
             $('.views').show();
+        }
+    });
+
+    // 回到顶部.
+    util.fixbar({
+        bar1: false,
+        bar2: false,
+        click: function (type) {
         }
     });
 

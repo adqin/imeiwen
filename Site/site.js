@@ -1,5 +1,5 @@
-layui.use(['jquery', 'element', 'form'], function () {
-    var $ = layui.$, element = layui.element, form = layui.form;
+layui.use(['jquery', 'element', 'form', 'util'], function () {
+    var $ = layui.$, element = layui.element, form = layui.form, util = layui.util;
     imgResize();
     lazyRender();
 
@@ -17,6 +17,14 @@ layui.use(['jquery', 'element', 'form'], function () {
         date = $(this).val();
         url = date ? '/meiriyiwen/' + date : '/meiriyiwen';
         window.location.href = url;
+    });
+
+    // 回到顶部.
+    util.fixbar({
+        bar1: false,
+        bar2: false,
+        click: function (type) {
+        }
     });
 
     function imgResize() {
