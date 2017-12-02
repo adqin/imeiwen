@@ -22,7 +22,8 @@ layui.use(['jquery', 'element', 'util'], function () {
     util.fixbar({
         bar1: false,
         bar2: false,
-        click: function (type) {
+        bgcolor: '#2F4056',
+        click: function () {
         }
     });
 
