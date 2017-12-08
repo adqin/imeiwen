@@ -35,5 +35,11 @@ class System {
         'meiriyiwen' => ['title' => '每日一文', 'url' => '/meiriyiwen'],
         'weixindingyue' => ['title' => '微信订阅', 'url' => '/page/weixindingyue'],
     );
+    
+    public static $smenu = array(
+        'recommend' => ['title' => '推荐', 'url' => '/'],
+        'recent' => ['title' => '最近', 'url' => '/recent'],
+        'weixindingyue' => ['title' => '微信订阅', 'url' => '/page/weixindingyue'],
+    );
 
 }

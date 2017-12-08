@@ -46,28 +46,28 @@
     font-size: 16px;
     color: #607fa6;
 }
-#tj-read-container {
+#more-read-container {
     margin: 40px 0;
 }
-#tj-read-container legend {
+#more-read-container legend {
     font-size: 20px;
-    color: #607fa6;
+    color: #8c8c8c;
     font-weight: 400;
 }
-.tj-read {
+.more-read {
     font-size: 16px;
     line-height: 28px;
 }
-.tj-read a {
+.more-read a {
     color: #666;
 }
-.tj-read ul {
+.more-read ol {
     margin: 10px 0 10px 16px;
     color: #666;
 }
-.tj-read ul li {
-    list-style-type: disc;
+.more-read ol li {
     font-style: italic;
+    list-style-type: decimal;
 }
 .qrcode {
     line-height: 24px;

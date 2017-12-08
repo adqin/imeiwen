@@ -145,11 +145,11 @@ class PostItemer {
             }
         }
         
-        // 推荐文章最多取10条.
-        if (count($return['kz']) > 10) {
+        // 推荐文章最多取12条.
+        if (count($return['kz']) > 12) {
             $tmp = [];
             shuffle($return['kz']);
-            for ($i = 0; $i < 10; $i++) {
+            for ($i = 0; $i < 12; $i++) {
                 $tmp[] = $return['kz'][$i];
             }
             $return['kz'] = $tmp;

@@ -15,7 +15,7 @@
           <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
           <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->          
-
+        <?php require TPL_PATH . 'home/small_menu.html'; ?>
         <div class="layui-container">
             <?php require TPL_PATH . 'home/header.html'; ?>
 
@@ -23,7 +23,7 @@
             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
                 <legend><?=$info['title']?></legend>
             </fieldset>
-            
+
             <div class="layui-row" id="page-content-div">
                 <div id="page-content" class="layui-col-md7"><?=nl2br($info['content'])?></div>
             </div>

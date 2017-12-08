@@ -2,9 +2,11 @@ layui.use(['jquery', 'element', 'form', 'util'], function () {
     var $ = layui.$, element = layui.element, form = layui.form, util = layui.util;
     imgResize();
     lazyRender();
+    changeMenu();
 
     // 浏览器窗口大小发生变化.
     $(window).resize(function () {
+        changeMenu();
         imgResize();
     });
 
@@ -27,6 +29,17 @@ layui.use(['jquery', 'element', 'form', 'util'], function () {
         click: function () {
         }
     });
+    
+    function changeMenu() {
+        width = $(window).width();
+        if (width >= 720) {
+            $('#top-nav-big').show();
+            $('#top-nav-small').hide();
+        } else {
+            $('#top-nav-big').hide();
+            $('#top-nav-small').show();
+        }
+    }
 
     function imgResize() {
         iw = $('.item').first().width();
