@@ -22,8 +22,12 @@ class Post extends \Controller\Base {
         $post_id = isset($this->param['post_id']) && $this->param['post_id'] ? $this->param['post_id'] : '';        
         $itemer = new \Logic\PostItemer($post_id);
         $info = $itemer->get();
-        //var_dump($info);
         
+        $share_title = urlencode($info['description'] . $info['author'] . '-《' . $info['title'] . '》');
+        $share_url = urlencode('http://imeiwen.org/post/' . $info['post_id']);
+        $pic_url = urlencode(\Config\Qiniu::$domain . $info['image_url']);
+        $weibo_share_url = 'http://service.weibo.com/share/share.php?title=' . $share_title . '&url=' . $share_url . '&pic=' . $pic_url . '&appkey=76945915&searchPic=false';
+        //echo $weibo_share_url;
         $this->assign('info', $info);
         $this->display('home/post');
     }
