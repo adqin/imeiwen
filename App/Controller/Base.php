@@ -15,14 +15,17 @@ class Base {
 
     protected $data = array(); // 模板变量存储.
     protected $param = array();
+    protected $isMobile = false; // 是否是移动设备浏览.
 
     /**
      * 构造函数.
      * 
      * @param mixed $vals 附加的变量.
      */
+
     public function __construct($vals = array()) {
         $this->param = $vals;
+        $this->isMobile();
     }
 
     /**
@@ -115,7 +118,9 @@ class Base {
      */
     protected function getCookie($key = '') {
         $value = isset($_COOKIE[$key]) ? trim($_COOKIE[$key]) : '';
-        $value = json_decode($value, true);
+        if ($value) {
+            $value = json_decode($value, true);
+        }
         return $this->filterData($value);
     }
 
@@ -146,6 +151,21 @@ class Base {
         }
 
         return $data;
+    }
+
+    /**
+     * 设置是否是移动设备浏览.
+     */
+    protected function isMobile() {
+        $c = $this->getCookie('is_mobile');
+        if ($c === '') {
+            // 未设置cookie.
+            $r = \Common::isMobile();
+            $this->setCookie('is_mobile', $r, time() + 2592000);
+            $this->assign('is_mobile', $r);
+        } else {
+            $this->assign('is_mobile', $c);
+        }
     }
 
     /**
