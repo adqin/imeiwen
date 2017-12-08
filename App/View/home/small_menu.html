@@ -1,4 +1,5 @@
 <div id="top-nav-small" style="display: none;">
+    <div style="height: 2px; background-color: #2F4056;"></div>
     <ul class="layui-nav layui-bg-cyan">
         <?php foreach(\Config\System::$smenu as $k => $v): ?>
         <li class="layui-nav-item<?php if($menu_key == $k): ?> layui-this<?php endif; ?>"><a href="<?=$v['url']?>"><?=$v['title']?></a></li>
