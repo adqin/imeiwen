@@ -133,5 +133,12 @@ class Index extends \Controller\Base {
             exit;
         }
     }
+    
+    /**
+     * test.
+     */
+    public function test() {
+        $this->display('home/test');
+    }
 
 }
