@@ -9,7 +9,7 @@ namespace Logic;
 class Pter {
 
     private $post_id = ''; // post主键id.
-    private $return = []; // 返回.
+    private $return = ''; // 返回.
     private $info = []; // 文章信息.
     private $force_reload = false; // 是否强制更新.
     private $cache_file = ''; // 缓存保存的文件.
@@ -23,6 +23,8 @@ class Pter {
 
     /**
      * 获取缓存.
+     * 
+     * @return 返回字符串.
      */
     public function getCache() {
         if (!$this->info) {
@@ -46,9 +48,9 @@ class Pter {
         } else {
             // 文件存在，并且没有要求强制要更新缓存.
             $result = file_get_contents($this->cache_file);
-            $return = $result ? json_decode($result, true) : [];
+            $result = $result ? $result : '';
             if ($return) {
-                $this->return = $return;
+                $this->return = $result;
             } else {
                 // 文件内容为空.
                 $this->setCache();
@@ -70,10 +72,19 @@ class Pter {
                 $all[] = $keyword;
             }
         }
-        
-        $in = "('" . implode("','", all) . "')";
-        $where = "`keyword` in{$in} and `status` = 2";
-        $tplist = \Db::instance()->getList("select `keyword`, `identify` from `topic` where $where order ");
+
+        $in = "('" . implode("','", $all) . "')";
+        $where = "`keyword` in{$in} and `status` = '1'";
+        $tplist = \Db::instance()->getList("select `keyword`, `identify` from `topic` where $where", 'keyword');
+
+        $return = [];
+        foreach ($all as $keyword) {
+            $return[] = isset($tplist[$keyword]) ? '<a class="layui-badge layui-bg-cyan" href="/topic/' . $tplist[$keyword]['identify'] . '" class="related-topic" target="_blank">' . $keyword . '</a>' : '<a class="layui-badge layui-bg-gray">' . $keyword . '</a>';
+        }
+
+        $return_string = implode(' ', $return);
+        file_put_contents($this->cache_file, $return_string);
+        $this->return = $return_string;
     }
 
     /**

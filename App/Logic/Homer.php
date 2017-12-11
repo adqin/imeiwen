@@ -67,11 +67,53 @@ class Homer {
         }
 
         if ($return && $from_db) {
+            foreach ($return as $k => $r) {
+                $return[$k]['relate_pt'] = static::getRelatePt($r['post_id']);
+            }
             // 更新缓存.
             file_put_contents($file, json_encode($return));
         }
 
         return static::getArrDataByNum($return, $shuffle);
+    }
+    
+    /**
+     * 查询首页展现的topic.
+     * 
+     * @param boolean $force_reload 是否强制刷新缓存.
+     * 
+     * @return array.
+     */
+    public static function getIndexTopic($force_reload = false) {
+        $cache_file = CACHE_PATH . 'cache.index.topic';
+        $from_db = false;
+        $return = [];
+        
+        if ($force_reload) {
+            // 强制刷新.
+            $from_db = true;
+        } elseif (!file_exists($cache_file)) {
+            // 缓存不存在.
+            $from_db = true;
+        } else {
+            $result = file_get_contents($cache_file);
+            $result = $result ? json_decode($result, true) : [];
+            if (!$result) {
+                $from_db = true;
+            } else {
+                $return = $result;
+            }
+        }
+        
+        if ($from_db) {
+            $list = \Db::instance()->getList("select `keyword`, `identify`, `title`, `note` from `topic` where `status` = '1' order by `count` desc limit 8");
+            if ($list) {
+                $return = $list;
+                file_put_contents($cache_file, json_encode($list));
+            }
+        }
+        
+        return $return;
     }
 
     /**
@@ -119,14 +161,14 @@ class Homer {
 
         return $return;
     }
-    
+
     /**
      * 获取首页推荐的文章.
      * 
      * @return array.
      */
     private static function getIndexPost() {
-        $sql = "select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`description` from `post` where `status` = '3' order by `update_time` desc limit 10";
+        $sql = "select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`description` from `post` where `status` = '3' order by `update_time` desc limit 6";
         return \Db::instance()->getList($sql);
     }
 
@@ -173,6 +215,27 @@ class Homer {
     private static function getRandomPost() {
         $sql = "select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`description` from `post` where `status` = 1 order by rand() limit 200";
         return \Db::instance()->getList($sql);
+    }
+
+    /**
+     * 获取关键关联的主题.
+     * 
+     * @param string $post_id 文章id.
+     * 
+     * @return string.
+     */
+    private static function getRelatePt($post_id = '') {
+        if (!$post_id) {
+            return '';
+        }
+
+        $cache_file = CACHE_PATH . 'post/' . $post_id[0] . '/' . $post_id[1] . '/cache.' . $post_id . '.pt';
+        if (file_exists($cache_file)) {
+            return file_get_contents($cache_file);
+        } else {
+            $pter = new \Logic\Pter($post_id, true);
+            return $pter->getCache();
+        }
     }
 
     /**

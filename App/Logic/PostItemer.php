@@ -99,6 +99,10 @@ class PostItemer {
 
         // 更新文件缓存.
         file_put_contents($this->cache_file, json_encode($return));
+        
+        // 强制刷新post_topic缓存.
+        $pter = new \Logic\Pter($this->post_id, true);
+        $pter->getCache();
     }
 
     /**

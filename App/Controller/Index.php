@@ -13,17 +13,16 @@ namespace Controller;
  */
 class Index extends \Controller\Base {
 
-    public function test2() {
-        $pt = new \Logic\Pter('4f61e8f8', true);
-        $pt->getCache();
-    }
-
-        /**
+    /**
      * 首页，缓存有效1周.
      */
     public function index() {
-        $list = \Logic\Homer::getCachePosts('index.post', 604800, false);
-        $this->assign('list', $list);
+        $post_list = \Logic\Homer::getCachePosts('index.post', 604800, false);
+        $this->assign('post_list', $post_list);
+        
+        $topic_list = \Logic\Homer::getIndexTopic(true);
+        $this->assign('topic_list', $topic_list);
+        
         $this->assign('this_menu', 'index');
         $this->display('home/index');
     }

@@ -128,7 +128,7 @@ class Common {
         $return = array();
         foreach ($arr as $a) {
             if (isset($a[$key])) {
-                $return[$key] = $a;
+                $return[$a[$key]] = $a;
             } else {
                 $return[] = $a;
             }

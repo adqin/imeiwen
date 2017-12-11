@@ -74,15 +74,19 @@ class Update extends \Controller\Admin\Init {
         if (file_exists(CACHE_PATH . 'cache.recommend')) {
             unlink(CACHE_PATH . 'cache.recommend');
         }
+        if (file_exists(CACHE_PATH . 'cache.hot')) {
+            unlink(CACHE_PATH . 'cache.hot');
+        }
         
         $sql = "delete from `topic` where `count` = 0";
         \Db::instance()->execute($sql);
 
         // 尽量后台刷新缓存.
         \Logic\Homer::getCachePosts('index.post', 0, false);
+        \Logic\Homer::getCachePosts('recommend', 0, false);
+        \Logic\Homer::getCachePosts('hot', 0, false);
         \Logic\Homer::getCachePosts('random', 0, false);
         \Logic\Homer::getCachePosts('recent', 0, false);
-        \Logic\Homer::getCachePosts('recommend', 0, false);
         
         $this->assign('message', '缓存更新完成');
         $this->display('admin/middle');

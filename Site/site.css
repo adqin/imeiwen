@@ -29,12 +29,13 @@ select {
     color: #999;
 }
 .item {
+    padding: 1px;
     border: 1px solid #d2d2d2;
 }
 .thumb {
     overflow: hidden;
-    border-bottom: 1px solid #d2d2d2;
     background-color: #2F4056;
+    margin: 0 auto;
 }
 .title,.note {
     padding: 3px;
@@ -53,7 +54,7 @@ select {
 .author-date {
     position: relative;
 }
-.author {
+.related-pt {
     color: #666;
     padding: 3px 3px 5px 3px;
     margin: 5px 5px 8px 5px;
@@ -64,6 +65,31 @@ select {
     position: absolute;
     top: 3px;
     right: 20px;
+}
+.index-topic-item {
+    border: 1px solid #d2d2d2;
+    padding: 10px;
+}
+.topic-title {
+    margin: 14px 0;
+}
+.topic-title a {
+    font-size: 16px;
+    padding: 5px 8px;
+}
+.topic-note {
+    min-height: 110px;
+}
+.topic-note a {
+    color: #666;
+    line-height: 22px;
+}
+.topic-note a:hover {
+    color: #999;
+}
+.friend-link {
+    margin-top: 60px;
+    color: #666;
 }
 #page-content-div {
     min-height: 600px;
