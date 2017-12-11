@@ -137,7 +137,7 @@ class PostItemer {
             'kz' => [],
         ];
         if ($post_ids) {
-            $where = "`post_id` in('" . implode("','", $post_ids) . "') and `status` in('1','2') and `post_id` <> '$this->post_id'";
+            $where = "`post_id` in('" . implode("','", $post_ids) . "') and `status` in('1','2','3') and `post_id` <> '$this->post_id'";
             $rs = \Db::instance()->getList("select `post_id`,`title`,`author`,`status` from `post` where $where");
             foreach ($rs as $r) {
                 $return['all'][] = $r;

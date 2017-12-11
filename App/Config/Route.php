@@ -10,7 +10,8 @@ class Route {
      * @var array. 
      */
     public static $routeRules = array(
-        '/' => ['handler' => 'Index@recommend'], // 推荐阅读.
+        '/' => ['handler' => 'Index@index'], // 首页
+        '/recommend' => ['handler' => 'Index@recommend'], // 推荐阅读.
         '/hot' => ['handler' => 'Index@hot'], // 热门浏览.
         '/recent' => ['handler' => 'Index@recent'], // 最近发布.
         '/random' => ['handler' => 'Index@random'], // 随机看看.

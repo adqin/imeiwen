@@ -1,5 +1,5 @@
-layui.use(['jquery', 'element', 'form', 'util'], function () {
-    var $ = layui.$, element = layui.element, form = layui.form, util = layui.util;
+layui.use(['jquery', 'element', 'form', 'util', 'carousel'], function () {
+    var $ = layui.$, element = layui.element, form = layui.form, util = layui.util, carousel = layui.carousel;
     imgResize();
     lazyRender();
     changeMenu();
@@ -29,7 +29,15 @@ layui.use(['jquery', 'element', 'form', 'util'], function () {
         click: function () {
         }
     });
-    
+
+    // 轮播.
+    carousel.render({
+        elem: '#test1'
+        , width: '100%' //设置容器宽度
+        , arrow: 'hover' //始终显示箭头
+        //,anim: 'updown' //切换动画方式
+    });
+
     function changeMenu() {
         width = $(window).width();
         if (width >= 720) {

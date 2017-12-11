@@ -13,55 +13,70 @@ namespace Controller;
  */
 class Index extends \Controller\Base {
 
+    public function test2() {
+        $pt = new \Logic\Pter('4f61e8f8', true);
+        $pt->getCache();
+    }
+
+        /**
+     * 首页，缓存有效1周.
+     */
+    public function index() {
+        $list = \Logic\Homer::getCachePosts('index.post', 604800, false);
+        $this->assign('list', $list);
+        $this->assign('this_menu', 'index');
+        $this->display('home/index');
+    }
+
     /**
-     * 推荐文章.
+     * 推荐文章，缓存有效1周.
      * 
      * @return void
      */
     public function recommend() {
         // 推荐文章.
-        $list = \Logic\Homer::getCachePosts('recommend', 43200, true);
+        $list = \Logic\Homer::getCachePosts('recommend', 604800, true);
         $this->assign('list', $list);
-        $this->assign('menu_key', 'recommend');
-        $this->display('home/index');
+        $this->assign('this_menu', 'recommend');
+        $this->display('home/recommend');
     }
 
     /**
-     * 热门浏览.
+     * 热门浏览，缓存有效1周.
      * 
      * @return void
      */
     public function hot() {
         // 热门文章.
-        $list = \Logic\Homer::getCachePosts('hot', 43200, false);
+        $list = \Logic\Homer::getCachePosts('hot', 604800, false);
         $this->assign('list', $list);
-        $this->assign('menu_key', 'hot');
+        $this->assign('this_menu', 'hot');
         $this->display('home/hot');
     }
 
     /**
-     * 最近更新文章.
+     * 最近更新文章，缓存有效1周.
      * 
      * @return void
      */
     public function recent() {
         // 最近更新.
-        $list = \Logic\Homer::getCachePosts('recent', 43200, false);
+        $list = \Logic\Homer::getCachePosts('recent', 604800, false);
         $this->assign('list', $list);
-        $this->assign('menu_key', 'recent');
+        $this->assign('this_menu', 'recent');
         $this->display('home/recent');
     }
 
     /**
-     * 最近更新文章.
+     * 最近更新文章，缓存有效1周.
      * 
      * @return void
      */
     public function random() {
         // 最近更新.
-        $list = \Logic\Homer::getCachePosts('random', 43200, true);
+        $list = \Logic\Homer::getCachePosts('random', 604800, true);
         $this->assign('list', $list);
-        $this->assign('menu_key', 'random');
+        $this->assign('this_menu', 'random');
         $this->display('home/random');
     }
 
@@ -80,7 +95,7 @@ class Index extends \Controller\Base {
         $this->assign('date', $date);
         $this->assign('dates', $dates);
         $this->assign('list', $list);
-        $this->assign('menu_key', 'meiriyiwen');
+        $this->assign('this_menu', 'meiriyiwen');
         $this->display('home/meiriyiwen');
     }
 
@@ -133,7 +148,7 @@ class Index extends \Controller\Base {
             exit;
         }
     }
-    
+
     /**
      * test.
      */

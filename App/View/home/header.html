@@ -2,6 +2,6 @@
 <ul class="layui-nav layui-bg-cyan" id="top-nav-big"<?php if ($is_mobile): ?> style="display:none"<?php endif; ?>>
     <li id="logo"><a href="/" title="爱美文网，精典短篇美文/诗歌收集珍藏"><img src="/logo.png" title="爱美文网"></a></li>
     <?php foreach(\Config\System::$menu as $k => $v): ?>
-        <li class="layui-nav-item<?php if($menu_key == $k): ?> layui-this<?php endif; ?>"><a href="<?=$v['url']?>"><?=$v['title']?></a></li>
+        <li class="layui-nav-item<?php if($this_menu == $k): ?> layui-this<?php endif; ?>"><a href="<?=$v['url']?>"><?=$v['title']?></a></li>
     <?php endforeach; ?>
 </ul>

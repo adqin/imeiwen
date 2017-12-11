@@ -62,6 +62,9 @@ class Update extends \Controller\Admin\Init {
      * @return void.
      */
     public function cleanData() {
+        if (file_exists(CACHE_PATH . 'cache.index.post')) {
+            unlink(CACHE_PATH . 'cache.index.post');
+        }
         if (file_exists(CACHE_PATH . 'cache.random')) {
             unlink(CACHE_PATH . 'cache.random');
         }
@@ -75,7 +78,13 @@ class Update extends \Controller\Admin\Init {
         $sql = "delete from `topic` where `count` = 0";
         \Db::instance()->execute($sql);
 
-        $this->assign('message', '缓存清理完成');
+        // 尽量后台刷新缓存.
+        \Logic\Homer::getCachePosts('index.post', 0, false);
+        \Logic\Homer::getCachePosts('random', 0, false);
+        \Logic\Homer::getCachePosts('recent', 0, false);
+        \Logic\Homer::getCachePosts('recommend', 0, false);
+        
+        $this->assign('message', '缓存更新完成');
         $this->display('admin/middle');
     }
 

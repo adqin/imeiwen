@@ -162,6 +162,12 @@ class Post extends \Controller\Admin\Init {
             return $data;
         }
 
+        $status_title = [
+            '0' => '隐藏',
+            '1' => '显示',
+            '2' => '推荐',
+            '3' => '首页推荐',
+        ];
         $return = array();
         foreach ($data as $d) {
             $return[] = array(
@@ -170,7 +176,7 @@ class Post extends \Controller\Admin\Init {
                 'title' => '<a href="/post/' . $d['post_id'] . '" class="post_item" target="_blank">' . $d['title'] . '</a>',
                 'author' => $d['author'],
                 'keywords' => trim($d['keywords'], ','),
-                'status' => $d['status'] == 1 ? '显示' : ($d['status'] == 0 ? '隐藏' : ($d['status'] == 2 ? '推荐' : '')),
+                'status' => $status_title[$d['status']],
                 'weixin_string' => $d['weixin_up_datetime'] ? '<a href="' . $d['weixin_url'] . '" class="weixin_url" target="_blank">' . date('Y-m-d', $d['weixin_up_datetime']) : '',
                 'op_string' => '<a href="/admin/post/edit?id=' . $d['id'] . '" class="layui-btn">修改<i class="layui-icon">&#xe642;</i></a>',
             );

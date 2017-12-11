@@ -1,8 +1,7 @@
 <div id="top-nav-small" style="display: none;">
-    <div style="margin-top: 1px;"></div>
     <ul class="layui-nav layui-bg-cyan">
         <?php foreach(\Config\System::$smenu as $k => $v): ?>
-        <li class="layui-nav-item<?php if($menu_key == $k): ?> layui-this<?php endif; ?>"><a href="<?=$v['url']?>"><?=$v['title']?></a></li>
+        <li class="layui-nav-item<?php if($this_menu == $k): ?> layui-this<?php endif; ?>"><a href="<?=$v['url']?>"><?=$v['title']?></a></li>
         <?php endforeach; ?>
     </ul>
 </div>

@@ -99,7 +99,7 @@ class Updater {
 
         if ($type == 'author') {
             $author = $keyword;
-            $post_ids = \Db::instance()->getColumn("select `post_id` from `post` where `author` = '$author' and `status` in('1', '2')");
+            $post_ids = \Db::instance()->getColumn("select `post_id` from `post` where `author` = '$author' and `status` in('1', '2','3')");
             $content = $post_ids ? implode(',', $post_ids) : '';
             $count = $post_ids ? count($post_ids) : 0;
             $param = [
