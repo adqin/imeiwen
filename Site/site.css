@@ -42,7 +42,7 @@ select {
     margin: 5px;
 }
 .note {
-    min-height: 80px;
+    min-height: 45px;
     line-height: 20px;
 }
 .note a {
