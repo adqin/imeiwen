@@ -5,8 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <title>最近更新 - 爱美文网</title>
         <link rel="shortcut icon" href="/favicon.png?2" type="image/x-icon" />
-        <link rel="stylesheet" href="/layui/dist/css/layui.css">
-        <link rel="stylesheet" href="/site.css">
+        <link rel="stylesheet" href="/layui/dist/css/layui.css?<?=$version?>">
+        <link rel="stylesheet" href="/site.css?<?=$version?>">
     </head>
     <body>
         <!-- 你的HTML代码 -->
@@ -25,7 +25,7 @@
             <?php require TPL_PATH . 'home/post_item.html'; ?>
             <?php require TPL_PATH . 'home/footer.html'; ?>
         </div>
-        <script src="/layui/dist/layui.js"></script>
-        <script src="/site.js"></script> 
+        <script src="/layui/dist/layui.js?<?=$version?>"></script>
+        <script src="/site.js?<?=$version?>"></script> 
     </body>
 </html>

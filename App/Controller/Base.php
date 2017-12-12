@@ -16,6 +16,7 @@ class Base {
     protected $data = array(); // 模板变量存储.
     protected $param = array();
     protected $isMobile = false; // 是否是移动设备浏览.
+    protected $version = 20171212; // 版本号.
 
     /**
      * 构造函数.
@@ -26,6 +27,7 @@ class Base {
     public function __construct($vals = array()) {
         $this->param = $vals;
         $this->isMobile();
+        $this->assign('version', $this->version);
     }
 
     /**
