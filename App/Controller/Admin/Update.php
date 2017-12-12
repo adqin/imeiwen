@@ -140,7 +140,7 @@ class Update extends \Controller\Admin\Init {
      * 每日一文数据更新.
      */
     public function meiriyiwen() {
-        $list = \Db::instance()->getList("select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`description`,`weixin_up_datetime` from `post` where `weixin_up_datetime` > 0 and `status` in('1','2') order by `weixin_up_datetime` desc");
+        $list = \Db::instance()->getList("select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`description`,`weixin_up_datetime` from `post` where `weixin_up_datetime` > 0 and `status` in('1','2','3') order by `weixin_up_datetime` desc");
         $dates = $info = $default = [];
 
         foreach ($list as $k => $v) {
