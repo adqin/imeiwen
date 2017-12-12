@@ -17,7 +17,7 @@ class Index extends \Controller\Base {
      * 首页，缓存有效1周.
      */
     public function index() {
-        $post_list = \Logic\Homer::getCachePosts('index.post', 604800, false);
+        $post_list = \Logic\Homer::getCachePosts('index.post', 604800, true, 6);
         $this->assign('post_list', $post_list);
         
         $topic_list = \Logic\Homer::getIndexTopic(true);

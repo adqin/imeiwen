@@ -22,7 +22,7 @@ class Homer {
      * 
      * @return array.
      */
-    public static function getCachePosts($type = '', $cache_time = 0, $shuffle = true) {
+    public static function getCachePosts($type = '', $cache_time = 0, $shuffle = true, $num = 12) {
         $file = CACHE_PATH . 'cache.' . $type; // 缓存的文件名.
         $from_db = true; // 默认从数据库获取数据.
         $file_exist = file_exists($file); // 文件是否存在.
@@ -71,7 +71,7 @@ class Homer {
             file_put_contents($file, json_encode($return));
         }
 
-        return static::getArrDataByNum($return, $shuffle);
+        return static::getArrDataByNum($return, $shuffle, $num);
     }
 
     /**
@@ -242,7 +242,7 @@ class Homer {
      * @return array.
      */
     private static function getIndexPost() {
-        $sql = "select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`description` from `post` where `status` = '3' order by `update_time` desc limit 6";
+        $sql = "select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`description` from `post` where `status` = '3' order by `update_time` desc limit 30";
         return \Db::instance()->getList($sql);
     }
 
@@ -289,12 +289,12 @@ class Homer {
      * 
      * @return array.
      */
-    private static function getArrDataByNum($list = array(), $shuffle = true) {
+    private static function getArrDataByNum($list = array(), $shuffle = true, $num = 12) {
         if (!$list) {
             return [];
         }
 
-        if (count($list) <= 12) {
+        if (count($list) <= $num) {
             return $list;
         }
 
@@ -302,7 +302,7 @@ class Homer {
         if ($shuffle) {
             shuffle($list);
         }
-        for ($i = 0; $i < 12; $i++) {
+        for ($i = 0; $i < $num; $i++) {
             $return[] = $list[$i];
         }
 
