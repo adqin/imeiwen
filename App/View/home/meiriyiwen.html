@@ -19,14 +19,14 @@
         <div class="layui-container">
             <?php require TPL_PATH . 'home/header.html'; ?>
             <!--描述-->
-            <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 20px;" id="quote-note">
+            <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 30px;" id="quote-note">
                 <p>
-                    爱美文微信订阅号每天会群发一篇精选的文章，每日一文，欢迎大家订阅。
+                    <i class="layui-icon" style="color: #666; font-weight: 500; font-size: 20px;">&#xe60b;</i> 爱美文微信订阅号每天会群发一篇精选的文章，每日一文，欢迎大家订阅。
                 </p>
             </blockquote>
 
             <!--页面主题内容-->
-            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
                 <legend>每日一文</legend>
             </fieldset>
 
@@ -44,31 +44,15 @@
                     </select>
                 </div>
             </div>
-            <div class="layui-row layui-col-space10" id="content">
-                <?php foreach($list as $r): ?>
-                <div class="layui-col-md6">
-                    <div class="item">
-                        <div class="thumb">
-                            <a href="/post/<?=$r['post_id']?>" target="_blank" title="<?=$r['title']?>|<?=$r['author']?>"><img src="" data-src="<?=\Config\Qiniu::$domain . $r['image_url']?>?imageView2/2/w/600/<?=$r['image_up_time']?>"></a>
-                        </div>
-                        <div class="text">
-                            <div class="title"><a href="/post/<?=$r['post_id']?>" target="_blank"><?=$r['title']?></a></div>
-                            <div class="note"><a href="/post/<?=$r['post_id']?>" target="_blank"><?=$r['description']?></a></div>
-                            <div class="author-date">
-                                <div class="author">——<?=$r['author']?></div>
-                                <div class="date"><?=date('Y-m-d', $r['weixin_up_datetime'])?></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <?php endforeach; ?>
-            </div>
+            
+            <?php require TPL_PATH . 'home/mryw_post_item.html'; ?>
 
-            <div class="layui-row" id="meiriyiwen-nav" style="display: none">
+            <div style="display: none">
                 <?php foreach($dates as $v => $d): ?>
-                <a href="/meiriyiwen/<?=$v?>"><?=$d?></a>
+                <a href="/meiriyiwen/<?=$v?>"><?=$d?>/每日一文</a>
                 <?php endforeach; ?>
             </div>
+            
             <?php require TPL_PATH . 'home/footer.html'; ?>
 
         </div>

@@ -3,7 +3,9 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        <title>推荐阅读 - 爱美文网</title>
+        <title><?=$result['title']?> - 爱美文网</title>
+        <meta name="keywords" content="<?=$result['keyword']?>">
+        <meta name="description" content="<?=$result['note']?>">
         <link rel="shortcut icon" href="/favicon.png?2" type="image/x-icon" />
         <link rel="stylesheet" href="/layui/dist/css/layui.css">
         <link rel="stylesheet" href="/site.css">
@@ -16,16 +18,27 @@
           <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
         <div class="layui-container">
+
             <?php require TPL_PATH . 'home/header.html'; ?>
 
+            <input type="hidden" id="identify-val" value="<?=$identify?>" />
             <!--页面主题内容-->
-            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
-                <legend>推荐阅读</legend>
+            <fieldset class="layui-elem-field" style="margin: 30px 0;">
+                <legend><span class="layui-badge-rim layui-bg-gray" style="font-size: 18px; padding: 2px; 3px;">主题 :: <?=$result['title']?></span></legend>
+                <div class="layui-field-box">
+                    <!--描述-->
+                    <blockquote class="layui-elem-quote layui-quote-nm" style="margin: 5px 0;" id="quote-note">
+                        <p>
+                            <i class="layui-icon" style="color: #666; font-weight: 500; font-size: 20px;">&#xe60b;</i>
+                            <?=$result['note']?>
+                        </p>
+                    </blockquote>
+                </div>
             </fieldset>
 
             <div class="layui-row layui-col-space10" id="old">
                 <div class="layui-col-md4">
-                    <select id="recommend-change-page">
+                    <select id="topic-detail-change-page">
                         <?php for ($i = 1; $i <= $total_page; $i++): ?>
                         <?php if ($i == $page): ?>
                         <option value="<?=$i?>" selected="selected">第<?=$i?>页</option>
@@ -39,7 +52,7 @@
 
             <div style="display: none">
                 <?php for ($i = 1; $i <= $total_page; $i++): ?>
-                <a href="/recommend/<?=$i?>">推荐阅读第<?=$i?>页</a>
+                <a href="/topic/<?=$identify?>/<?=$i?>">第<?=$i?>页</a>
                 <?php endfor; ?>
             </div>
 

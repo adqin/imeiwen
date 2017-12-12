@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:wb="http://open.weibo.com/wb">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -9,6 +9,7 @@
         <link rel="shortcut icon" href="/favicon.png?2" type="image/x-icon" />
         <link rel="stylesheet" href="/layui/dist/css/layui.css">
         <link rel="stylesheet" href="/site.css">
+        <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
     </head>
     <body>
         <!-- 你的HTML代码 -->
@@ -17,26 +18,25 @@
           <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
           <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
-        <?php require TPL_PATH . 'home/small_menu.html'; ?>
         <div class="layui-container">
             <?php require TPL_PATH . 'home/header.html'; ?>
             <!--描述-->
-            <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 20px;" id="quote-note">
+            <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 30px;" id="quote-note">
                 <p>
                     <i class="layui-icon" style="color: #666; font-weight: 500; font-size: 20px;">&#xe60b;</i> 爱美文网，精典短篇美文与诗歌收集。精心挑选，精心配图，一图一文，每一篇都值得珍藏。
                 </p>
             </blockquote>
 
             <!--首页推荐-->
-            <fieldset class="layui-elem-field" style="margin-top: 20px;">
+            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
                 <legend>首页推荐</legend>
                 <div class="layui-field-box">
-                    <?php require TPL_PATH . 'home/post_item_6.html'; ?>
+                    <?php require TPL_PATH . 'home/index_post_item.html'; ?>
                 </div>
             </fieldset>
 
             <?php if ($topic_list): ?>
-            <fieldset class="layui-elem-field" style="margin-top: 30px;" id="index-topic">
+            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;" id="index-topic">
                 <legend>美文主题</legend>
                 <div class="layui-field-box">
                     <div class="layui-row layui-col-space10">

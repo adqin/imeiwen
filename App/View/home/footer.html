@@ -1,6 +1,59 @@
+<style type="text/css">
+    #footer {
+        margin: 50px 0 0 0;
+        border-top: 1px solid #d2d2d2;
+        font-size: 14px;
+        padding: 5px 0 0 0;
+        line-height: 26px;
+        color: #333;
+    }
+    #footer a {
+        color: #666 !important;
+    }
+</style>
 <!--页面底部-->
-<div class="layui-row" id="footer">
-    <div id="copyright">&copy;2017 <a href="/">imeiwen.org</a></div>
+<div class="layui-row layui-col-space10" id="footer">
+    <?php if ($is_mobile): ?>
+    <div class="layui-col-md6">
+        <div class=" layui-breadcrumb" lay-separator="·">
+            <a href="/">首页</a>
+            <a href="/recommend">推荐</a>
+            <a href="/hot">热门</a>
+            <a href="/recent">最近</a>
+            <a href="/random">随机</a>
+            <a href="/meiriyiwen">每日一文</a>
+            <a href="/page/event">大事件</a>
+            <a href="/page/contact">联系方式</a>
+            <a href="/page/weixindingyue">微信</a>
+        </div>
+    </div>
+    <div class="layui-col-md6">
+        <div>&copy;2017 <a href="/">imeiwen.org</a> 爱美文网</div>
+    </div>
+    <?php else: ?>
+    <div class="layui-col-md5">
+        <div>&copy;2017 <a href="/">imeiwen.org</a> 爱美文网</div>
+        <div><a href="http://www.miibeian.gov.cn/" target="_blank">蜀ICP备17041329号-1</a></div>
+        <div>爱美文网，精典短篇美文与诗歌收集珍藏。</div>
+    </div>
+    <div class="layui-col-md7">
+        <div class=" layui-breadcrumb" lay-separator="·">
+            <a href="/">首页</a>
+            <a href="/recommend">推荐阅读</a>
+            <a href="/hot">热门浏览</a>
+            <a href="/recent">最近更新</a>
+            <a href="/random">随机看看</a>
+            <a href="/meiriyiwen">每日一文</a>
+        </div>
+        <div class=" layui-breadcrumb" lay-separator="·">
+            <a href="/page/event">大事件</a>
+            <a href="https://weibo.com/1660523610" target="_blank">爱美文微博</a>
+            <a href="/page/weixindingyue">微信订阅</a>
+            <a>QQ: 41262633</a>
+            <div><wb:follow-button uid="1660523610" type="red_1" width="67" height="24" ></wb:follow-button></div>
+        </div>
+    </div>
+    <?php endif; ?>
 </div>
 <!--baidu tongji-->
 <script>

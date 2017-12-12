@@ -51,9 +51,6 @@ class Homer {
                 case 'index.post':
                     $return = static::getIndexPost();
                     break;
-                case 'recommend':
-                    $return = static::getRecommendPost();
-                    break;
                 case 'recent':
                     $return = static::getRecentPost();
                     break;
@@ -76,7 +73,7 @@ class Homer {
 
         return static::getArrDataByNum($return, $shuffle);
     }
-    
+
     /**
      * 查询首页展现的topic.
      * 
@@ -88,7 +85,7 @@ class Homer {
         $cache_file = CACHE_PATH . 'cache.index.topic';
         $from_db = false;
         $return = [];
-        
+
         if ($force_reload) {
             // 强制刷新.
             $from_db = true;
@@ -104,7 +101,7 @@ class Homer {
                 $return = $result;
             }
         }
-        
+
         if ($from_db) {
             $list = \Db::instance()->getList("select `keyword`, `identify`, `title`, `note` from `topic` where `status` = '1' order by `count` desc limit 8");
             if ($list) {
@@ -112,7 +109,7 @@ class Homer {
                 file_put_contents($cache_file, json_encode($list));
             }
         }
-        
+
         return $return;
     }
 
@@ -163,22 +160,89 @@ class Homer {
     }
 
     /**
+     * 获取关键关联的主题.
+     * 
+     * @param string $post_id 文章id.
+     * 
+     * @return string.
+     */
+    public static function getRelatePt($post_id = '') {
+        if (!$post_id) {
+            return '';
+        }
+
+        $cache_file = CACHE_PATH . 'post/' . $post_id[0] . '/' . $post_id[1] . '/cache.' . $post_id . '.pt';
+        if (file_exists($cache_file)) {
+            return file_get_contents($cache_file);
+        } else {
+            $pter = new \Logic\Pter($post_id, true);
+            return $pter->getCache();
+        }
+    }
+
+    /**
+     * 更新topic的文章列表缓存.
+     * 
+     * @param integer $topic_id topic.id.
+     * 
+     * @return void
+     */
+    public static function updateTopicDetail($topic_id = 0) {
+        if (!$topic_id) {
+            return;
+        }
+
+        $info = \Db::instance()->getRow("select * from `topic` where `id` = '$topic_id'");
+        if (!$info) {
+            return;
+        }
+
+        $identify = $info['identify'];
+        $content = $info['content'];
+        $post_ids = explode(',', $content);
+        if (!$post_ids) {
+            return;
+        }
+
+        $cache_dir = CACHE_PATH . 'topic/' . $identify[0] . '/' . $identify[1] . '/';
+        if (!file_exists($cache_dir)) {
+            mkdir($cache_dir, 0777, true);
+        }
+
+        $post_ids_in = "('" . implode("','", $post_ids) . "')";
+        $where = "`status` in('1','2','3') and `post_id` in{$post_ids_in}";
+        $tc = \Db::instance()->count("select count(1) from `post` where $where");
+        if (!$tc) {
+            return;
+        }
+
+        $limit = 12;
+        $total_page = ceil($tc / $limit);
+        file_put_contents($cache_dir . 'cache.' . $identify . '.page.num', $total_page);
+
+        for ($i = 1; $i <= $total_page; $i++) {
+            $offset = ($i - 1) * $limit;
+            $sql = "select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`keywords`,`description` from `post` where {$where} order by `input_time` desc limit $limit offset $offset";
+            $list = \Db::instance()->getList($sql);
+            foreach ($list as $k => $v) {
+                // 获取post关联的topic tag.
+                $list[$k]['relate_pt'] = \Logic\Homer::getRelatePt($v['post_id']);
+            }
+
+            $rs = $info;
+            $rs['post_list'] = $list;
+
+            file_put_contents($cache_dir . 'cache.' . $identify . '.list.' . $i, json_encode($rs));
+        }
+    }
+
+    /**
      * 获取首页推荐的文章.
      * 
      * @return array.
      */
     private static function getIndexPost() {
         $sql = "select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`description` from `post` where `status` = '3' order by `update_time` desc limit 6";
-        return \Db::instance()->getList($sql);
-    }
-
-    /**
-     * 获取推荐的文章列表.
-     * 
-     * @return array.
-     */
-    private static function getRecommendPost() {
-        $sql = "select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`description` from `post` where `status` in('2','3') order by rand() limit 200";
         return \Db::instance()->getList($sql);
     }
 
@@ -215,27 +279,6 @@ class Homer {
     private static function getRandomPost() {
         $sql = "select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`description` from `post` where `status` = 1 order by rand() limit 200";
         return \Db::instance()->getList($sql);
-    }
-
-    /**
-     * 获取关键关联的主题.
-     * 
-     * @param string $post_id 文章id.
-     * 
-     * @return string.
-     */
-    private static function getRelatePt($post_id = '') {
-        if (!$post_id) {
-            return '';
-        }
-
-        $cache_file = CACHE_PATH . 'post/' . $post_id[0] . '/' . $post_id[1] . '/cache.' . $post_id . '.pt';
-        if (file_exists($cache_file)) {
-            return file_get_contents($cache_file);
-        } else {
-            $pter = new \Logic\Pter($post_id, true);
-            return $pter->getCache();
-        }
     }
 
     /**

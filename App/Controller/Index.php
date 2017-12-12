@@ -34,7 +34,16 @@ class Index extends \Controller\Base {
      */
     public function recommend() {
         // 推荐文章.
-        $list = \Logic\Homer::getCachePosts('recommend', 604800, true);
+        $page = isset($this->param['page']) ? $this->param['page'] : 1;
+        $page = (!$page || $page > 5) ? 1 : $page;
+        
+        $total_page = file_get_contents(CACHE_PATH . 'recommend/cache.page.num');
+        $result = file_get_contents(CACHE_PATH . 'recommend/cache.recommend.' . $page);
+        $result = $result ? json_decode($result, true) : [];
+        $list = $result ? $result : [];
+        
+        $this->assign('page', $page);
+        $this->assign('total_page', $total_page);
         $this->assign('list', $list);
         $this->assign('this_menu', 'recommend');
         $this->display('home/recommend');

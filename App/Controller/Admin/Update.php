@@ -71,24 +71,68 @@ class Update extends \Controller\Admin\Init {
         if (file_exists(CACHE_PATH . 'cache.recent')) {
             unlink(CACHE_PATH . 'cache.recent');
         }
-        if (file_exists(CACHE_PATH . 'cache.recommend')) {
-            unlink(CACHE_PATH . 'cache.recommend');
-        }
         if (file_exists(CACHE_PATH . 'cache.hot')) {
             unlink(CACHE_PATH . 'cache.hot');
         }
-        
+
         $sql = "delete from `topic` where `count` = 0";
         \Db::instance()->execute($sql);
 
         // 尽量后台刷新缓存.
         \Logic\Homer::getCachePosts('index.post', 0, false);
-        \Logic\Homer::getCachePosts('recommend', 0, false);
         \Logic\Homer::getCachePosts('hot', 0, false);
         \Logic\Homer::getCachePosts('random', 0, false);
         \Logic\Homer::getCachePosts('recent', 0, false);
-        
+
         $this->assign('message', '缓存更新完成');
+        $this->display('admin/middle');
+    }
+
+    /**
+     * 主题数据更新.
+     */
+    public function topic() {
+        $topic_list = \Db::instance()->getList("select `id`, `keyword`, `identify`, `title`, `note`, `content` from `topic` where `status` = '1'");
+        foreach ($topic_list as $t) {
+            \Logic\Homer::updateTopicDetail($t['id']);
+        }
+
+        $this->assign('message', '主题数据更新完成');
+        $this->display('admin/middle');
+    }
+
+    /**
+     * 更新推荐阅读缓存.
+     */
+    public function recommend() {
+        // 缓存保存目录.
+        $cache_dir = CACHE_PATH . 'recommend/';
+        if (!file_exists($cache_dir)) {
+            mkdir($cache_dir, 0777);
+        }
+
+        $limit = 12;
+        $tc = \Db::instance()->count("select count(1) from `post` where `status` in('2','3')");
+        $total_page = ceil($tc / $limit);
+
+        // 最多更新五页.
+        $total = $total_page > 5 ? 5 : $total_page;
+        file_put_contents($cache_dir . 'cache.page.num', $total);
+
+        for ($i = 1; $i <= $total; $i++) {
+            $offset = ($i - 1) * $limit;
+            $sql = "select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`keywords`,`description` from `post` where `status` in('2','3') order by `input_time` desc limit $limit offset $offset";
+            $list = \Db::instance()->getList($sql);
+
+            foreach ($list as $k => $v) {
+                // 获取post关联的topic tag.
+                $list[$k]['relate_pt'] = \Logic\Homer::getRelatePt($v['post_id']);
+            }
+
+            file_put_contents($cache_dir . 'cache.recommend.' . $i, json_encode($list));
+        }
+
+        $this->assign('message', '推荐阅读数据更新完成');
         $this->display('admin/middle');
     }
 
@@ -98,6 +142,11 @@ class Update extends \Controller\Admin\Init {
     public function meiriyiwen() {
         $list = \Db::instance()->getList("select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`description`,`weixin_up_datetime` from `post` where `weixin_up_datetime` > 0 and `status` in('1','2') order by `weixin_up_datetime` desc");
         $dates = $info = $default = [];
+
+        foreach ($list as $k => $v) {
+            // 获取post关联的topic tag.
+            $list[$k]['relate_pt'] = \Logic\Homer::getRelatePt($v['post_id']);
+        }
 
         $i = 0;
         foreach ($list as $r) {
@@ -142,13 +191,13 @@ class Update extends \Controller\Admin\Init {
 
         $limit = 20;
 
-        $totalCount = \Db::instance()->count("select count(`id`) from `post` where `status` in('1','2')");
+        $totalCount = \Db::instance()->count("select count(`id`) from `post`");
 
         $totalPage = ceil($totalCount / $limit);
         $nextPage = $page + 1;
 
         $offset = ($page - 1) * $limit;
-        $rows = \Db::instance()->getList("select `post_id`, `title`,`author` from `post` where `status` in('1','2') order by `id` desc limit $limit offset $offset");
+        $rows = \Db::instance()->getList("select `post_id`, `title`,`author` from `post` order by `id` desc limit $limit offset $offset");
         foreach ($rows as $r) {
             $itemer = new \Logic\PostItemer($r['post_id'], true);
             $itemer->get();

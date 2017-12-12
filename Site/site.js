@@ -2,17 +2,28 @@ layui.use(['jquery', 'element', 'form', 'util'], function () {
     var $ = layui.$, element = layui.element, form = layui.form, util = layui.util;
     imgResize();
     lazyRender();
-    changeMenu();
 
     // 浏览器窗口大小发生变化.
     $(window).resize(function () {
-        changeMenu();
         imgResize();
     });
 
     // 懒加载.
     $(window).on('scroll', function () {
         lazyRender();
+    });
+
+    $('#topic-detail-change-page').change(function () {
+        identify = $('#identify-val').val();
+        page = $(this).val();
+        url = '/topic/' + identify + '/' + page;
+        window.location.href = url;
+    });
+
+    $('#recommend-change-page').change(function () {
+        page = $(this).val();
+        url = '/recommend/' + page;
+        window.location.href = url;
     });
 
     $('#change-weix-uptime').change(function () {
@@ -30,19 +41,8 @@ layui.use(['jquery', 'element', 'form', 'util'], function () {
         }
     });
 
-    function changeMenu() {
-        width = $(window).width();
-        if (width >= 720) {
-            $('#top-nav-big').show();
-            $('#top-nav-small').hide();
-        } else {
-            $('#top-nav-big').hide();
-            $('#top-nav-small').show();
-        }
-    }
-
     function imgResize() {
-        $('.thumb > a > img').each(function() {
+        $('.thumb > a > img').each(function () {
             var tw = $(this).parents('.item').width();
             var th = tw * 0.55;
             $(this).parents('.thumb').width(tw).height(th);

@@ -65,12 +65,12 @@
                         <p><a href="/post/<?=$r['post_id']?>"><?=$r['title']?> - <?=$r['author']?></a></p>
                         <?php endforeach; ?>
                     </div>
+
+                    <?php require TPL_PATH . 'home/footer.html'; ?>
+                    
                 </div>
                 <div class="layui-col-md2">&nbsp;</div>
             </div>
-            
-            <?php require TPL_PATH . 'home/footer.html'; ?>
-            
         </div>
         <div class="qrcode">
             <img src="/qrcode_imeiwen.jpg" alt="爱美文公众号二维码" />

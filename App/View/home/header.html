@@ -1,7 +1,41 @@
 <!--导航菜单-->
-<ul class="layui-nav layui-bg-cyan" id="top-nav-big"<?php if ($is_mobile): ?> style="display:none"<?php endif; ?>>
-    <li id="logo"><a href="/" title="爱美文网，精典短篇美文/诗歌收集珍藏"><img src="/logo.png" title="爱美文网"></a></li>
-    <?php foreach(\Config\System::$menu as $k => $v): ?>
-        <li class="layui-nav-item<?php if($this_menu == $k): ?> layui-this<?php endif; ?>"><a href="<?=$v['url']?>"><?=$v['title']?></a></li>
-    <?php endforeach; ?>
-</ul>
+<?php
+    $menu_arr = \Logic\TopNaver::getMenu($this_menu, $is_mobile);
+    $normal = $menu_arr['normal'];
+    $more = $menu_arr['more'];
+?>
+<?php if ($is_mobile): ?>
+<div id="mobile-top-nav">
+    <ul class="layui-nav layui-bg-cyan">
+        <?php foreach($normal as $v): ?>
+        <li class="layui-nav-item<?php if($v['selected']): ?> layui-this<?php endif; ?>"><a href="<?=$v['url']?>"><?=$v['title']?></a></li>
+        <?php endforeach; ?>
+        <li class="layui-nav-item">
+            <!-- 二级菜单 -->
+            <a href="javascript:;">更多</a>
+            <dl class="layui-nav-child">
+                <?php foreach ($more as $v): ?>
+                <dd><a href="<?=$v['url']?>"><?=$v['title']?></a></dd>
+                <?php endforeach; ?>
+            </dl>
+        </li>
+    </ul>
+</div>
+<?php else: ?>
+<div>
+    <ul class="layui-nav layui-bg-cyan">
+        <?php foreach($normal as $v): ?>
+        <li class="layui-nav-item<?php if($v['selected']): ?> layui-this<?php endif; ?>"><a href="<?=$v['url']?>"><?=$v['title']?></a></li>
+        <?php endforeach; ?>
+        <li class="layui-nav-item">
+            <!-- 二级菜单 -->
+            <a href="javascript:;">更多</a>
+            <dl class="layui-nav-child">
+                <?php foreach ($more as $v): ?>
+                <dd><a href="<?=$v['url']?>"><?=$v['title']?></a></dd>
+                <?php endforeach; ?>
+            </dl>
+        </li>
+    </ul>
+</div>
+<?php endif; ?>
