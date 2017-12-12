@@ -45,7 +45,12 @@
 
                     <!--文章正文-->
                     <div class="post-content"><?=nl2br($info['content'])?></div>
-                    <!--分享按钮-->
+                    
+                    <!--关键词-->
+                    <?php if (isset($info['relate_pt']) && $info['relate_pt']): ?>                    
+                    <div class="related-pt">关键词: <?=$info['relate_pt']?></div>
+                    <?php endif; ?>
+                   
                     <!--推荐阅读-->
                     <?php if($info['relation']['kz']): ?>
                     <fieldset class="layui-elem-field layui-field-title" id="more-read-container">
@@ -59,6 +64,7 @@
                         </div>
                     </fieldset>
                     <?php endif; ?>
+
                     <!--更多关联文章-->
                     <div style="display: none">
                         <?php foreach($info['relation']['all'] as $r): ?>
@@ -67,7 +73,7 @@
                     </div>
 
                     <?php require TPL_PATH . 'home/footer.html'; ?>
-                    
+
                 </div>
                 <div class="layui-col-md2">&nbsp;</div>
             </div>

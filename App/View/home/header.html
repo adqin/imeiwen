@@ -24,6 +24,7 @@
 <?php else: ?>
 <div>
     <ul class="layui-nav layui-bg-cyan">
+        <li id="logo"><a href="/" title="爱美文网，精典短篇美文/诗歌收集珍藏"><img src="/logo.png" title="爱美文网"></a></li>
         <?php foreach($normal as $v): ?>
         <li class="layui-nav-item<?php if($v['selected']): ?> layui-this<?php endif; ?>"><a href="<?=$v['url']?>"><?=$v['title']?></a></li>
         <?php endforeach; ?>

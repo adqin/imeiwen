@@ -77,6 +77,9 @@ class PostItemer {
 
         // 查询关联文章.
         $relation = $this->getRelation($info);
+        // 强制刷新post_topic缓存.
+        $pter = new \Logic\Pter($this->post_id, true);
+        $relate_pt = $pter->getCache();
 
         $return = [
             'post_id' => $info['post_id'],
@@ -93,16 +96,13 @@ class PostItemer {
             'weixin_up_datetime' => $info['weixin_up_datetime'],
             'page_view' => $view ? $view['views'] : 0,
             'relation' => $relation,
+            'relate_pt' => $relate_pt,
         ];
 
         $this->info = $return;
 
         // 更新文件缓存.
         file_put_contents($this->cache_file, json_encode($return));
-        
-        // 强制刷新post_topic缓存.
-        $pter = new \Logic\Pter($this->post_id, true);
-        $pter->getCache();
     }
 
     /**

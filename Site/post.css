@@ -39,12 +39,16 @@
     font-size: 16px;
     color: #666;
 }
-
 .post-content {
     color: #3e3e3e;
     font-size: 16px;
     word-wrap: break-word;
     line-height: 30px;
+}
+.related-pt {
+    font-size: 14px;
+    color: #666;
+    margin: 20px 0 0 0;
 }
 .share {
     margin-top: 30px;
