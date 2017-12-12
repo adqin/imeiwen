@@ -37,6 +37,8 @@ class Topicer {
         $this->valid();
 
         if ($this->saveDb()) {
+            // 更新缓存.
+            \Logic\Homer::updateTopicDetail($this->info['id']);
             \Common::ajaxReturnSuccess('更新成功');
         } else {
             \Common::ajaxReturnFalse('更新失败');
