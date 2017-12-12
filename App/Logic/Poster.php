@@ -246,8 +246,8 @@ class Poster {
         
         if ($this->param['description']) {
             $len = strlen($this->param['description']);
-            if ($len > 234) {
-                \Common::ajaxReturnFalse("文章简介长度应在234个字符长度内");
+            if ($len > 225) {
+                \Common::ajaxReturnFalse("文章简介长度应在225个字符长度内");
             }
         }
 
