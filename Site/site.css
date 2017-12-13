@@ -42,8 +42,17 @@ select {
     margin: 5px;
 }
 .note {
-    min-height: 45px;
     line-height: 20px;
+}
+@media screen and (min-width: 980px) and (max-width: 1200px) {
+    .note {
+        min-height: 60px;
+    }
+}
+@media screen and (min-width: 1200px) {
+    .note {
+        min-height: 45px;
+    }
 }
 .note a {
     color: #999;
