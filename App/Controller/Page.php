@@ -23,7 +23,7 @@ class Page extends \Controller\Base {
         
         $info = \Logic\Homer::getCachePage($id);
         
-        $this->assign('this_menu', 'weixindingyue');
+        $this->assign('this_menu', $id);
         $this->assign('info', $info);
         $this->display('home/page');
     }
