@@ -161,7 +161,7 @@ class Index extends \Controller\Base {
      * test.
      */
     public function test() {
-        $this->display('home/test');
+        
     }
 
 }
