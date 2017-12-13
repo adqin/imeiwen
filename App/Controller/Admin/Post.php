@@ -162,6 +162,10 @@ class Post extends \Controller\Admin\Init {
             return $data;
         }
 
+        $post_ids = array_column($data, 'post_id');
+        $where = "`post_id` in('" . implode("','", $post_ids) . "')";
+        $views = \Db::instance()->getList("select `post_id`,`views` from `page_view` where $where", 'post_id');
+        
         $status_title = [
             '0' => '隐藏',
             '1' => '显示',
@@ -177,6 +181,7 @@ class Post extends \Controller\Admin\Init {
                 'author' => $d['author'],
                 'keywords' => trim($d['keywords'], ','),
                 'status' => $status_title[$d['status']],
+                'views' => isset($views[$d['post_id']]) ? $views[$d['post_id']]['views'] : 0,
                 'weixin_string' => $d['weixin_up_datetime'] ? '<a href="' . $d['weixin_url'] . '" class="weixin_url" target="_blank">' . date('Y-m-d', $d['weixin_up_datetime']) : '',
                 'op_string' => '<a href="/admin/post/edit?id=' . $d['id'] . '" class="layui-btn">修改<i class="layui-icon">&#xe642;</i></a>',
             );
