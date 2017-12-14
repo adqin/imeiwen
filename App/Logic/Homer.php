@@ -260,7 +260,7 @@ class Homer {
      * @return array.
      */
     private static function getRecentPost() {
-        $sql = "select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`description` from `post` where `status` in('1', '2', '3') order by `update_time` desc limit 13";
+        $sql = "select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`description` from `post` where `status` in('1', '2', '3') order by `input_time` desc limit 13";
         $return = \Db::instance()->getList($sql);
         unset($return[0]);
         return array_values($return);
@@ -285,7 +285,7 @@ class Homer {
      * @return array.
      */
     private static function getRandomPost() {
-        $sql = "select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`description` from `post` where `status` = 1 order by rand() limit 200";
+        $sql = "select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`description` from `post` where `status` in('1','2','3') order by rand() limit 200";
         return \Db::instance()->getList($sql);
     }
 
