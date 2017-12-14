@@ -85,11 +85,14 @@ class PostItemer {
             'post_id' => $info['post_id'],
             'title' => $info['title'],
             'author' => $info['author'],
+            'category' => $info['category'],
             'image_url' => $info['image_url'],
             'image_up_time' => $info['image_up_time'],
             'content' => $info['content'],
             'keywords' => trim($info['keywords'], ','),
             'description' => $this->cleanString($info['description']),
+            'share_title' => $this->cleanString($info['share_title']),
+            'share_description' => $this->cleanString($info['share_description']),
             'input_time' => $info['input_time'],
             'update_time' => $info['update_time'],
             'weixin_url' => $info['weixin_url'],
@@ -124,7 +127,7 @@ class PostItemer {
         $arr[] = $author;
 
         $where = "keyword in" . "('" . implode("','", $arr) . "')";
-        $rs = \Db::instance()->getColumn("select `content` from `topic` where $where");
+        $rs = \Db::instance()->getColumn("select `content` from `keywords` where $where");
 
         $tmp = [];
         foreach ($rs as $r) {
@@ -136,27 +139,21 @@ class PostItemer {
         $post_ids = array_unique($tmp);
 
         // 查询文章.
-        $return = [
-            'all' => [],
-            'kz' => [],
-        ];
+        $return = $list = [];
+        
         if ($post_ids) {
-            $where = "`post_id` in('" . implode("','", $post_ids) . "') and `status` in('1','2','3') and `post_id` <> '$this->post_id'";
-            $rs = \Db::instance()->getList("select `post_id`,`title`,`author`,`status` from `post` where $where");
-            foreach ($rs as $r) {
-                $return['all'][] = $r;
-                $return['kz'][] = $r;
-            }
+            $where = "`post_id` in('" . implode("','", $post_ids) . "') and `status` in('2','3') and `post_id` <> '$this->post_id'";
+            $list = \Db::instance()->getList("select `post_id`,`title`,`author` from `post` where $where");
         }
         
-        // 推荐文章最多取12条.
-        if (count($return['kz']) > 12) {
-            $tmp = [];
-            shuffle($return['kz']);
-            for ($i = 0; $i < 12; $i++) {
-                $tmp[] = $return['kz'][$i];
+        if (count($list) > 10) {
+            shuffle($list);
+            for ($i = 0; $i < 10; $i++) {
+                $return[] = $list[$i];
             }
-            $return['kz'] = $tmp;
+        } else {
+            $return = $list;
+            $list = [];
         }
         
         return $return;
@@ -171,8 +168,8 @@ class PostItemer {
      */
     private function cleanString($string = '') {
         $string = strip_tags($string);
-        $string = trim($string);
         $string = str_replace("\n", "", $string);
+        $string = trim($string);
         return $string;
     }
 

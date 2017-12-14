@@ -180,6 +180,7 @@ class Post extends \Controller\Admin\Init {
             '2' => '推荐',
             '3' => '首页推荐',
         ];
+        
         $return = array();
         foreach ($data as $d) {
             $return[] = array(
@@ -187,6 +188,7 @@ class Post extends \Controller\Admin\Init {
                 'thumb' => $d['image_url'] ? '<img src="' . \Config\Qiniu::$domain . $d['image_url'] . '?imageView2/2/w/200/' . $d['image_up_time'] . '" width="200">' : '',
                 'title' => '<a href="/post/' . $d['post_id'] . '" class="post_item" target="_blank">' . $d['title'] . '</a>',
                 'author' => $d['author'],
+                'category' => $d['category'] && isset(\Config\System::$category[$d['category']]) ? \Config\System::$category[$d['category']] : '',
                 'keywords' => trim($d['keywords'], ','),
                 'status' => $status_title[$d['status']],
                 'views' => isset($views[$d['post_id']]) ? $views[$d['post_id']]['views'] : 0,

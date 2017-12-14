@@ -74,8 +74,8 @@ class Pter {
         }
 
         $in = "('" . implode("','", $all) . "')";
-        $where = "`keyword` in{$in} and `status` = '1'";
-        $tplist = \Db::instance()->getList("select `keyword`, `identify` from `topic` where $where", 'keyword');
+        $where = "`post_keywords` in{$in} and `status` = '1'";
+        $tplist = \Db::instance()->getList("select `post_keywords`, `identify` from `topic` where $where", 'identify');
 
         $return = [];
         foreach ($all as $keyword) {
