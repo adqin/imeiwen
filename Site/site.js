@@ -20,13 +20,13 @@ layui.use(['jquery', 'element', 'form', 'util'], function () {
         window.location.href = url;
     });
 
-    $('#recommend-change-page').change(function () {
+    $('.recommend-change-page').change(function () {
         page = $(this).val();
         url = '/recommend/' + page;
         window.location.href = url;
     });
 
-    $('#change-weix-uptime').change(function () {
+    $('.change-weix-uptime').change(function () {
         date = $(this).val();
         url = date ? '/meiriyiwen/' + date : '/meiriyiwen';
         window.location.href = url;

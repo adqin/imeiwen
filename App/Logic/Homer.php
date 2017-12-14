@@ -81,7 +81,7 @@ class Homer {
      * 
      * @return array.
      */
-    public static function getIndexTopic($force_reload = false) {
+    public static function getIndexTopic($force_reload = false, $num = 8) {
         $cache_file = CACHE_PATH . 'cache.index.topic';
         $from_db = false;
         $return = [];
@@ -109,8 +109,16 @@ class Homer {
                 file_put_contents($cache_file, json_encode($list));
             }
         }
-
-        return $return;
+        
+        if (count($return) <= $num) {
+            return $return;
+        } else {
+            $arr = [];
+            for ($i = 0; $i < $num; $i++) {
+                $arr[] = $return[$i];
+            }
+            return $arr;
+        }
     }
 
     /**

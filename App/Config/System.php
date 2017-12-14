@@ -29,7 +29,7 @@ class System {
     
     public static $menu = array(
         'index' => ['title' => '首页', 'url' => '/'],
-        'recommend' => ['title' => '推荐', 'url' => '/recommend'],
+        'recommend' => ['title' => '精选', 'url' => '/recommend'],
         'hot' => ['title' => '热门', 'url' => '/hot'],
         'recent' => ['title' => '最近', 'url' => '/recent'],
         'random' => ['title' => '随机', 'url' => '/random'],

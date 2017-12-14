@@ -17,10 +17,13 @@ class Index extends \Controller\Base {
      * 首页，缓存有效1周.
      */
     public function index() {
-        $post_list = \Logic\Homer::getCachePosts('index.post', 604800, true, 6);
+        
+        $num = $this->isMobile ? 3 : 6;
+        $post_list = \Logic\Homer::getCachePosts('index.post', 604800, true, $num);
         $this->assign('post_list', $post_list);
         
-        $topic_list = \Logic\Homer::getIndexTopic(true);
+        $num = $this->isMobile ? 4 : 8;
+        $topic_list = \Logic\Homer::getIndexTopic(false, $num);
         $this->assign('topic_list', $topic_list);
         
         $this->assign('this_menu', 'index');

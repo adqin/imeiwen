@@ -17,9 +17,9 @@
           <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
           <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
-        
+
         <?php require TPL_PATH . 'home/header.html'; ?>
-        
+
         <div class="layui-container">
 
             <input type="hidden" id="identify-val" value="<?=$identify?>" />
@@ -37,7 +37,23 @@
                 </div>
             </fieldset>
 
-            <div class="layui-row layui-col-space10" id="old">
+            <div class="layui-row layui-col-space10">
+                <div class="layui-col-md4">
+                    <select id="topic-detail-change-page">
+                        <?php for ($i = 1; $i <= $total_page; $i++): ?>
+                        <?php if ($i == $page): ?>
+                        <option value="<?=$i?>" selected="selected">第<?=$i?>页</option>
+                        <?php else: ?>
+                        <option value="<?=$i?>">第<?=$i?>页</option>
+                        <?php endif; ?>
+                        <?php endfor; ?>
+                    </select>
+                </div>
+            </div>
+
+            <?php require TPL_PATH . 'home/post_item.html'; ?>
+
+            <div class="layui-row layui-col-space10">
                 <div class="layui-col-md4">
                     <select id="topic-detail-change-page">
                         <?php for ($i = 1; $i <= $total_page; $i++): ?>
@@ -56,8 +72,7 @@
                 <a href="/topic/<?=$identify?>/<?=$i?>">第<?=$i?>页</a>
                 <?php endfor; ?>
             </div>
-
-            <?php require TPL_PATH . 'home/post_item.html'; ?>
+            
             <?php require TPL_PATH . 'home/footer.html'; ?>
 
         </div>

@@ -27,6 +27,8 @@ class Base {
     public function __construct($vals = array()) {
         $this->param = $vals;
         $this->isMobile();
+        
+        $this->assign('is_mobile', $this->isMobile);
         $this->assign('version', $this->version);
     }
 
@@ -164,9 +166,9 @@ class Base {
             // 未设置cookie.
             $r = \Common::isMobile();
             $this->setCookie('is_mobile', $r, time() + 2592000);
-            $this->assign('is_mobile', $r);
+            $this->isMobile = $r;
         } else {
-            $this->assign('is_mobile', $c);
+            $this->isMobile = $c;
         }
     }
 
