@@ -44,7 +44,7 @@ layui.use(['jquery', 'element', 'form', 'util'], function () {
     function imgResize() {
         $('.thumb > a > img').each(function () {
             var tw = $(this).parents('.item').width();
-            var th = tw * 0.55;
+            var th = tw * 0.5;
             $(this).parents('.thumb').width(tw).height(th);
             $(this).width(tw);
         });
