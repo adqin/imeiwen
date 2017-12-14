@@ -122,10 +122,12 @@ class Poster {
             'post_id' => $this->post_id,
             'title' => $this->param['title'],
             'author' => $this->param['author'],
+            'category' => $this->param['category'],
             'content' => $this->param['content'],
-            'long_title' => $this->param['long_title'],
             'keywords' => $this->param['keywords'] ? $this->formatKeywords($this->param['keywords']) : '', // 替换中文逗号为英文.
             'description' => $this->param['description'],
+            'share_title' => $this->param['share_title'],
+            'share_description' => $this->param['share_description'],
             'weixin_url' => $this->param['weixin_url'],
             'weixin_up_datetime' => $this->param['weixin_up_datetime'] ? strtotime($this->param['weixin_up_datetime']) : 0, // 转换为时间戳, 方便排序.
             'status' => $this->param['status'],
@@ -185,9 +187,9 @@ class Poster {
             'post_id' => '文章id',
             'title' => '标题',
             'author' => '作者',
+            'category' => '分类',
             'image_url' => '配图',
             'content' => '内容',
-            'long_title' => '长标题',
             'keywords' => '关键词',
             'description' => '简要描述',
             'weixin_url' => '微信文章URL',
@@ -195,7 +197,7 @@ class Poster {
             'status' => '状态',
         );
 
-        $required = array('post_id', 'title', 'author', 'content');
+        $required = array('post_id', 'title', 'author', 'category', 'content');
 
         foreach ($fields as $k => $v) {
             if (!isset($this->param[$k])) {
@@ -250,6 +252,20 @@ class Poster {
                 \Common::ajaxReturnFalse("文章简介长度应在225个字符长度内");
             }
         }
+        
+        if ($this->param['share_title']) {
+            $len = strlen($this->param['share_title']);
+            if ($len > 100) {
+                \Common::ajaxReturnFalse("文章分享标题应在100个字符内");
+            }
+        }
+        
+        if ($this->param['share_description']) {
+            $len = strlen($this->param['share_description']);
+            if ($len > 300) {
+                \Common::ajaxReturnFalse("文章分享描述赢在300个字符内");
+            }
+        }
 
         // 验证微信文章发布日期.
         if ($this->param['weixin_up_datetime']) {
@@ -276,7 +292,7 @@ class Poster {
      * @return void
      */
     private function getInfo() {
-        $this->info = \Db::instance()->getRow("select `id`, `post_id`, `title`, `author`, `image_url`, `content`, `long_title`, `keywords`, `description` from `post` where `id` = '$this->id'");
+        $this->info = \Db::instance()->getRow("select `id`, `post_id`, `title`, `author`, `image_url`, `content`, `keywords`, `description` from `post` where `id` = '$this->id'");
         if (empty($this->info)) {
             \Common::ajaxReturnFalse("post: {$this->id}, 更新的文章不存在");
         }

@@ -38,11 +38,13 @@ class Post extends \Controller\Admin\Init {
         if (\Common::isPost()) {
             $param['title'] = $this->getPost('title');
             $param['author'] = $this->getPost('author');
+            $param['category'] = $this->getPost('category');
             $param['image_url'] = $this->getPost('image_url');
             $param['content'] = $this->getPost('content');
-            $param['long_title'] = $this->getPost('long_title');
             $param['keywords'] = $this->getPost('keywords');
             $param['description'] = $this->getPost('description');
+            $param['share_title'] = $this->getPost('share_title');
+            $param['share_description'] = $this->getPost('share_description');
             $param['weixin_url'] = $this->getPost('weixin_url');
             $param['weixin_up_datetime'] = $this->getPost('weixin_up_datetime');
             $param['status'] = $this->getPost('status');
@@ -68,11 +70,13 @@ class Post extends \Controller\Admin\Init {
 
             $param['title'] = $this->getPost('title');
             $param['author'] = $this->getPost('author');
+            $param['category'] = $this->getPost('category');
             $param['image_url'] = $this->getPost('image_url');
             $param['content'] = $this->getPost('content');
-            $param['long_title'] = $this->getPost('long_title');
             $param['keywords'] = $this->getPost('keywords');
             $param['description'] = $this->getPost('description');
+            $param['share_title'] = $this->getPost('share_title');
+            $param['share_description'] = $this->getPost('share_description');
             $param['weixin_url'] = $this->getPost('weixin_url');
             $param['weixin_up_datetime'] = $this->getPost('weixin_up_datetime');
             $param['status'] = $this->getPost('status');
@@ -109,6 +113,7 @@ class Post extends \Controller\Admin\Init {
         // 查询条件.
         $title = $this->getPost('title');
         $author = $this->getPost('author');
+        $category = $this->getPost('category');
         $isMryw = $this->getPost('isMryw');
         $status = $this->getPost('status');
 
@@ -119,6 +124,9 @@ class Post extends \Controller\Admin\Init {
         }
         if ($author) {
             $where .= " and `author` = '$author'";
+        }
+        if ($category) {
+            $where .= " and `category` = '$category'";
         }
         if ($isMryw == 1) {
             $where .= " and `weixin_up_datetime` > 0";

@@ -27,6 +27,24 @@ class System {
         'domain' => 'imeiwen.org',
     );
     
+    /**
+     * 文章分类.
+     * 
+     * @var array. 
+     */
+    public static $category = array(
+        '1' => '美文',
+        '2' => '短篇美文',
+        '3' => '诗歌',
+        '4' => '短诗',
+        '5' => '古诗文',
+    );
+    
+    /**
+     * 导航菜单.
+     * 
+     * @var array. 
+     */
     public static $menu = array(
         'index' => ['title' => '首页', 'url' => '/'],
         'recommend' => ['title' => '精选', 'url' => '/recommend'],
