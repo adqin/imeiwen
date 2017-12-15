@@ -255,8 +255,8 @@ class Poster {
         
         if ($this->param['share_title']) {
             $len = strlen($this->param['share_title']);
-            if ($len > 100) {
-                \Common::ajaxReturnFalse("文章分享标题应在100个字符内");
+            if ($len > 200) {
+                \Common::ajaxReturnFalse("文章分享标题应在200个字符内");
             }
         }
         

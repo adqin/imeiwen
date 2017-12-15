@@ -73,13 +73,13 @@ class PostItemer {
         // 查询post信息.
         $info = \Db::instance()->getRow("select * from `post` where `post_id` = '$this->post_id'");
         // 查询浏览信息.
-        $view = \Db::instance()->getRow("select * from `page_view` where `post_id` = '$this->post_id'");
+        $view = \Db::instance()->getRow("select * from `post_view` where `post_id` = '$this->post_id'");
 
         // 查询关联文章.
         $relation = $this->getRelation($info);
         // 强制刷新post_topic缓存.
         $pter = new \Logic\Pter($this->post_id, true);
-        $relate_pt = $pter->getCache();
+        //$relate_pt = $pter->getCache();
 
         $return = [
             'post_id' => $info['post_id'],
@@ -99,7 +99,7 @@ class PostItemer {
             'weixin_up_datetime' => $info['weixin_up_datetime'],
             'page_view' => $view ? $view['views'] : 0,
             'relation' => $relation,
-            'relate_pt' => $relate_pt,
+                //'relate_pt' => $relate_pt,
         ];
 
         $this->info = $return;
@@ -140,23 +140,53 @@ class PostItemer {
 
         // 查询文章.
         $return = $list = [];
-        
+
         if ($post_ids) {
             $where = "`post_id` in('" . implode("','", $post_ids) . "') and `status` in('2','3') and `post_id` <> '$this->post_id'";
             $list = \Db::instance()->getList("select `post_id`,`title`,`author` from `post` where $where");
         }
-        
+
         if (count($list) > 10) {
             shuffle($list);
             for ($i = 0; $i < 10; $i++) {
                 $return[] = $list[$i];
             }
         } else {
-            $return = $list;
-            $list = [];
+            // 不足10条，获取更多.
+            $return = $this->getMoreByCategory($list, $info);
         }
-        
+
         return $return;
+    }
+
+    /**
+     * 获取更多的文章(分类查询).
+     * 
+     * @param array $list 排除的文章.
+     * @param array $info 当前文章信息.
+     * 
+     * @return array.
+     */
+    private function getMoreByCategory($list = [], $info = []) {
+        $post_ids = array_column($list, 'post_id');
+        $category = $info['category'];
+        $count = count($list);
+
+        $where = "`category` = '$category'";
+        if ($list) {
+            $post_ids_str = "('" . implode("','", $post_ids) . "')";
+            $where .= " and `post_id` not in{$post_ids_str}";
+        }
+
+        $rs = \Db::instance()->getList("select `post_id`,`title`,`author` from `post` where $where order by rand() limit 10");
+
+        for ($i = $count; $i < 10; $i++) {
+            if (isset($rs[$i])) {
+                $list[$i] = $rs[$i];
+            }
+        }
+
+        return $list;
     }
 
     /**

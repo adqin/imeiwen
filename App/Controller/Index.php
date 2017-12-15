@@ -137,14 +137,14 @@ class Index extends \Controller\Base {
             exit;
         }
 
-        $row = \Db::instance()->getRow("select `id`,`views` from `page_view` where `post_id` = '$post_id'");
+        $row = \Db::instance()->getRow("select `id`,`views` from `post_view` where `post_id` = '$post_id'");
         if (!$row) {
             $param = [
                 'post_id' => $post_id,
                 'views' => 1,
                 'latest_time' => time(),
             ];
-            \Db::instance()->insert('page_view', $param);
+            \Db::instance()->insert('post_view', $param);
             echo '1';
             exit;
         } else {
@@ -154,7 +154,7 @@ class Index extends \Controller\Base {
                 'views' => $views,
                 'latest_time' => time(),
             ];
-            \Db::instance()->updateById('page_view', $param, $id);
+            \Db::instance()->updateById('post_view', $param, $id);
             echo $views;
             exit;
         }

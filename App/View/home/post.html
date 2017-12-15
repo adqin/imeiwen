@@ -52,25 +52,18 @@
                     <?php endif; ?>
                    
                     <!--推荐阅读-->
-                    <?php if($info['relation']['kz']): ?>
+                    <?php if ($info['relation']): ?>
                     <fieldset class="layui-elem-field layui-field-title" id="more-read-container">
                         <legend>更多阅读</legend>
                         <div class="more-read">
                             <ol>
-                                <?php foreach($info['relation']['kz'] as $r): ?>
+                                <?php foreach ($info['relation'] as $r): ?>
                                 <li><a href="/post/<?=$r['post_id']?>" title="<?=$r['title']?> | <?=$r['author']?>"><?=$r['title']?> - <?=$r['author']?></a></li>
                                 <?php endforeach; ?>
                             </ol>
                         </div>
                     </fieldset>
                     <?php endif; ?>
-
-                    <!--更多关联文章-->
-                    <div style="display: none">
-                        <?php foreach($info['relation']['all'] as $r): ?>
-                        <p><a href="/post/<?=$r['post_id']?>"><?=$r['title']?> - <?=$r['author']?></a></p>
-                        <?php endforeach; ?>
-                    </div>
 
                     <?php require TPL_PATH . 'home/footer.html'; ?>
 

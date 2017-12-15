@@ -24,6 +24,31 @@ class Topic extends \Controller\Admin\Init {
     }
 
     /**
+     * 新增主题.
+     * 
+     * @return void
+     */
+    public function add() {
+        if (\Common::isPost()) {
+            // 提交表单.
+            $param['topic_id'] = $this->getPost('topic_id');
+            $param['title'] = $this->getPost('title');
+            $param['note'] = $this->getPost('note');
+            $param['description'] = $this->getPost('description');
+            $param['category'] = $this->getPost('category');
+            $param['keywords'] = $this->getPost('keywords');
+            $param['post_ids'] = $this->getPost('post_ids');
+            $param['post_status'] = $this->getPost('post_status');
+            $param['share_theme'] = $this->getPost('share_theme');
+            $param['status'] = $this->getPost('status');
+            $topicer = new \Logic\Topicer(0, $param);
+            $topicer->add();
+        } else {
+            $this->display('admin/topic/add');
+        }
+    }
+
+    /**
      * topic编辑更新.
      * 
      * @return void
@@ -34,15 +59,14 @@ class Topic extends \Controller\Admin\Init {
             if (!$id) {
                 \Common::ajaxReturnFalse('id POST参数有误');
             }
-            
+
             $param['identify'] = $this->getPost('identify');
             $param['title'] = $this->getPost('title');
             $param['note'] = $this->getPost('note');
             $param['status'] = $this->getPost('status');
-            
+
             $topicer = new \Logic\Topicer($id, $param);
             $topicer->edit();
-            
         } else {
             $id = $this->getGet('id');
             if (!$id) {
@@ -75,25 +99,25 @@ class Topic extends \Controller\Admin\Init {
         if ($status !== '') {
             $where .= " and `status` = '$status'";
         }
-        
+
         $order = "order by `count` desc";
 
         $return = array(
             'code' => 0,
             'msg' => '',
-            'count' => \Db::instance()->count("select count(`id`) from `topic` where $where"),
+            'count' => \Db::instance()->count("select count(`id`) from `keywords` where $where"),
             'data' => array(),
         );
 
-        $offset = ($page -1) * $limit;
-        $sql = "select * from `topic` where $where $order limit $limit offset $offset";
+        $offset = ($page - 1) * $limit;
+        $sql = "select * from `keywords` where $where $order limit $limit offset $offset";
         $return['data'] = $this->formatSearchData(\Db::instance()->getList($sql));
 
         \Common::ajaxOut($return);
     }
 
     /**
-     * topic列表搜索数据格式化.
+     * keywords列表搜索数据格式化.
      * 
      * @param array $data 源数据.
      * 
@@ -108,11 +132,9 @@ class Topic extends \Controller\Admin\Init {
         foreach ($data as $d) {
             $return[] = array(
                 'id' => $d['id'],
-                'keyword' => $d['identify'] ? '<a href="/topic/' . $d['identify'] . '" class="topic_item" target="_blank">' . $d['keyword'] . '|' . $d['identify'] . '</a>' : $d['keyword'],
+                'keyword' => $d['keyword'],
                 'type' => $d['type'],
                 'count' => $d['count'],
-                'status' => $d['status'] ? '显示' : '隐藏',
-                'op_string' => '<a href="/admin/topic/edit?id=' . $d['id'] . '" class="layui-btn">修改<i class="layui-icon">&#xe642;</i></a>',
             );
         }
 

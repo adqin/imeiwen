@@ -172,7 +172,7 @@ class Post extends \Controller\Admin\Init {
 
         $post_ids = array_column($data, 'post_id');
         $where = "`post_id` in('" . implode("','", $post_ids) . "')";
-        $views = \Db::instance()->getList("select `post_id`,`views` from `page_view` where $where", 'post_id');
+        $views = \Db::instance()->getList("select `post_id`,`views` from `post_view` where $where", 'post_id');
         
         $status_title = [
             '0' => '隐藏',

@@ -22,6 +22,15 @@ class Topicer {
             $this->getInfo();
         }
     }
+    
+    /**
+     * 新增主题.
+     * 
+     * @return void
+     */
+    public function add() {
+        
+    }
 
     /**
      * 编辑更新.

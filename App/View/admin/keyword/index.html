@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <title>关键词列表 - 爱美文网</title>
+        <link rel="stylesheet" href="/layui/dist/css/layui.css">
+        <style type="text/css">
+            .layui-table-cell {
+                height: auto !important;
+            }
+            .topic_item {
+                text-decoration: underline #009688 dashed !important;
+            }
+        </style>
+    </head>
+    <body class="layui-layout-body">
+        <div class="layui-layout layui-layout-admin">
+            <?php require TPL_PATH . 'admin/header.html'; ?>
+            <div class="layui-body">
+                <div style="width: 800px; padding: 10px;">
+                    <!-- 内容主体区域 -->
+                    <fieldset class="layui-elem-field">
+                        <legend>关键词列表</legend>
+                        <form class="layui-form layui-form-pane" style="padding: 20px 1px 1px 20px;">
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="keyword" class="layui-input" placeholder="输入查询关键词" />     
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <button class="layui-btn" lay-submit lay-filter="*">查询</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div style="padding: 0px 10px 5px 20px;">
+                            <table id="data_list" lay-filter="data_list"></table>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <?php require TPL_PATH . 'admin/footer.html'; ?>
+        </div>
+        <script src="/layui/dist/layui.js"></script>
+        <script>
+            layui.use(['element', 'table', 'form'], function () {
+                var element = layui.element, table = layui.table, form = layui.form;
+                table.render({
+                    elem: '#data_list',
+                    height: 'auto',
+                    page: true,
+                    loading: true,
+                    id: 'data_list',
+                    url: '/admin/keyword/search',
+                    limits: [20, 50],
+                    limit: 20,
+                    method: 'post',
+                    cols: [[
+                            {field: 'id', title: 'ID', width: 80},
+                            {field: 'keyword', title: '关键词', width: 200},
+                            {field: 'type', title: '类型', width: 100},
+                            {field: 'count', title: '文章数量', width: 100},
+                        ]]
+                });
+
+                form.on('submit(*)', function (data) {
+                    table.reload('data_list', {
+                        where: data.field
+                    });
+                    return false;
+                });
+            });
+        </script>
+    </body>
+</html>

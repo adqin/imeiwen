@@ -260,7 +260,7 @@ class Homer {
      * @return array.
      */
     private static function getRecentPost() {
-        $sql = "select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`description` from `post` where `status` in('1', '2', '3') order by `input_time` desc limit 13";
+        $sql = "select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`description` from `post` where `status` in('1', '2', '3') order by `update_time` desc limit 13";
         $return = \Db::instance()->getList($sql);
         unset($return[0]);
         return array_values($return);
@@ -275,7 +275,7 @@ class Homer {
         // 最近一周浏览较多的数据.
         $min = time() - 604800;
         $max = time();
-        $sql = "select p.`post_id`,p.`title`,p.`author`,p.`image_url`,p.`image_up_time`,p.`description` from `post` as p, `page_view` as v where p.`post_id` = v.`post_id` and p.`status` in('1', '2', '3') and v.`latest_time` between $min and $max order by v.`views` desc limit 12";
+        $sql = "select p.`post_id`,p.`title`,p.`author`,p.`image_url`,p.`image_up_time`,p.`description` from `post` as p, `post_view` as v where p.`post_id` = v.`post_id` and p.`status` in('1', '2', '3') and v.`latest_time` between $min and $max order by v.`views` desc limit 12";
         return \Db::instance()->getList($sql);
     }
 

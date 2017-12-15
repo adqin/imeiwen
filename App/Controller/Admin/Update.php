@@ -26,13 +26,13 @@ class Update extends \Controller\Admin\Init {
         $nextPage = $page + 1;
 
         $type = $this->getGet('type');
-        $type = $type ? $type : 'post'; // post or topic.
+        $type = $type ? $type : 'post'; // post or keywords.
         // 计算总的条数.
         $totalCount = 0;
         if ($type == 'post') {
             $totalCount = \Db::instance()->count("select count(`id`) from `post`");
         } else {
-            $totalCount = \Db::instance()->count("select count(`id`) from `topic`");
+            $totalCount = \Db::instance()->count("select count(`id`) from `keywords`");
         }
 
         // 每页20条.
@@ -75,7 +75,7 @@ class Update extends \Controller\Admin\Init {
             unlink(CACHE_PATH . 'cache.hot');
         }
 
-        $sql = "delete from `topic` where `count` = 0";
+        $sql = "delete from `keywords` where `count` = 0";
         \Db::instance()->execute($sql);
 
         // 尽量后台刷新缓存.
@@ -121,7 +121,7 @@ class Update extends \Controller\Admin\Init {
 
         for ($i = 1; $i <= $total; $i++) {
             $offset = ($i - 1) * $limit;
-            $sql = "select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`keywords`,`description` from `post` where `status` in('2','3') order by `input_time` desc limit $limit offset $offset";
+            $sql = "select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`keywords`,`description` from `post` where `status` in('2','3') order by `update_time` desc limit $limit offset $offset";
             $list = \Db::instance()->getList($sql);
 
             foreach ($list as $k => $v) {
@@ -229,8 +229,8 @@ class Update extends \Controller\Admin\Init {
         if ($table == 'post') {
             $rows = \Db::instance()->getList("select `id`, `author`, `keywords` from `post` order by `id` asc limit $limit offset $offset");
             foreach ($rows as $r) {
-                \Logic\Updater::upKeywordsToTopic($r['keywords']);
-                \Logic\Updater::upAuthorToTopic($r['author']);
+                \Logic\Updater::upKeywords($r['keywords']);
+                \Logic\Updater::upAuthorToKeywords($r['author']);
                 $return[] = [
                     'id' => $r['id'],
                     'title' => $r['keywords'] . '#' . $r['author'],
@@ -238,10 +238,10 @@ class Update extends \Controller\Admin\Init {
             }
         }
 
-        if ($table == 'topic') {
-            $rows = \Db::instance()->getList("select `id`, `keyword`, `type` from `topic` order by `id` asc limit $limit offset $offset");
+        if ($table == 'keywords') {
+            $rows = \Db::instance()->getList("select `id`, `keyword`, `type` from `keywords` order by `id` asc limit $limit offset $offset");
             foreach ($rows as $r) {
-                \Logic\Updater::updateTopicInfo($r['id'], $r['keyword'], $r['type']);
+                \Logic\Updater::updateKeywordsInfo($r['id'], $r['keyword'], $r['type']);
                 $return[] = [
                     'id' => $r['id'],
                     'title' => $r['keyword'] . '#' . $r['type'],

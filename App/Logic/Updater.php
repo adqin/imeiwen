@@ -11,13 +11,13 @@ namespace Logic;
 class Updater {
 
     /**
-     * 从post里取keywords更新到topic表.
+     * 从post里取keywords更新到keywords表.
      * 
      * @param string $keywords 取的关键词.
      * 
      * @return void
      */
-    public static function upKeywordsToTopic($keywords = '') {
+    public static function upKeywords($keywords = '') {
         if (!$keywords) {
             return;
         }
@@ -30,7 +30,7 @@ class Updater {
                 continue;
             }
 
-            if (\Db::instance()->exists("select `id` from `topic` where `keyword` = '$r' and `type` = 'keyword'")) {
+            if (\Db::instance()->exists("select `id` from `keywords` where `keyword` = '$r' and `type` = 'keyword'")) {
                 continue;
             }
 
@@ -38,7 +38,7 @@ class Updater {
                 'keyword' => $r,
                 'type' => 'keyword',
             ];
-            \Db::instance()->insert('topic', $param);
+            \Db::instance()->insert('keywords', $param);
         }
     }
 
@@ -49,14 +49,14 @@ class Updater {
      * 
      * @return void.
      */
-    public static function upAuthorToTopic($author = '') {
+    public static function upAuthorToKeywords($author = '') {
         $author = trim($author);
 
         if (!$author) {
             return;
         }
 
-        if (\Db::instance()->exists("select `id` from `topic` where `keyword` = '$author' and `type` = 'author'")) {
+        if (\Db::instance()->exists("select `id` from `keywords` where `keyword` = '$author' and `type` = 'author'")) {
             return;
         }
 
@@ -64,7 +64,7 @@ class Updater {
             'keyword' => $author,
             'type' => 'author',
         ];
-        \Db::instance()->insert('topic', $param);
+        \Db::instance()->insert('keywords', $param);
     }
 
     /**
@@ -76,7 +76,7 @@ class Updater {
      * 
      * @return void
      */
-    public static function updateTopicInfo($id = 0, $keyword = '', $type = '') {
+    public static function updateKeywordsInfo($id = 0, $keyword = '', $type = '') {
         if (!$id || !$keyword || !in_array($type, ['keyword', 'author'])) {
             return;
         }
@@ -94,7 +94,7 @@ class Updater {
                 $param['status'] = 0;
             }
 
-            \Db::instance()->updateById('topic', $param, $id);
+            \Db::instance()->updateById('keywords', $param, $id);
         }
 
         if ($type == 'author') {
@@ -110,7 +110,7 @@ class Updater {
                 $param['status'] = 0;
             }
 
-            \Db::instance()->updateById('topic', $param, $id);
+            \Db::instance()->updateById('keywords', $param, $id);
         }
     }
 
