@@ -29,6 +29,9 @@ class Topicer {
      * @return void
      */
     public function add() {
+        // 参数验证.
+        $this->valid();
+        
         
     }
 
