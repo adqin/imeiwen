@@ -33,13 +33,12 @@ class Topic extends \Controller\Admin\Init {
             // 提交表单.
             $param['topic_id'] = $this->getPost('topic_id');
             $param['title'] = $this->getPost('title');
-            $param['note'] = $this->getPost('note');
+            $param['long_title'] = $this->getPost('long_title');
+            $param['keywords'] = $this->getPost('keywords');
             $param['description'] = $this->getPost('description');
             $param['category'] = $this->getPost('category');
-            $param['keywords'] = $this->getPost('keywords');
-            $param['post_ids'] = $this->getPost('post_ids');
+            $param['post_keyword'] = $this->getPost('post_keyword');
             $param['post_status'] = $this->getPost('post_status');
-            $param['share_theme'] = $this->getPost('share_theme');
             $param['status'] = $this->getPost('status');
             $topicer = new \Logic\Topicer(0, $param);
             $topicer->add();
@@ -60,11 +59,15 @@ class Topic extends \Controller\Admin\Init {
                 \Common::ajaxReturnFalse('id POST参数有误');
             }
 
-            $param['identify'] = $this->getPost('identify');
+            $param['topic_id'] = $this->getPost('topic_id');
             $param['title'] = $this->getPost('title');
-            $param['note'] = $this->getPost('note');
+            $param['long_title'] = $this->getPost('long_title');
+            $param['keywords'] = $this->getPost('keywords');
+            $param['description'] = $this->getPost('description');
+            $param['category'] = $this->getPost('category');
+            $param['post_keyword'] = $this->getPost('post_keyword');
+            $param['post_status'] = $this->getPost('post_status');
             $param['status'] = $this->getPost('status');
-
             $topicer = new \Logic\Topicer($id, $param);
             $topicer->edit();
         } else {
@@ -74,6 +77,7 @@ class Topic extends \Controller\Admin\Init {
             }
 
             $info = \Db::instance()->getRow("select * from `topic` where `id` = '$id'");
+            
             if (empty($info)) {
                 exit("id: {$id}, 文章信息没找到");
             }
@@ -105,12 +109,12 @@ class Topic extends \Controller\Admin\Init {
         $return = array(
             'code' => 0,
             'msg' => '',
-            'count' => \Db::instance()->count("select count(`id`) from `keywords` where $where"),
+            'count' => \Db::instance()->count("select count(`id`) from `topic` where $where"),
             'data' => array(),
         );
 
         $offset = ($page - 1) * $limit;
-        $sql = "select * from `keywords` where $where $order limit $limit offset $offset";
+        $sql = "select * from `topic` where $where $order limit $limit offset $offset";
         $return['data'] = $this->formatSearchData(\Db::instance()->getList($sql));
 
         \Common::ajaxOut($return);
@@ -128,13 +132,22 @@ class Topic extends \Controller\Admin\Init {
             return $data;
         }
 
+        $status_title = array(
+            0 => '隐藏',
+            1 => '显示',
+        );
         $return = array();
         foreach ($data as $d) {
             $return[] = array(
                 'id' => $d['id'],
-                'keyword' => $d['keyword'],
-                'type' => $d['type'],
+                'topic_id' => $d['topic_id'],
+                'title' => $d['title'],
+                'category' => $d['category'],
+                'post_keyword' => $d['post_keyword'],
+                'post_status' => $d['post_status'],
                 'count' => $d['count'],
+                'status' => $status_title[$d['status']],
+                'op_string' => '<a href="/admin/topic/edit?id=' . $d['id'] . '" class="layui-btn">修改<i class="layui-icon">&#xe642;</i></a>',
             );
         }
 

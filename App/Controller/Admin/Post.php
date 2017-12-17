@@ -41,10 +41,9 @@ class Post extends \Controller\Admin\Init {
             $param['category'] = $this->getPost('category');
             $param['image_url'] = $this->getPost('image_url');
             $param['content'] = $this->getPost('content');
+            $param['long_title'] = $this->getPost('long_title');
             $param['keywords'] = $this->getPost('keywords');
             $param['description'] = $this->getPost('description');
-            $param['share_title'] = $this->getPost('share_title');
-            $param['share_description'] = $this->getPost('share_description');
             $param['weixin_url'] = $this->getPost('weixin_url');
             $param['weixin_up_datetime'] = $this->getPost('weixin_up_datetime');
             $param['status'] = $this->getPost('status');
@@ -73,10 +72,9 @@ class Post extends \Controller\Admin\Init {
             $param['category'] = $this->getPost('category');
             $param['image_url'] = $this->getPost('image_url');
             $param['content'] = $this->getPost('content');
+            $param['long_title'] = $this->getPost('long_title');
             $param['keywords'] = $this->getPost('keywords');
             $param['description'] = $this->getPost('description');
-            $param['share_title'] = $this->getPost('share_title');
-            $param['share_description'] = $this->getPost('share_description');
             $param['weixin_url'] = $this->getPost('weixin_url');
             $param['weixin_up_datetime'] = $this->getPost('weixin_up_datetime');
             $param['status'] = $this->getPost('status');
@@ -135,7 +133,7 @@ class Post extends \Controller\Admin\Init {
         if ($isMryw == 2) {
             $where .= " and `weixin_up_datetime` = 0";
         }
-        
+
         if ($status !== '') {
             $where .= " and `status` = '$status'";
         }
@@ -173,14 +171,14 @@ class Post extends \Controller\Admin\Init {
         $post_ids = array_column($data, 'post_id');
         $where = "`post_id` in('" . implode("','", $post_ids) . "')";
         $views = \Db::instance()->getList("select `post_id`,`views` from `post_view` where $where", 'post_id');
-        
+
         $status_title = [
             '0' => '隐藏',
             '1' => '显示',
             '2' => '推荐',
             '3' => '首页推荐',
         ];
-        
+
         $return = array();
         foreach ($data as $d) {
             $return[] = array(

@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        <title>主题编辑更新 - 爱美文网</title>
+        <title>主题更新 - 爱美文网</title>
         <link rel="stylesheet" href="/layui/dist/css/layui.css">
     </head>
     <body class="layui-layout-body">
@@ -13,87 +13,96 @@
                 <!-- 内容主体区域 -->
                 <div style="padding: 15px;">
                     <fieldset class="layui-elem-field">
-                        <legend>主题编辑更新</legend>
+                        <legend>更新主题</legend>
                         <div class="layui-field-box">
                             <form class="layui-form" style="width: 600px;">
                                 <div class="layui-form-item">
-                                    <label class='layui-form-label'>ID</label>
-                                    <div style="padding: 10px 15px;">
+                                    <label class='layui-form-label'>ID标识</label>
+                                    <div class='layui-input-block'>
                                         <input type="hidden" name="id" value="<?=$info['id']?>">
-                                        <?php if($info['identify']): ?>
-                                        <?=$info['id'] . ' : ' . $info['identify']?>
-                                        <?php else: ?>
-                                        <?=$info['id']?>
-                                        <?php endif;?>
+                                        <input type="hidden" name="topic_id" value="<?=$info['topic_id']?>">
+                                        <div style="padding:10px;"><a href="/topic/<?=$info['topic_id']?>" target="_blank"><?=$info['id']?> - <?=$info['topic_id']?></a></div>
+                                    </div>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <label class='layui-form-label'>标题</label>
+                                    <div class='layui-input-block'>
+                                        <input type="text" name="title" required lay-verify="required" placeholder="请输入主题标题" autocomplete="off" class="layui-input" value="<?=$info['title']?>">
+                                    </div>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <label class='layui-form-label'>长标题</label>
+                                    <div class='layui-input-block'>
+                                        <textarea name="long_title" placeholder="请输入长标题，200字符内" class="layui-textarea"><?=$info['long_title']?></textarea>
                                     </div>
                                 </div>
 
                                 <div class="layui-form-item">
                                     <label class='layui-form-label'>关键词</label>
-                                    <div class='layui-input-block' style="padding: 10px 0 0 0">
-                                        <?=$info['keyword']?>
+                                    <div class='layui-input-block'>
+                                        <input type="text" name="keywords"  placeholder="请输入关键词描述" autocomplete="off" class="layui-input" value="<?=$info['keywords']?>">
                                     </div>
                                 </div>
 
                                 <div class="layui-form-item">
-                                    <label class='layui-form-label'>类型</label>
-                                    <div class='layui-input-block' style="padding: 10px 0 0 0">
-                                        <?=$info['type']?>
+                                    <label class='layui-form-label'>主题简介</label>
+                                    <div class='layui-input-block'>
+                                        <textarea name="description" placeholder="请输入主题简介，300字符内" class="layui-textarea" rows="6"><?=$info['description']?></textarea>
                                     </div>
                                 </div>
-                                
+
                                 <div class="layui-form-item">
-                                    <label class='layui-form-label'>标识</label>
-                                    <?php if($info['identify']): ?>
-                                    <div class='layui-input-block' style="padding: 10px 0 0 0">
-                                        <?=$info['identify']?>
-                                        <input type="hidden" name="identify" value="<?=$info['identify']?>">
-                                    </div>
-                                    <?php else: ?>
+                                    <label class='layui-form-label'>关联分类</label>
                                     <div class='layui-input-block'>
-                                        <input type="text" name="identify" required lay-verify="required" placeholder="请输入主题标识" autocomplete="off" class="layui-input" value="">
+                                        <input type="text" name="category" placeholder="主题关联的分类，多个以逗号分隔，可为空" autocomplete="off" class="layui-input" value="<?=$info['category']?>">
+                                        <div style="color: #666; margin: 4px 0 0 0;">
+                                            分类
+                                            <?php foreach (\Config\System::$category as $k => $v): ?>
+                                            <?=$k . ' = ' . $v?>&nbsp;
+                                            <?php endforeach; ?>
+                                        </div>
                                     </div>
-                                    <?php endif;?>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <label class='layui-form-label'>关联关键词</label>
+                                    <div class='layui-input-block'>
+                                        <input type="text" name="post_keyword" placeholder="请输入关联关键词，可为空" autocomplete="off" class="layui-input" value="<?=$info['post_keyword']?>">
+                                    </div>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <label class='layui-form-label'>文章状态</label>
+                                    <div class='layui-input-block'>
+                                        <input type="text" name="post_status" placeholder="关联文章状态筛选，多个状态以逗号分隔，可为空" autocomplete="off" class="layui-input" value="<?=$info['post_status']?>">
+                                        <div style="color: #666; margin: 4px 0 0 0;">文章状态 1 = 显示 2 = 推荐 3 = 首页推荐</div>
+                                    </div>
                                 </div>
 
                                 <div class="layui-form-item">
                                     <label class='layui-form-label'>关联文章</label>
-                                    <div class='layui-input-block' style="padding: 10px 0 0 0">
-                                        <?=$info['content']?>
-                                    </div>
-                                </div>
-                                
-                                <div class="layui-form-item">
-                                    <label class='layui-form-label'>关联文章数量</label>
-                                    <div class='layui-input-block' style="padding: 10px 0 0 0">
-                                        <?=$info['count']?>
-                                    </div>
-                                </div>
-                                
-                                <div class="layui-form-item">
-                                    <label class='layui-form-label'>标题描述</label>
                                     <div class='layui-input-block'>
-                                        <input type="text" name="title" placeholder="请输入标题描述" autocomplete="off" class="layui-input" value="<?=$info['title']?>">
-                                    </div>
-                                </div>
-                                
-                                <div class="layui-form-item">
-                                    <label class='layui-form-label'>简要描述</label>
-                                    <div class='layui-input-block'>
-                                        <textarea name="note" placeholder="请输入简要描述" class="layui-textarea"><?=$info['note']?></textarea>
+                                        <div style="padding:10px 0;">文章数量：<?=$info['count']?></div>
+                                        <?php if ($info['post_ids']): ?>
+                                        <div><?=$info['post_ids']?></div>
+                                        <?php else: ?>
+                                        <div>无</div>
+                                        <?php endif;?>
                                     </div>
                                 </div>
 
                                 <div class="layui-form-item">
-                                    <label class='layui-form-label'>状态</label>
+                                    <label class='layui-form-label'>主题状态</label>
                                     <div class='layui-input-block'>
-                                        <?php if ($info['status']): ?>
+                                        <?php if ($info['status'] == 1): ?>
                                         <input type="radio" name="status" value="0" title="隐藏">
                                         <input type="radio" name="status" value="1" title="显示" checked="checked">
                                         <?php else: ?>
                                         <input type="radio" name="status" value="0" title="隐藏" checked="checked">
                                         <input type="radio" name="status" value="1" title="显示">
-                                        <?php endif; ?>
+                                        <?php endif;?>
                                     </div>
                                 </div>
 
@@ -127,9 +136,8 @@
                                 content: result.message,
                                 icon: 6,
                                 yes: function (index, layero) {
-                                    $('#submit').removeClass('layui-btn-disabled').html('立即提交');
-                                    $('#result').removeClass('layui-btn-disabled');
                                     layer.close(index);
+                                    window.location.href = '/admin/topic/edit?id=' + result.data.id;
                                 }
                             });
                         } else {

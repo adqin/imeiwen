@@ -8,14 +8,14 @@
 <div id="mobile-top-nav">
     <ul class="layui-nav layui-bg-cyan">
         <?php foreach($normal as $v): ?>
-        <li class="layui-nav-item<?php if($v['selected']): ?> layui-this<?php endif; ?>"><a href="<?=$v['url']?>"><?=$v['title']?></a></li>
+        <li class="layui-nav-item<?php if($v['selected']): ?> layui-this<?php endif; ?>"><a href="<?=$v['url']?>" title="<?=$v['note']?>"><?=$v['title']?></a></li>
         <?php endforeach; ?>
         <li class="layui-nav-item">
             <!-- 二级菜单 -->
             <a href="javascript:;">更多</a>
             <dl class="layui-nav-child">
                 <?php foreach ($more as $v): ?>
-                <dd><a href="<?=$v['url']?>"><?=$v['title']?></a></dd>
+                <dd><a href="<?=$v['url']?>" title="<?=$v['title']?>"><?=$v['title']?></a></dd>
                 <?php endforeach; ?>
             </dl>
         </li>
@@ -26,14 +26,14 @@
     <ul class="layui-nav layui-bg-cyan">
         <li id="logo"><a href="/" title="爱美文网，精典短篇美文/诗歌收集珍藏"><img src="/logo.png" title="爱美文网"></a></li>
         <?php foreach($normal as $v): ?>
-        <li class="layui-nav-item<?php if($v['selected']): ?> layui-this<?php endif; ?>"><a href="<?=$v['url']?>"><?=$v['title']?></a></li>
+        <li class="layui-nav-item<?php if($v['selected']): ?> layui-this<?php endif; ?>"><a href="<?=$v['url']?>" title="<?=$v['note']?>"><?=$v['title']?></a></li>
         <?php endforeach; ?>
         <li class="layui-nav-item">
             <!-- 二级菜单 -->
             <a href="javascript:;">更多</a>
             <dl class="layui-nav-child">
                 <?php foreach ($more as $v): ?>
-                <dd><a href="<?=$v['url']?>"><?=$v['title']?></a></dd>
+                <dd><a href="<?=$v['url']?>" title="<?=$v['note']?>"><?=$v['title']?></a></dd>
                 <?php endforeach; ?>
             </dl>
         </li>

@@ -28,18 +28,21 @@ select {
     font-size: 14px;
     color: #999;
 }
-.item {
-    padding: 1px;
-    border: 1px solid #d2d2d2;
-}
 .thumb {
     overflow: hidden;
     background-color: #2F4056;
     margin: 0 auto;
+    border: 1px solid #eee;
 }
 .title,.note {
     padding: 3px;
     margin: 5px;
+}
+.title a {
+    color: #666;
+}
+.title a:hover {
+    color: #333;
 }
 .note {
     line-height: 20px;
@@ -60,7 +63,7 @@ select {
 .note a:hover {
     color: #666;
 }
-.author-date {
+.pt-date {
     position: relative;
 }
 .related-pt {
@@ -95,10 +98,6 @@ select {
 }
 .topic-note a:hover {
     color: #999;
-}
-.friend-link {
-    margin-top: 30px;
-    color: #666;
 }
 #page-content-div {
     min-height: 600px;

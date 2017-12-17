@@ -20,13 +20,12 @@ class System {
      */
     public static $site = array(
         'name' => '爱美文网',
-        'note' => '美文/诗歌/古诗词精品收藏',
-        'title' => '爱美文网',
-        'keywords' => '爱美文, 爱美文网, 美文, 散文, 诗歌, 古诗文',
-        'description' => '爱美文网，精典美文与诗歌收集，精心挑选，精心配图，一图一文，每一篇都值得珍藏。',
         'domain' => 'imeiwen.org',
+        'title' => '爱美文网',
+        'keywords' => '爱美文网, 美文, 短篇美文, 诗歌, 短诗, 古诗文',
+        'note' => '爱美文网，精典美文与诗歌收藏。',
     );
-    
+
     /**
      * 文章分类.
      * 
@@ -39,22 +38,27 @@ class System {
         '4' => '短诗',
         '5' => '古诗文',
     );
-    
+
     /**
      * 导航菜单.
      * 
      * @var array. 
      */
     public static $menu = array(
-        'index' => ['title' => '首页', 'url' => '/'],
-        'recommend' => ['title' => '精选', 'url' => '/recommend'],
-        'hot' => ['title' => '热门', 'url' => '/hot'],
-        'recent' => ['title' => '最近', 'url' => '/recent'],
-        'random' => ['title' => '随机', 'url' => '/random'],
-        'meiriyiwen' => ['title' => '每日一文', 'url' => '/meiriyiwen'],
-        'weixindingyue' => ['title' => '微信订阅', 'url' => '/page/weixindingyue'],
-        'event' => ['title' => '发展历程', 'url' => '/page/event'],
-        'contact' => ['title' => '联系方式', 'url' => '/page/contact'],
+        'normal' => [
+            'index' => ['title' => '首页', 'url' => '/', 'note' => '首页'],
+            'recommend' => ['title' => '精选', 'url' => '/recommend', 'note' => '美文精选'],
+            'topiclist' => ['title' => '主题', 'url' => '/topiclist', 'note' => '主题'],
+            'hot' => ['title' => '热门', 'url' => '/hot', 'note' => '热门美文'],
+            'meiriyiwen' => ['title' => '每日一文', 'url' => '/meiriyiwen', 'note' => '每日一文'],
+            'random' => ['title' => '随机看看', 'url' => '/random', 'note' => '随机看看'],
+            'recent' => ['title' => '最近更新', 'url' => '/recent', 'note' => '最近发布'],
+        ],
+        'more' => [
+            'weixindingyue' => ['title' => '微信订阅', 'url' => '/page/weixindingyue', 'note' => '微信订阅'],
+            'event' => ['title' => '发展历程', 'url' => '/page/event', 'note' => '发展历程'],
+            'contact' => ['title' => '联系方式', 'url' => '/page/contact', 'note' => '联系方式'],
+        ],
     );
 
 }

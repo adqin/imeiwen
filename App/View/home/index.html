@@ -3,10 +3,10 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        <title>爱美文网，精典短篇美文/诗歌收集珍藏</title>
-        <meta name="keywords" content="爱美文,爱美文网,精典短篇美文,诗歌">
-        <meta name="description" content="爱美文网，精典短篇美文/诗歌收集收藏。微信公众号订阅爱美文，每日一文，每一篇都值得珍藏。">
-        <link rel="shortcut icon" href="/favicon.png?2" type="image/x-icon" />
+        <title>爱美文网 - imeiwen.org</title>
+        <meta name="keywords" content="<?=\Config\System::$site['keywords']?>">
+        <meta name="description" content="<?=\Config\System::$site['note']?>">
+        <link rel="shortcut icon" href="/favicon.png?v1" type="image/x-icon" />
         <link rel="stylesheet" href="/layui/dist/css/layui.css?<?=$version?>">
         <link rel="stylesheet" href="/site.css?<?=$version?>">
     </head>
@@ -23,14 +23,12 @@
 
             <!--描述-->
             <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 20px;" id="quote-note">
-                <p>
-                    <i class="layui-icon" style="color: #666; font-weight: 500; font-size: 20px;">&#xe60b;</i> 爱美文网，精典短篇美文与诗歌收集。精心挑选，精心配图，一图一文，每一篇都值得珍藏。
-                </p>
+                <p><?=\Config\System::$site['note']?></p>
             </blockquote>
 
             <!--首页推荐-->
             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-                <legend><a href="/recommend">美文精选</a></legend>
+                <legend>美文精选</legend>
                 <div class="layui-field-box">
                     <?php require TPL_PATH . 'home/index_post_item.html'; ?>
                 </div>
@@ -38,7 +36,7 @@
 
             <?php if ($topic_list): ?>
             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;" id="index-topic">
-                <legend>美文主题</legend>
+                <legend>主题</legend>
                 <div class="layui-field-box">
                     <div class="layui-row layui-col-space10">
                         <?php foreach ($topic_list as $r): ?>
@@ -53,12 +51,6 @@
                 </div>
             </fieldset>
             <?php endif; ?>
-
-            <div class="friend-link" style="margin-bottom: -24px; margin-left: 6px;">
-                友情链接：
-                <div style="display: inline-block;"><a href="https://secure.php.net/" target="_blank"><img src="http://st.imeiwen.org/php_logo.png" width="30"></a></div>
-                <div style="display: inline-block; margin-left: 10px;"><a href="http://www.layui.com/" target="_blank">layui</a></div>
-            </div>
 
             <?php require TPL_PATH . 'home/footer.html'; ?>
 

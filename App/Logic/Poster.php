@@ -95,11 +95,11 @@ class Poster {
 
             // 清理本地缓存图片.
             $this->cleanLocalImage();
-            
+
             // 更新文章缓存.
             $itemer = new \Logic\PostItemer($this->post_id, true);
             $itemer->get();
-            
+
             // 返回成功提示.
             \Common::ajaxReturnSuccess("更新文章成功", ['id' => $this->id]);
         } catch (\Exception $e) {
@@ -124,10 +124,9 @@ class Poster {
             'author' => $this->param['author'],
             'category' => $this->param['category'],
             'content' => $this->param['content'],
+            'long_title' => $this->param['long_title'],
             'keywords' => $this->param['keywords'] ? $this->formatKeywords($this->param['keywords']) : '', // 替换中文逗号为英文.
             'description' => $this->param['description'],
-            'share_title' => $this->param['share_title'],
-            'share_description' => $this->param['share_description'],
             'weixin_url' => $this->param['weixin_url'],
             'weixin_up_datetime' => $this->param['weixin_up_datetime'] ? strtotime($this->param['weixin_up_datetime']) : 0, // 转换为时间戳, 方便排序.
             'status' => $this->param['status'],
@@ -190,6 +189,7 @@ class Poster {
             'category' => '分类',
             'image_url' => '配图',
             'content' => '内容',
+            'long_title' => '长标题',
             'keywords' => '关键词',
             'description' => '简要描述',
             'weixin_url' => '微信文章URL',
@@ -226,7 +226,7 @@ class Poster {
                 \Common::ajaxReturnFalse('文章配图必须上传');
             }
 
-            $required = array('description');
+            $required = array('long_title', 'keywords', 'description');
             foreach ($required as $k) {
                 if (empty($this->param[$k])) {
                     \Common::ajaxReturnFalse("{$k}:{$fields[$k]} 值不能为空");
@@ -245,25 +245,18 @@ class Poster {
         if (\Db::instance()->exists("select `id` from `post` where $where")) {
             \Common::ajaxReturnFalse("author: {$author}, title: {$title} 文章已发布过, 不要重复发布");
         }
-        
+
+        if ($this->param['long_title']) {
+            $len = strlen($this->param['long_title']);
+            if ($len > 140) {
+                \Common::ajaxReturnFalse("文章长标题应在140个字符内");
+            }
+        }
+
         if ($this->param['description']) {
             $len = strlen($this->param['description']);
-            if ($len > 225) {
-                \Common::ajaxReturnFalse("文章简介长度应在225个字符长度内");
-            }
-        }
-        
-        if ($this->param['share_title']) {
-            $len = strlen($this->param['share_title']);
-            if ($len > 200) {
-                \Common::ajaxReturnFalse("文章分享标题应在200个字符内");
-            }
-        }
-        
-        if ($this->param['share_description']) {
-            $len = strlen($this->param['share_description']);
             if ($len > 300) {
-                \Common::ajaxReturnFalse("文章分享描述赢在300个字符内");
+                \Common::ajaxReturnFalse("文章描述长度应在300个字符长度内");
             }
         }
 
@@ -325,7 +318,7 @@ class Poster {
             $this->image_data = $image_data;
         }
     }
-    
+
     /**
      * 格式化处理关键词.
      * 
@@ -335,19 +328,19 @@ class Poster {
      */
     private function formatKeywords($keywords = '') {
         $keywords = str_replace('，', ',', $keywords);
-        
+
         $return = [];
         $arr = explode(',', $keywords);
-        
+
         foreach ($arr as $r) {
             $r = trim($r);
             if ($r) {
                 $return[] = $r;
             }
         }
-        
+
         $return = array_unique($return);
-        
+
         return $return ? ',' . implode(',', $return) . ',' : '';
     }
 

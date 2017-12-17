@@ -17,8 +17,17 @@ class TopNaver {
      * @return array.
      */
     public static function getMenu($this_menu = 'index', $is_mobile = false) {
-        $menu_list = \Config\System::$menu;
+        $menu_normal = \Config\System::$menu['normal'];
+        $menu_more = \Config\System::$menu['more'];
+        $menu_list = array_merge($menu_normal, $menu_more);
         $show_count = $is_mobile ? 2 : 6;
+        $other = [];
+        
+        $tmp = $menu_list;
+        for ($i = 0; $i < $show_count; $i++) {
+            array_shift($tmp);
+        }
+        $other = array_keys($tmp);
 
         $normal = $more = [];
         $index = 0;
@@ -30,7 +39,7 @@ class TopNaver {
             unset($menu_list['index']);
             $index++;
 
-            if ($this_menu) {
+            if ($this_menu && in_array($this_menu, $other)) {
                 $normal[$index] = $menu_list[$this_menu];
                 $normal[$index]['selected'] = 'selected';
                 unset($menu_list[$this_menu]);

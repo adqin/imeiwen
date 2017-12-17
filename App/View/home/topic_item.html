@@ -24,32 +24,14 @@
 
             <input type="hidden" id="identify-val" value="<?=$identify?>" />
             <!--页面主题内容-->
-            <fieldset class="layui-elem-field" style="margin: 30px 0;">
-                <legend><span class="layui-badge-rim layui-bg-gray" style="font-size: 18px; padding: 2px; 3px;">主题 :: <?=$result['title']?></span></legend>
-                <div class="layui-field-box">
-                    <!--描述-->
-                    <blockquote class="layui-elem-quote layui-quote-nm" style="margin: 5px 0;" id="quote-note">
-                        <p>
-                            <i class="layui-icon" style="color: #666; font-weight: 500; font-size: 20px;">&#xe60b;</i>
-                            <?=$result['note']?>
-                        </p>
-                    </blockquote>
-                </div>
+            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+                <legend><?=$result['title']?></legend>
             </fieldset>
 
-            <div class="layui-row layui-col-space10">
-                <div class="layui-col-md4">
-                    <select id="topic-detail-change-page">
-                        <?php for ($i = 1; $i <= $total_page; $i++): ?>
-                        <?php if ($i == $page): ?>
-                        <option value="<?=$i?>" selected="selected">第<?=$i?>页</option>
-                        <?php else: ?>
-                        <option value="<?=$i?>">第<?=$i?>页</option>
-                        <?php endif; ?>
-                        <?php endfor; ?>
-                    </select>
-                </div>
-            </div>
+            <!--描述-->
+            <blockquote class="layui-elem-quote layui-quote-nm" style="margin: 0px 0px 20px 0;" id="quote-note">
+                <p><?=$result['note']?></p>
+            </blockquote>
 
             <?php require TPL_PATH . 'home/post_item.html'; ?>
 
@@ -72,7 +54,7 @@
                 <a href="/topic/<?=$identify?>/<?=$i?>">第<?=$i?>页</a>
                 <?php endfor; ?>
             </div>
-            
+
             <?php require TPL_PATH . 'home/footer.html'; ?>
 
         </div>
