@@ -50,7 +50,6 @@ class System {
             'recommend' => ['title' => '精选', 'url' => '/recommend', 'note' => '美文精选'],
             'topiclist' => ['title' => '主题', 'url' => '/topiclist', 'note' => '主题'],
             'hot' => ['title' => '热门', 'url' => '/hot', 'note' => '热门美文'],
-            'meiriyiwen' => ['title' => '每日一文', 'url' => '/meiriyiwen', 'note' => '每日一文'],
             'random' => ['title' => '随机看看', 'url' => '/random', 'note' => '随机看看'],
             'recent' => ['title' => '最近更新', 'url' => '/recent', 'note' => '最近发布'],
         ],

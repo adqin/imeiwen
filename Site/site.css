@@ -3,9 +3,14 @@
     background-color: #2F4056;
 }
 #logo {
-    margin: 15px 20px 0 0;
+    margin: 15px 10px 0 0;
     padding: 0;
     float: left;
+}
+@media screen and (min-width: 600px) {
+    #logo {
+        margin: 15px 20px 0 0 !important;
+    }
 }
 #logo img {
     padding: 0;
@@ -13,7 +18,7 @@
     height: 30px;
 }
 .layui-nav-item a {
-    font-size: 18px !important;
+    font-size: 16px !important;
 }
 #quote-note {
     font-size: 16px;

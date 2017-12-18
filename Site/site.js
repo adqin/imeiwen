@@ -1,11 +1,11 @@
 layui.use(['jquery', 'element', 'form', 'util'], function () {
     var $ = layui.$, element = layui.element, form = layui.form, util = layui.util;
-    imgResize();
+    windowResize();
     lazyRender();
 
     // 浏览器窗口大小发生变化.
     $(window).resize(function () {
-        imgResize();
+        windowResize();
     });
 
     // 懒加载.
@@ -26,12 +26,6 @@ layui.use(['jquery', 'element', 'form', 'util'], function () {
         window.location.href = url;
     });
 
-    $('.change-weix-uptime').change(function () {
-        date = $(this).val();
-        url = date ? '/meiriyiwen/' + date : '/meiriyiwen';
-        window.location.href = url;
-    });
-
     // 回到顶部.
     util.fixbar({
         bar1: false,
@@ -41,13 +35,19 @@ layui.use(['jquery', 'element', 'form', 'util'], function () {
         }
     });
 
-    function imgResize() {
+    function windowResize() {
         $('.thumb > a > img').each(function () {
             var tw = $(this).parents('.item').width();
             var th = tw * 0.5;
             $(this).parents('.thumb').width(tw).height(th);
             $(this).width(tw);
         });
+        var win_w = $(window).width();
+        if (win_w < 400) {
+            $('#logo').hide();
+        } else {
+            $('#logo').show();
+        }
     }
 
     function lazyRender() {
