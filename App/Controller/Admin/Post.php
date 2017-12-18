@@ -44,8 +44,6 @@ class Post extends \Controller\Admin\Init {
             $param['long_title'] = $this->getPost('long_title');
             $param['keywords'] = $this->getPost('keywords');
             $param['description'] = $this->getPost('description');
-            $param['weixin_url'] = $this->getPost('weixin_url');
-            $param['weixin_up_datetime'] = $this->getPost('weixin_up_datetime');
             $param['status'] = $this->getPost('status');
 
             $poster = new \Logic\Poster($id = 0, $param);
@@ -75,8 +73,6 @@ class Post extends \Controller\Admin\Init {
             $param['long_title'] = $this->getPost('long_title');
             $param['keywords'] = $this->getPost('keywords');
             $param['description'] = $this->getPost('description');
-            $param['weixin_url'] = $this->getPost('weixin_url');
-            $param['weixin_up_datetime'] = $this->getPost('weixin_up_datetime');
             $param['status'] = $this->getPost('status');
 
             $poster = new \Logic\Poster($id, $param);
@@ -125,13 +121,6 @@ class Post extends \Controller\Admin\Init {
         }
         if ($category) {
             $where .= " and `category` = '$category'";
-        }
-        if ($isMryw == 1) {
-            $where .= " and `weixin_up_datetime` > 0";
-            $order = "order by `weixin_up_datetime` desc";
-        }
-        if ($isMryw == 2) {
-            $where .= " and `weixin_up_datetime` = 0";
         }
 
         if ($status !== '') {
@@ -190,7 +179,6 @@ class Post extends \Controller\Admin\Init {
                 'keywords' => trim($d['keywords'], ','),
                 'status' => $status_title[$d['status']],
                 'views' => isset($views[$d['post_id']]) ? $views[$d['post_id']]['views'] : 0,
-                'weixin_string' => $d['weixin_up_datetime'] ? '<a href="' . $d['weixin_url'] . '" class="weixin_url" target="_blank">' . date('Y-m-d', $d['weixin_up_datetime']) : '',
                 'op_string' => '<a href="/admin/post/edit?id=' . $d['id'] . '" class="layui-btn">修改<i class="layui-icon">&#xe642;</i></a>',
             );
         }

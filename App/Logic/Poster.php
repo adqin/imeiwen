@@ -127,8 +127,6 @@ class Poster {
             'long_title' => $this->param['long_title'],
             'keywords' => $this->param['keywords'] ? $this->formatKeywords($this->param['keywords']) : '', // 替换中文逗号为英文.
             'description' => $this->param['description'],
-            'weixin_url' => $this->param['weixin_url'],
-            'weixin_up_datetime' => $this->param['weixin_up_datetime'] ? strtotime($this->param['weixin_up_datetime']) : 0, // 转换为时间戳, 方便排序.
             'status' => $this->param['status'],
         );
 
@@ -192,8 +190,6 @@ class Poster {
             'long_title' => '长标题',
             'keywords' => '关键词',
             'description' => '简要描述',
-            'weixin_url' => '微信文章URL',
-            'weixin_up_datetime' => '微信文章发布日期',
             'status' => '状态',
         );
 
@@ -257,24 +253,6 @@ class Poster {
             $len = strlen($this->param['description']);
             if ($len > 300) {
                 \Common::ajaxReturnFalse("文章描述长度应在300个字符长度内");
-            }
-        }
-
-        // 验证微信文章发布日期.
-        if ($this->param['weixin_up_datetime']) {
-            $time = strtotime($this->param['weixin_up_datetime']);
-            if (date('Y-m-d', $time) != $this->param['weixin_up_datetime']) {
-                \Common::ajaxReturnFalse('微信文章发布日期格式有误');
-            }
-
-            // 验证微信文章发布日期是否重复, 每日一文, 每天只能一篇文章.
-            $where = "`weixin_up_datetime` = '$time'";
-            if ($this->id) {
-                $where .= " and `id` <> '$this->id'";
-            }
-
-            if (\Db::instance()->exists("select `id` from `post` where $where")) {
-                \Common::ajaxReturnFalse("每日一文/微信文章发布日期: {$this->param['weixin_up_datetime']}已发布过, 不要重复发布");
             }
         }
     }

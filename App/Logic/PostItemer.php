@@ -79,7 +79,7 @@ class PostItemer {
         $relation = $this->getRelation($info);
         // 强制刷新post_topic缓存.
         $pter = new \Logic\Pter($this->post_id, true);
-        //$relate_pt = $pter->getCache();
+        $relate_pt = $pter->getCache();
 
         $return = [
             'post_id' => $info['post_id'],
@@ -94,11 +94,9 @@ class PostItemer {
             'description' => $this->cleanString($info['description']),
             'input_time' => $info['input_time'],
             'update_time' => $info['update_time'],
-            'weixin_url' => $info['weixin_url'],
-            'weixin_up_datetime' => $info['weixin_up_datetime'],
             'page_view' => $view ? $view['views'] : 0,
             'relation' => $relation,
-                //'relate_pt' => $relate_pt,
+            'relate_pt' => $relate_pt,
         ];
 
         $this->info = $return;

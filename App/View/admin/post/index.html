@@ -9,7 +9,7 @@
             .layui-table-cell {
                 height: auto !important;
             }
-            .post_item, .weixin_url {
+            .post_item {
                 text-decoration: underline #009688 dashed !important;
             }
         </style>
@@ -50,16 +50,6 @@
 
                             </div>
                             <div class="layui-form-item">
-                                <div class="layui-inline">
-                                    <label class="layui-form-label">每日一文</label>
-                                    <div class="layui-input-inline">
-                                        <select name="isMryw">
-                                            <option value="">全部</option>
-                                            <option value="1">是</option>
-                                            <option value="2">否</option>
-                                        </select>     
-                                    </div>
-                                </div>
                                 <div class="layui-inline">
                                     <label class="layui-form-label">文章状态</label>
                                     <div class="layui-input-inline">
@@ -106,7 +96,6 @@
                             {field: 'author', title: '作者', width: 120},
                             {field: 'category', title: '分类', width: 120},
                             {field: 'keywords', title: '关键词', width: 200},
-                            {field: 'weixin_string', 'title': '微信发布/每日一文', width: 150},
                             {field: 'status', title: '状态', width: 90},
                             {field: 'views', title: '浏览量', width: 90},
                             {field: 'op_string', title: '操作', width: 150}

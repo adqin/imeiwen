@@ -56,7 +56,7 @@
                                 <div class="layui-form-item">
                                     <label class='layui-form-label'>关联分类</label>
                                     <div class='layui-input-block'>
-                                        <input type="text" name="category" placeholder="主题关联的分类，多个以逗号分隔，可为空" autocomplete="off" class="layui-input" value="<?=$info['category']?>">
+                                        <input type="text" name="category" placeholder="主题关联的分类，多个以逗号分隔，可为空" autocomplete="off" class="layui-input" value="<?=trim($info['category'], ',')?>">
                                         <div style="color: #666; margin: 4px 0 0 0;">
                                             分类
                                             <?php foreach (\Config\System::$category as $k => $v): ?>
@@ -76,7 +76,7 @@
                                 <div class="layui-form-item">
                                     <label class='layui-form-label'>文章状态</label>
                                     <div class='layui-input-block'>
-                                        <input type="text" name="post_status" placeholder="关联文章状态筛选，多个状态以逗号分隔，可为空" autocomplete="off" class="layui-input" value="<?=$info['post_status']?>">
+                                        <input type="text" name="post_status" placeholder="关联文章状态筛选，多个状态以逗号分隔，可为空" autocomplete="off" class="layui-input" value="<?=trim($info['post_status'], ',')?>">
                                         <div style="color: #666; margin: 4px 0 0 0;">文章状态 1 = 显示 2 = 推荐 3 = 首页推荐</div>
                                     </div>
                                 </div>

@@ -9,7 +9,7 @@ namespace Logic;
 class Pter {
 
     private $post_id = ''; // post主键id.
-    private $return = ''; // 返回.
+    private $return = []; // 返回.
     private $info = []; // 文章信息.
     private $force_reload = false; // 是否强制更新.
     private $cache_file = ''; // 缓存保存的文件.
@@ -17,7 +17,7 @@ class Pter {
     public function __construct($post_id = '', $force_reload = false) {
         $this->post_id = $post_id;
         $where = "`post_id` = '$post_id' and `status` in('1','2','3')";
-        $this->info = \Db::instance()->getRow("select `post_id`,`keywords`,`author` from `post` where $where");
+        $this->info = \Db::instance()->getRow("select `post_id`, `category`, `keywords`, `author`, `status` from `post` where $where");
         $this->force_reload = $force_reload;
     }
 
@@ -48,8 +48,8 @@ class Pter {
         } else {
             // 文件存在，并且没有要求强制要更新缓存.
             $result = file_get_contents($this->cache_file);
-            $result = $result ? $result : '';
-            if ($return) {
+            $result = $result ? json_decode($result, true) : '';
+            if ($result) {
                 $this->return = $result;
             } else {
                 // 文件内容为空.
@@ -73,18 +73,27 @@ class Pter {
             }
         }
 
+        // 查询作者与关键词关联的主题.
         $in = "('" . implode("','", $all) . "')";
-        $where = "`post_keywords` in{$in} and `status` = '1'";
-        $tplist = \Db::instance()->getList("select `post_keywords`, `identify` from `topic` where $where", 'identify');
-
-        $return = [];
+        $where = "`post_keyword` in{$in} and `status` = '1' and `count` >= 10";
+        $rs = \Db::instance()->getList("select `topic_id`,`post_keyword` from `topic` where $where order by `count` asc", 'post_keyword');
+        $tplist_keywords = [];
         foreach ($all as $keyword) {
-            $return[] = isset($tplist[$keyword]) ? '<a class="layui-badge layui-bg-cyan" href="/topic/' . $tplist[$keyword]['identify'] . '" class="related-topic" target="_blank">' . $keyword . '</a>' : '<a class="layui-badge layui-bg-gray">' . $keyword . '</a>';
+            $tplist_keywords[$keyword] = isset($rs[$keyword]) ? $rs[$keyword] : [];
         }
 
-        $return_string = implode(' ', $return);
-        file_put_contents($this->cache_file, $return_string);
-        $this->return = $return_string;
+        $category = ',' . $this->info['category'] . ',';
+        $post_status = ',' . $this->info['status'] . ',';
+        $where = "`category` like '%$category%' and `post_status` like '%$post_status%' and `status` = 1 and `count` >= 10";
+        $tplist_category = \Db::instance()->getList("select `topic_id`, `title` from `topic` where $where order by `count` asc");
+
+        $return = [
+            'keyword' => $tplist_keywords,
+            'category' => $tplist_category,
+        ];
+
+        file_put_contents($this->cache_file, json_encode($return));
+        $this->return = $return;
     }
 
     /**
