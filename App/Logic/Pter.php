@@ -84,7 +84,7 @@ class Pter {
 
         $category = ',' . $this->info['category'] . ',';
         $post_status = ',' . $this->info['status'] . ',';
-        $where = "`category` like '%$category%' and `post_status` like '%$post_status%' and `status` = 1 and `count` >= 10";
+        $where = "`category` like '%$category%' and `post_status` like '%$post_status%' and `status` = 1 and `count` >= 10 and `post_keyword` = ''";
         $tplist_category = \Db::instance()->getList("select `topic_id`, `title` from `topic` where $where order by `count` asc");
 
         $return = [
