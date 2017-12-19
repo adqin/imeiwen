@@ -17,7 +17,8 @@ class Route {
         '/random' => ['handler' => 'Index@random'], // 随机看看.
         '/meiriyiwen[/{date:\w+}]' => ['handler' => 'Index@meiriyiwen'], // 每日一文.
         '/post/{post_id:\w+}' => ['handler' => 'Post@item'], // 文章详情页.
-        '/topic/{identify:\w+}[/{page:\d+}]' => ['handler' => 'Topic@index'], // 主题.
+        '/topiclist[/{page:\d+}]' => ['handler' => 'Topic@index'], // 主题列表.
+        '/topic/{topic_id:\w+}[/{page:\d+}]' => ['handler' => 'Topic@item'], // 主题.
         '/page/{id:\w+}' => ['handler' => 'Page@index'], // 单页.
     );
 

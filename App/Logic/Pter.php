@@ -79,7 +79,7 @@ class Pter {
         $rs = \Db::instance()->getList("select `topic_id`,`post_keyword` from `topic` where $where order by `count` asc", 'post_keyword');
         $tplist_keywords = [];
         foreach ($all as $keyword) {
-            $tplist_keywords[$keyword] = isset($rs[$keyword]) ? $rs[$keyword] : [];
+            $tplist_keywords[$keyword] = isset($rs[$keyword]) ? $rs[$keyword]['topic_id'] : [];
         }
 
         $category = ',' . $this->info['category'] . ',';

@@ -22,7 +22,6 @@ class Post extends \Controller\Base {
         $post_id = isset($this->param['post_id']) && $this->param['post_id'] ? $this->param['post_id'] : '';        
         $itemer = new \Logic\PostItemer($post_id);
         $info = $itemer->get();
-        print_r($info);
         
         //$share_title = urlencode($info['description'] . $info['author'] . '-《' . $info['title'] . '》');
         //$share_url = urlencode('http://imeiwen.org/post/' . $info['post_id']);

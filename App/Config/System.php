@@ -51,7 +51,7 @@ class System {
             'topiclist' => ['title' => '主题', 'url' => '/topiclist', 'note' => '主题'],
             'hot' => ['title' => '热门', 'url' => '/hot', 'note' => '热门美文'],
             'random' => ['title' => '随机看看', 'url' => '/random', 'note' => '随机看看'],
-            'recent' => ['title' => '最近更新', 'url' => '/recent', 'note' => '最近发布'],
+            'recent' => ['title' => '最近发布', 'url' => '/recent', 'note' => '最近发布'],
         ],
         'more' => [
             'weixindingyue' => ['title' => '微信订阅', 'url' => '/page/weixindingyue', 'note' => '微信订阅'],

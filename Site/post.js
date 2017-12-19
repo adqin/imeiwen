@@ -9,7 +9,7 @@ layui.use(['jquery', 'element', 'util'], function () {
 
     // 刷新浏览次数.
     var post_id = $('#post_id').html();
-    $.get('/index/pageview', {post_id: post_id}, function (re) {
+    $.get('/index/postview', {post_id: post_id}, function (re) {
         if (re) {
             $('#page_view').html(re).show();
         }

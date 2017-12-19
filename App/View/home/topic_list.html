@@ -3,12 +3,17 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        <title><?=$info['title']?> - imeiwen.org</title>
-        <meta name="keywords" content="<?=$info['keywords']?>">
-        <meta name="description" content="<?=$info['description']?>">
+        <title>主题列表 - imeiwen.org</title>
         <link rel="shortcut icon" href="/favicon.png?2" type="image/x-icon" />
         <link rel="stylesheet" href="/layui/dist/css/layui.css?<?=$version?>">
         <link rel="stylesheet" href="/site.css?<?=$version?>">
+        <?php if (!$is_mobile): ?>
+        <style type="text/css">
+            .topic_list {
+                min-height: 600px;
+            }
+        </style>
+        <?php endif; ?>
     </head>
     <body>
         <!-- 你的HTML代码 -->
@@ -16,31 +21,32 @@
         <!--[if lt IE 9]>
           <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
           <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
+        <![endif]-->          
 
         <?php require TPL_PATH . 'home/header.html'; ?>
 
         <div class="layui-container">
 
-            <input type="hidden" id="topic_id" value="<?=$topic_id?>" />
-            <input type="hidden" id="topic_item_id" value="<?=$topic_id?>" />
-            
-            <!--页面主题内容-->
+            <!--页面内容-->
             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
-                <legend>主题 :: <?=$info['title']?></legend>
+                <legend>主题列表</legend>
             </fieldset>
 
-            <!--描述-->
-            <blockquote class="layui-elem-quote layui-quote-nm" style="margin: 0px 0px 20px 0;" id="quote-note">
-                <p><?=$info['description']?></p>
-            </blockquote>
-
-            <?php require TPL_PATH . 'home/post_item.html'; ?>
+            <div class="layui-row layui-col-space10 topic_list">
+                <?php foreach ($topic_list as $r): ?>
+                <div class="layui-col-md3">
+                    <div class="index-topic-item">
+                        <div class="topic-title"><a href="/topic/<?=$r['topic_id']?>" target="_blank" class="layui-badge-rim layui-bg-gray"><?=$r['title']?></a></div>
+                        <div class="topic-note"><a href="/topic/<?=$r['topic_id']?>" target="_blank"><?=$r['long_title']?></a></div>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+            </div>
 
             <?php if ($total_page > 1): ?>
-            <div class="layui-row topicitem-page">
+            <div class="layui-row topiclist-page">
                 <div class="layui-col-md12">
-                    <select class="topicitem-change-page layui-btn layui-btn-primary layui-btn-sm">
+                    <select class="topiclist-change-page layui-btn layui-btn-primary layui-btn-sm">
                         <?php for ($i = 1; $i <= $total_page; $i++): ?>
                         <?php if ($i == $page): ?>
                         <option value="<?=$i?>" selected="selected">第<?=$i?>页</option>
@@ -49,16 +55,15 @@
                         <?php endif; ?>
                         <?php endfor; ?>
                     </select>
-                    <?php if ($page - 1): ?><a href="/topic/<?=$topic_id?>/<?=$page-1?>" class="layui-btn layui-btn-sm">上一页</a><?php endif; ?>
-                    <?php if (($page + 1) <= $total_page): ?><a href="/topic/<?=$topic_id?>/<?=$page+1?>" class="layui-btn layui-btn-sm">下一页</a><?php endif; ?>
+                    <?php if ($page - 1): ?><a href="/topiclist/<?=$page-1?>" class="layui-btn layui-btn-sm">上一页</a><?php endif; ?>
+                    <?php if (($page + 1) <= $total_page): ?><a href="/topiclist/<?=$page+1?>" class="layui-btn layui-btn-sm">下一页</a><?php endif; ?>
                 </div>
             </div>
             <?php endif; ?>
 
             <?php require TPL_PATH . 'home/footer.html'; ?>
-
         </div>
         <script src="/layui/dist/layui.js?<?=$version?>"></script>
-        <script src="/site.js?<?=$version?>"></script>
+        <script src="/site.js?<?=$version?>"></script> 
     </body>
 </html>

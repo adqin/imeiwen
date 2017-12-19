@@ -24,7 +24,7 @@
     color: #607fa6;
 }
 .post-image {
-    margin: 30px 0 0 0;
+    margin: 20px 0 0 0;
 }
 .image-loading {
     text-align: center;
@@ -35,38 +35,44 @@
     border: 1px dashed #8c8c8c;
 }
 .author {
-    margin: 10px 0 30px 0px;
+    margin: 10px 0 0 0;
     font-size: 16px;
     color: #666;
+    padding-left: 4px;
 }
 .post-content {
     color: #3e3e3e;
     font-size: 16px;
     word-wrap: break-word;
     line-height: 30px;
+    margin-top: 30px;
 }
-.related-pt {
+.relate-pt {
+    margin-top: 30px;
+    margin-left: 3px;
+}
+.relate-pt a, .relate-pt span {
     font-size: 14px;
-    color: #666;
-    margin: 20px 0 0 0;
+    padding: 3px 5px;
 }
 .share {
     margin-top: 30px;
     font-size: 16px;
     color: #607fa6;
 }
-#more-read-container {
-    margin-top: 30px;
-    margin-bottom: 0px;
+.more-read-container {
+    margin-top: 40px;
 }
-#more-read-container legend {
+.more-title {
     font-size: 18px;
     color: #8c8c8c;
-    font-weight: 400;
+    border-bottom: 1px dashed #eee;
+    padding: 0 0 5px 3px;
 }
 .more-read {
     font-size: 14px;
     line-height: 28px;
+    padding-left: 4px;
 }
 .more-read a {
     color: #666;

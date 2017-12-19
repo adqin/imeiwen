@@ -13,10 +13,16 @@ layui.use(['jquery', 'element', 'form', 'util'], function () {
         lazyRender();
     });
 
-    $('#topic-detail-change-page').change(function () {
-        identify = $('#identify-val').val();
+    $('.topiclist-change-page').change(function () {
         page = $(this).val();
-        url = '/topic/' + identify + '/' + page;
+        url = '/topiclist/' + page;
+        window.location.href = url;
+    });
+
+    $('.topicitem-change-page').change(function () {
+        topic_id = $('#topic_id').val();
+        page = $(this).val();
+        url = '/topic/' + topic_id + '/' + page;
         window.location.href = url;
     });
 
@@ -25,6 +31,11 @@ layui.use(['jquery', 'element', 'form', 'util'], function () {
         url = '/recommend/' + page;
         window.location.href = url;
     });
+    
+    var topic_item_id = $('#topic_item_id').val();
+    if (topic_item_id) {
+        $.get('/index/topicview', {topic_id: topic_item_id}, function(re){});
+    }
 
     // 回到顶部.
     util.fixbar({

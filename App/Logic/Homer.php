@@ -16,7 +16,7 @@ class Homer {
     /**
      * 查询指定类型文章列表.
      * 
-     * @param string $type 类型, recommend=推荐, new=最近更新, hot=热门浏览, random=随机看看.
+     * @param string $type 类型, new=最近更新, hot=热门浏览.
      * @param integer $cache_time, 缓存过期时间.
      * @param boolean $shuffle 是否随机输出.
      * 
@@ -56,9 +56,6 @@ class Homer {
                     break;
                 case 'hot':
                     $return = static::getHotPost();
-                    break;
-                case 'random':
-                    $return = static::getRandomPost();
                     break;
             }
         }
@@ -103,13 +100,13 @@ class Homer {
         }
 
         if ($from_db) {
-            $list = \Db::instance()->getList("select `keyword`, `identify`, `title`, `note` from `topic` where `status` = '1' order by `count` desc limit 8");
+            $list = \Db::instance()->getList("select `topic_id`, `title`, `long_title` from `topic` where `status` = '1' and `count` >= 10 limit 8");
             if ($list) {
                 $return = $list;
                 file_put_contents($cache_file, json_encode($list));
             }
         }
-        
+
         if (count($return) <= $num) {
             return $return;
         } else {
@@ -119,6 +116,28 @@ class Homer {
             }
             return $arr;
         }
+    }
+
+    /**
+     * 获取随机的数据.
+     * 
+     * @return array.
+     */
+    public static function getRandomPost() {
+        $return = [];
+        $total_page = file_get_contents(CACHE_PATH . 'random/cache.random.num');
+        $random_num = mt_rand(1, $total_page);
+        $result = file_get_contents(CACHE_PATH . 'random/cache.random.' . $random_num);
+        $result = $result ? json_decode($result, true) : [];
+
+        if ($result) {
+            shuffle($result);
+            for ($i = 0; $i < 12; $i++) {
+                $return[] = $result[$i];
+            }
+        }
+
+        return $return;
     }
 
     /**
@@ -176,71 +195,16 @@ class Homer {
      */
     public static function getRelatePt($post_id = '') {
         if (!$post_id) {
-            return '';
+            return [];
         }
 
         $cache_file = CACHE_PATH . 'post/' . $post_id[0] . '/' . $post_id[1] . '/cache.' . $post_id . '.pt';
         if (file_exists($cache_file)) {
-            return file_get_contents($cache_file);
+            $result = file_get_contents($cache_file);
+            return $result ? json_decode($result, true) : [];
         } else {
             $pter = new \Logic\Pter($post_id, true);
             return $pter->getCache();
-        }
-    }
-
-    /**
-     * 更新topic的文章列表缓存.
-     * 
-     * @param integer $topic_id topic.id.
-     * 
-     * @return void
-     */
-    public static function updateTopicDetail($topic_id = 0) {
-        if (!$topic_id) {
-            return;
-        }
-
-        $info = \Db::instance()->getRow("select * from `topic` where `id` = '$topic_id'");
-        if (!$info) {
-            return;
-        }
-
-        $identify = $info['identify'];
-        $content = $info['content'];
-        $post_ids = explode(',', $content);
-        if (!$post_ids) {
-            return;
-        }
-
-        $cache_dir = CACHE_PATH . 'topic/' . $identify[0] . '/' . $identify[1] . '/';
-        if (!file_exists($cache_dir)) {
-            mkdir($cache_dir, 0777, true);
-        }
-
-        $post_ids_in = "('" . implode("','", $post_ids) . "')";
-        $where = "`status` in('1','2','3') and `post_id` in{$post_ids_in}";
-        $tc = \Db::instance()->count("select count(1) from `post` where $where");
-        if (!$tc) {
-            return;
-        }
-
-        $limit = 12;
-        $total_page = ceil($tc / $limit);
-        file_put_contents($cache_dir . 'cache.' . $identify . '.page.num', $total_page);
-
-        for ($i = 1; $i <= $total_page; $i++) {
-            $offset = ($i - 1) * $limit;
-            $sql = "select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`keywords`,`description` from `post` where {$where} order by `input_time` desc limit $limit offset $offset";
-            $list = \Db::instance()->getList($sql);
-            foreach ($list as $k => $v) {
-                // 获取post关联的topic tag.
-                $list[$k]['relate_pt'] = \Logic\Homer::getRelatePt($v['post_id']);
-            }
-
-            $rs = $info;
-            $rs['post_list'] = $list;
-
-            file_put_contents($cache_dir . 'cache.' . $identify . '.list.' . $i, json_encode($rs));
         }
     }
 
@@ -250,7 +214,7 @@ class Homer {
      * @return array.
      */
     private static function getIndexPost() {
-        $sql = "select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`description` from `post` where `status` = '3' order by `update_time` desc limit 30";
+        $sql = "select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`long_title` from `post` where `status` = '3' order by `update_time` desc limit 30";
         return \Db::instance()->getList($sql);
     }
 
@@ -260,9 +224,8 @@ class Homer {
      * @return array.
      */
     private static function getRecentPost() {
-        $sql = "select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`description` from `post` where `status` in('1', '2', '3') order by `update_time` desc limit 13";
+        $sql = "select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`long_title` from `post` where `status` in('1', '2', '3') order by `input_time` desc limit 12";
         $return = \Db::instance()->getList($sql);
-        unset($return[0]);
         return array_values($return);
     }
 
@@ -275,17 +238,7 @@ class Homer {
         // 最近一周浏览较多的数据.
         $min = time() - 604800;
         $max = time();
-        $sql = "select p.`post_id`,p.`title`,p.`author`,p.`image_url`,p.`image_up_time`,p.`description` from `post` as p, `post_view` as v where p.`post_id` = v.`post_id` and p.`status` in('1', '2', '3') and v.`latest_time` between $min and $max order by v.`views` desc limit 12";
-        return \Db::instance()->getList($sql);
-    }
-
-    /**
-     * 获取随机的文章数据（给只显示的文章多些展现）.
-     * 
-     * @return array.
-     */
-    private static function getRandomPost() {
-        $sql = "select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`description` from `post` where `status` in('1','2','3') order by rand() limit 200";
+        $sql = "select p.`post_id`,p.`title`,p.`author`,p.`image_url`,p.`image_up_time`,p.`long_title` from `post` as p, `post_view` as v where p.`post_id` = v.`post_id` and p.`status` in('1', '2', '3') and v.`latest_time` between $min and $max order by v.`views` desc limit 12";
         return \Db::instance()->getList($sql);
     }
 

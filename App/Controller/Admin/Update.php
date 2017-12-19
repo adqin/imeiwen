@@ -91,19 +91,38 @@ class Update extends \Controller\Admin\Init {
      * 主题详情数据更新.
      */
     public function topicitem() {
-        
+        $list = \Db::instance()->getList("select `topic_id` from `topic` where `status` = 1");
+        foreach ($list as $v) {
+            $r = new \Logic\TopicItemer($v['topic_id']);
+            $r->setCache();
+        }
+        $this->assign('message', '主题详情更新完成');
+        $this->display('admin/middle');
     }
 
     /**
      * 主题列表数据更新.
      */
     public function topiclist() {
-        $topic_list = \Db::instance()->getList("select `id`, `keyword`, `identify`, `title`, `note`, `content` from `topic` where `status` = '1'");
-        foreach ($topic_list as $t) {
-            \Logic\Homer::updateTopicDetail($t['id']);
+        $cache_dir = CACHE_PATH . 'topiclist/';
+        if (!file_exists($cache_dir)) {
+            mkdir($cache_dir, 0777);
         }
 
-        $this->assign('message', '主题数据更新完成');
+        $limit = 20;
+        $where = "`status` = '1' and `count` >= 10";
+        $count = \Db::instance()->count("select count(1) from `topic` where $where");
+        $total_page = ceil($count / $limit);
+        file_put_contents($cache_dir . 'cache.topiclist.num', $total_page);
+
+        for ($i = 1; $i <= $total_page; $i++) {
+            $offset = ($i - 1) * $limit;
+            $sql = "select `id`, `topic_id`, `title`, `long_title` from `topic` where $where order by `id` desc limit $limit offset $offset";
+            $list = \Db::instance()->getList($sql);
+            file_put_contents($cache_dir . 'cache.topiclist.' . $i, json_encode($list));
+        }
+
+        $this->assign('message', '主题列表更新完成');
         $this->display('admin/middle');
     }
 
@@ -126,7 +145,7 @@ class Update extends \Controller\Admin\Init {
 
         for ($i = 1; $i <= $total_page; $i++) {
             $offset = ($i - 1) * $limit;
-            $sql = "select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`keywords`,`description` from `post` where `status` in('2','3') order by `update_time` desc limit $limit offset $offset";
+            $sql = "select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`long_title` from `post` where `status` in('2','3') order by `update_time` desc limit $limit offset $offset";
             $list = \Db::instance()->getList($sql);
 
             foreach ($list as $k => $v) {
@@ -138,6 +157,41 @@ class Update extends \Controller\Admin\Init {
         }
 
         $this->assign('message', '精选美文列表数据更新完成');
+        $this->display('admin/middle');
+    }
+
+    /**
+     * 随机列表更新.
+     */
+    public function random() {
+        $cache_dir = CACHE_PATH . 'random/';
+        if (!file_exists($cache_dir)) {
+            mkdir($cache_dir, 0777);
+        }
+
+        $where = "`status` in('1','2','3')";
+        $total_count = \Db::instance()->count("select count(1) from `post` where $where");
+        $limit = 20;
+
+        $total = $total_page = ceil($total_count / $limit);
+
+        for ($i = 1; $i <= $total_page; $i++) {
+            $offset = ($i - 1) * $limit;
+            $sql = "select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`long_title` from `post` where $where order by `update_time` desc limit $limit offset $offset";
+            $list = \Db::instance()->getList($sql);
+            if (count($list) < 12) {
+                $total = $total - 1;
+                continue;
+            }
+
+            foreach ($list as $k => $v) {
+                $list[$k]['relate_pt'] = \Logic\Homer::getRelatePt($v['post_id']);
+            }
+            file_put_contents($cache_dir . 'cache.random.' . $i, json_encode($list));
+        }
+
+        file_put_contents($cache_dir . 'cache.random.num', $total);
+        $this->assign('message', '随机列表数据更新完成');
         $this->display('admin/middle');
     }
 

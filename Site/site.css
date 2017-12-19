@@ -71,7 +71,7 @@ select {
 .pt-date {
     position: relative;
 }
-.related-pt {
+.relate-pt {
     color: #666;
     padding: 3px 3px 5px 3px;
     margin: 5px 5px 8px 5px;
@@ -84,7 +84,7 @@ select {
     right: 20px;
 }
 .index-topic-item {
-    border: 1px solid #d2d2d2;
+    border: 1px solid #eee;
     padding: 10px;
 }
 .topic-title {
@@ -104,17 +104,21 @@ select {
 .topic-note a:hover {
     color: #999;
 }
-#page-content-div {
-    min-height: 600px;
-    margin: 40px 0;
+.list-page, .topiclist-page, .topicitem-page {
+    margin-top: 30px;
+    margin-left: 5px;
 }
-#page-content {
+.page-content-div {
+    min-height: 600px;
+    margin-top: 30px;
+}
+.page-content {
     color: #3e3e3e;
     font-size: 16px;
     word-wrap: break-word;
-    line-height: 28px;
+    line-height: 26px;
     padding: 5px;
 }
-#page-content img {
-    border: 1px solid #3e3e3e;
+.page-content img {
+    border: 1px solid #eee;
 }

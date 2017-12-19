@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        <title><?=$info['title']?> | <?=$info['author']?> - 爱美文网</title>
+        <title><?=$info['title']?> | <?=$info['author']?> - imeiwen.org</title>
         <meta name="keywords" content="爱美文,爱美文网,<?=$info['keywords']?>">
         <meta name="description" content="<?=$info['description']?>">
         <link rel="shortcut icon" href="/favicon.png?2" type="image/x-icon" />
@@ -45,16 +45,29 @@
 
                     <!--文章正文-->
                     <div class="post-content"><?=nl2br($info['content'])?></div>
-                    
+
                     <!--关键词-->
-                    <?php if (isset($info['relate_pt']) && $info['relate_pt']): ?>                    
-                    <div class="related-pt">关键词: <?=$info['relate_pt']?></div>
+                    <?php if (isset($info['relate_pt']) && ($info['relate_pt']['keyword'] || $info['relate_pt']['category'])): ?>                    
+                    <div class="relate-pt">
+                        <span class="layui-badge-rim">标签</span> 
+                        <?php if ($info['relate_pt']['keyword']): ?>
+                        <?php foreach ($info['relate_pt']['keyword'] as $kw => $tid): ?>
+                        <?php if ($tid): ?><a href="/topic/<?=$tid?>" class="layui-badge layui-bg-cyan"><?=$kw?></a><?php else: ?><span class="layui-badge layui-bg-gray"><?=$kw?></span><?php endif; ?>
+                        <?php endforeach; ?>
+                        <?php endif; ?>
+
+                        <?php if ($info['relate_pt']['category']): ?>
+                        <?php foreach ($info['relate_pt']['category'] as $v): ?>
+                        <a href="/topic/<?=$v['topic_id']?>" class="layui-badge layui-bg-cyan"><?=$v['title']?></a>
+                        <?php endforeach; ?>
+                        <?php endif; ?>
+                    </div>
                     <?php endif; ?>
-                   
+
                     <!--推荐阅读-->
                     <?php if ($info['relation']): ?>
-                    <fieldset class="layui-elem-field layui-field-title" id="more-read-container">
-                        <legend>更多阅读</legend>
+                    <div class="more-read-container">
+                        <div class="more-title">推荐阅读</div>
                         <div class="more-read">
                             <ol>
                                 <?php foreach ($info['relation'] as $r): ?>
@@ -62,7 +75,7 @@
                                 <?php endforeach; ?>
                             </ol>
                         </div>
-                    </fieldset>
+                    </div>
                     <?php endif; ?>
 
                     <?php require TPL_PATH . 'home/footer.html'; ?>
