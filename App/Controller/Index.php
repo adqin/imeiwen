@@ -38,9 +38,10 @@ class Index extends \Controller\Base {
     public function recommend() {
         // 推荐文章.
         $page = isset($this->param['page']) ? $this->param['page'] : 1;
-        $page = (!$page || $page > 5) ? 1 : $page;
 
         $total_page = file_get_contents(CACHE_PATH . 'recommend/cache.page.num');
+        $page = (!$page || $page > $total_page) ? 1 : $page;
+        
         $result = file_get_contents(CACHE_PATH . 'recommend/cache.recommend.' . $page);
         $result = $result ? json_decode($result, true) : [];
         $list = $result ? $result : [];
