@@ -36,6 +36,7 @@
 }
 .item {
     border: 1px solid #eee;
+    padding: 1px;
 }
 .thumb {
     overflow: hidden;
