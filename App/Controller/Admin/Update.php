@@ -204,6 +204,9 @@ class Update extends \Controller\Admin\Init {
         if (file_exists(CACHE_PATH . 'cache.index.post')) {
             unlink(CACHE_PATH . 'cache.index.post');
         }
+        if (file_exists(CACHE_PATH . 'cache.index.topic')) {
+            unlink(CACHE_PATH . 'cache.index.topic');
+        }
         if (file_exists(CACHE_PATH . 'cache.recent')) {
             unlink(CACHE_PATH . 'cache.recent');
         }
@@ -219,6 +222,7 @@ class Update extends \Controller\Admin\Init {
 
         // 尽量后台刷新缓存.
         \Logic\Homer::getCachePosts('index.post', 0, false);
+        \Logic\Homer::getIndexTopic(true);
         \Logic\Homer::getCachePosts('hot', 0, false);
         \Logic\Homer::getCachePosts('recent', 0, false);
 

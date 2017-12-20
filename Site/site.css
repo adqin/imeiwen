@@ -28,16 +28,18 @@
 #quote-note p {
     width: 96%;
 }
-select {
-    padding: 3px 10px;
+.page-select {
+    padding: 2px 10px;
     font-size: 14px;
     color: #999;
+    margin-right: 8px;
+}
+.item {
+    border: 1px solid #eee;
 }
 .thumb {
     overflow: hidden;
-    background-color: #2F4056;
-    margin: 0 auto;
-    border: 1px solid #eee;
+    background-color: #eee;
 }
 .title,.note {
     padding: 3px;
@@ -94,8 +96,10 @@ select {
     font-size: 16px;
     padding: 5px 8px;
 }
-.topic-note {
-    min-height: 110px;
+@media screen and (min-width: 990px) {
+    .topic-note {
+        min-height: 110px;
+    }
 }
 .topic-note a {
     color: #666;

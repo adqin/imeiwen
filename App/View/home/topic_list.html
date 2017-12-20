@@ -46,7 +46,7 @@
             <?php if ($total_page > 1): ?>
             <div class="layui-row topiclist-page">
                 <div class="layui-col-md12">
-                    <select class="topiclist-change-page layui-btn layui-btn-primary layui-btn-sm">
+                    <select class="topiclist-change-page page-select">
                         <?php for ($i = 1; $i <= $total_page; $i++): ?>
                         <?php if ($i == $page): ?>
                         <option value="<?=$i?>" selected="selected">第<?=$i?>页</option>
