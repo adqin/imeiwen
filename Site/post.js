@@ -46,7 +46,7 @@ layui.use(['jquery', 'element', 'util'], function () {
         var img = new Image();
         img.src = post_img_url;
         img.onload = function () {
-            $('#post-image-id').attr('src', post_img_url);
+            $('#post-image-id').attr('src', post_img_url).show();
             $('.image-loading').hide();
         }
     }
