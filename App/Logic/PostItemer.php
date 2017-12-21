@@ -172,7 +172,7 @@ class PostItemer {
         $where = "`category` = '$category'";
         if ($list) {
             $post_ids_str = "('" . implode("','", $post_ids) . "')";
-            $where .= " and `post_id` not in{$post_ids_str}";
+            $where .= " and `post_id` not in{$post_ids_str} and `status` in('2','3')";
         }
 
         $rs = \Db::instance()->getList("select `post_id`,`title`,`author` from `post` where $where order by rand() limit 10");
