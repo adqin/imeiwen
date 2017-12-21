@@ -145,7 +145,7 @@ class Update extends \Controller\Admin\Init {
 
         for ($i = 1; $i <= $total_page; $i++) {
             $offset = ($i - 1) * $limit;
-            $sql = "select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`long_title` from `post` where `status` in('2','3') order by `update_time` desc limit $limit offset $offset";
+            $sql = "select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`long_title` from `post` where `status` in('2','3') order by `input_time` desc limit $limit offset $offset";
             $list = \Db::instance()->getList($sql);
 
             foreach ($list as $k => $v) {
