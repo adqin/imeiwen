@@ -45,6 +45,7 @@ class Post extends \Controller\Admin\Init {
             $param['keywords'] = $this->getPost('keywords');
             $param['description'] = $this->getPost('description');
             $param['status'] = $this->getPost('status');
+            $param['weixin_post_url'] = $this->getPost('weixin_post_url');
 
             $poster = new \Logic\Poster($id = 0, $param);
             $poster->add();
@@ -74,6 +75,7 @@ class Post extends \Controller\Admin\Init {
             $param['keywords'] = $this->getPost('keywords');
             $param['description'] = $this->getPost('description');
             $param['status'] = $this->getPost('status');
+            $param['weixin_post_url'] = $this->getPost('weixin_post_url');
 
             $poster = new \Logic\Poster($id, $param);
             $poster->edit();
@@ -108,7 +110,7 @@ class Post extends \Controller\Admin\Init {
         $title = $this->getPost('title');
         $author = $this->getPost('author');
         $category = $this->getPost('category');
-        $isMryw = $this->getPost('isMryw');
+        $isWeixinPost = $this->getPost('weixin_post');
         $status = $this->getPost('status');
 
         $where = "1=1";
@@ -122,9 +124,14 @@ class Post extends \Controller\Admin\Init {
         if ($category) {
             $where .= " and `category` = '$category'";
         }
-
         if ($status !== '') {
             $where .= " and `status` = '$status'";
+        }
+        if ($isWeixinPost == 1) {
+            $where .= " and `weixin_post_url` = ''";
+        }
+        if ($isWeixinPost == 2) {
+            $where .= " and `weixin_post_url` <> ''";
         }
 
         // 计算总的条数.
@@ -178,6 +185,7 @@ class Post extends \Controller\Admin\Init {
                 'category' => $d['category'] && isset(\Config\System::$category[$d['category']]) ? \Config\System::$category[$d['category']] : '',
                 'keywords' => trim($d['keywords'], ','),
                 'status' => $status_title[$d['status']],
+                'weixin_post' => $d['weixin_post_url'] ? '已发布' : '未发布',
                 'views' => isset($views[$d['post_id']]) ? $views[$d['post_id']]['views'] : 0,
                 'op_string' => '<a href="/admin/post/edit?id=' . $d['id'] . '" class="layui-btn">修改<i class="layui-icon">&#xe642;</i></a>',
             );

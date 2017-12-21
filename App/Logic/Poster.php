@@ -128,6 +128,7 @@ class Poster {
             'keywords' => $this->param['keywords'] ? $this->formatKeywords($this->param['keywords']) : '', // 替换中文逗号为英文.
             'description' => $this->param['description'],
             'status' => $this->param['status'],
+            'weixin_post_url' => $this->param['weixin_post_url'],
         );
 
         if ($this->id) {
