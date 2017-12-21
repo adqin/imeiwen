@@ -26,6 +26,9 @@
 .post-image {
     margin: 20px 0 0 0;
 }
+.post-image img {
+    border: 1px solid #d9dadc;
+}
 .image-loading {
     text-align: center;
     padding-top: 30px;
