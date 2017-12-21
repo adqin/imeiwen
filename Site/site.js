@@ -49,7 +49,7 @@ layui.use(['jquery', 'element', 'form', 'util'], function () {
     function windowResize() {
         $('.thumb > a > img').each(function () {
             var tw = $(this).parents('.item').width();
-            var th = tw * 0.5;
+            var th = tw * 0.6;
             $(this).parents('.thumb').width(tw).height(th);
             $(this).width(tw);
         });
