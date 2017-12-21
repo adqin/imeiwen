@@ -2,6 +2,26 @@
     margin: 0;
     background-color: #2F4056;
 }
+@media screen and (max-width: 400px) {
+    .layui-nav {
+        padding: 0 5px !important;
+    }
+    #logo {
+        margin: 17px 10px 0 0 !important;
+    }
+    #logo img {
+        height: 26px !important;
+    }
+    .layui-nav-item a {
+        padding: 0 14px !important;
+    }
+    .layui-nav-more {
+        right: 0px !important;
+    }
+    #mobile-top-nav {
+        
+    }
+}
 #logo {
     margin: 15px 10px 0 0;
     padding: 0;

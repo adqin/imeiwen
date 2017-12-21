@@ -53,12 +53,12 @@ layui.use(['jquery', 'element', 'form', 'util'], function () {
             $(this).parents('.thumb').width(tw).height(th);
             $(this).width(tw);
         });
-        var win_w = $(window).width();
+        /*var win_w = $(window).width();
         if (win_w < 400) {
             $('#logo').hide();
         } else {
             $('#logo').show();
-        }
+        }*/
     }
 
     function lazyRender() {
