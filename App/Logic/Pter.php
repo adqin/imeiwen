@@ -75,7 +75,7 @@ class Pter {
 
         // 查询作者与关键词关联的主题.
         $in = "('" . implode("','", $all) . "')";
-        $where = "`post_keyword` in{$in} and `status` = '1' and `count` >= 10";
+        $where = "`post_keyword` in{$in} and `status` = '1' and `count` >= 9";
         $rs = \Db::instance()->getList("select `topic_id`,`post_keyword` from `topic` where $where order by `count` asc", 'post_keyword');
         $tplist_keywords = [];
         foreach ($all as $keyword) {
@@ -84,7 +84,7 @@ class Pter {
 
         $category = ',' . $this->info['category'] . ',';
         $post_status = ',' . $this->info['status'] . ',';
-        $where = "`category` like '%$category%' and `post_status` like '%$post_status%' and `status` = 1 and `count` >= 10 and `post_keyword` = ''";
+        $where = "`category` like '%$category%' and `post_status` like '%$post_status%' and `status` = 1 and `count` >= 9 and `post_keyword` = ''";
         $tplist_category = \Db::instance()->getList("select `topic_id`, `title` from `topic` where $where order by `count` asc");
 
         $return = [
