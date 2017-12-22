@@ -116,7 +116,7 @@
 }
 @media screen and (min-width: 990px) {
     .topic-note {
-        min-height: 110px;
+        min-height: 80px;
     }
 }
 .topic-note a {
