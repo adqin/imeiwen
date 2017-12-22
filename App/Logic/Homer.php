@@ -100,7 +100,7 @@ class Homer {
         }
 
         if ($from_db) {
-            $list = \Db::instance()->getList("select `topic_id`, `title`, `long_title` from `topic` where `status` = '1' and `count` >= 10 limit 8");
+            $list = \Db::instance()->getList("select `topic_id`, `title`, `long_title` from `topic` where `status` = '1' and `count` >= 9 limit 8");
             if ($list) {
                 $return = $list;
                 file_put_contents($cache_file, json_encode($list));
