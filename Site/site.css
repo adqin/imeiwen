@@ -7,13 +7,13 @@
         padding: 0 0 0 10px !important;
     }
     #logo {
-        margin: 18px 12px 0 0 !important;
+        margin: 17px 12px 0 0 !important;
     }
     #logo img {
         height: 24px !important;
     }
     .layui-nav-item a {
-        padding: 0 10px !important;
+        padding: 0 12px !important;
     }
     .layui-nav-more {
         right: 0px !important;
