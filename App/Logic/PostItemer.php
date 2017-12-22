@@ -171,6 +171,7 @@ class PostItemer {
 
         $where = "`category` = '$category'";
         if ($list) {
+            $post_ids[] = $this->post_id;
             $post_ids_str = "('" . implode("','", $post_ids) . "')";
             $where .= " and `post_id` not in{$post_ids_str} and `status` in('2','3')";
         }
