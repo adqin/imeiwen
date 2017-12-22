@@ -141,7 +141,7 @@ class Topic extends \Controller\Admin\Init {
             $return[] = array(
                 'id' => $d['id'],
                 'topic_id' => $d['topic_id'],
-                'title' => '<a href="/topic/"' . $d['topic_id'] . ' target="_blank">' . $d['title'] . '</a>',
+                'title' => '<a href="/topic/' . $d['topic_id'] . '" target="_blank">' . $d['title'] . '</a>',
                 'category' => trim($d['category'], ','),
                 'post_keyword' => $d['post_keyword'],
                 'post_status' => trim($d['post_status'], ','),
