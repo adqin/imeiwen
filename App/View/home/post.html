@@ -3,7 +3,11 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <?php if ($isShare): ?>
+        <title><?=$info['author']?>：<?=$info['long_title']?></title>
+        <?php else: ?>
         <title><?=$info['author']?>：<?=$info['title']?> - imeiwen.org</title>
+        <?php endif; ?>
         <meta name="keywords" content="爱美文,爱美文网,<?=$info['keywords']?>">
         <meta name="description" content="<?=$info['description']?>">
         <link rel="shortcut icon" href="/favicon.png?2" type="image/x-icon" />
@@ -49,14 +53,12 @@
 
                     <!--文章正文-->
                     <div class="post-content"><?=nl2br($info['content'])?></div>
-                    <!--分享文章-->
+                    <!--分享-->
                     <div class="share">
                         <span class="layui-icon"><i style="font-size: 22px; font-style: normal">&#xe641;</i>分享到：</span>
                         <a href="<?=$wb_share_url?>" target="_blank" rel="nofollow">微薄</a>
                         <a href="<?=$qq_share_url?>" target="_blank" rel="nofollow">QQ空间</a>
-                        <?php if (isset($info['weixin_post_url']) && $info['weixin_post_url']): ?>
-                        <a href="<?=$info['weixin_post_url']?>" target="_blank" rel="nofollow">微信</a>
-                        <?php endif; ?>
+                        <a href="<?=$wx_post_url?>" target="_blank" rel="nofollow" id="wx_share">微信</a>
                     </div>
 
                     <!--关键词-->

@@ -1,5 +1,5 @@
-layui.use(['jquery', 'element', 'util'], function () {
-    var $ = layui.$, element = layui.element, util = layui.util;
+layui.use(['jquery', 'element', 'util', 'layer'], function () {
+    var $ = layui.$, element = layui.element, util = layui.util, layer = layui.layer;
     itemSet();
 
     // 浏览器窗口大小发生变化.
@@ -25,6 +25,20 @@ layui.use(['jquery', 'element', 'util'], function () {
         bgcolor: '#2F4056',
         click: function () {
         }
+    });
+    
+    // 微信分享
+    $('#wx_share').click(function() {
+        wx_url = $(this).attr('href');
+        qr_src = '/qr.php?url=' + wx_url;
+        layer.open({
+            type: 1,
+            title: '<b>微信</b>',
+            closeBtn: 1,
+            shadeClose: true,
+            content: '<div class="wx_share"><p>打开微信“扫一扫”，页面加载完成后点击屏幕右上角分享按钮分享</p><img src="' + qr_src + '"></div>'
+        });
+        return false;
     });
 
     function itemSet() {

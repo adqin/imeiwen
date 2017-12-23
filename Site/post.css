@@ -67,6 +67,10 @@
     font-size: 16px;
     color: #607fa6;
 }
+.share a {
+    display: inline-block;
+    margin-right: 10px;
+}
 .more-read-container {
     margin-top: 40px;
 }
@@ -103,4 +107,14 @@
     background-color: #fff;
     width: 140px;
     padding: 16px;
+}
+.wx_share {
+    font-size: 14px;
+    text-align: center;
+    color: #333;
+    line-height: 26px;
+}
+.wx_share p {
+    padding: 6px;
+    margin: 5px 0 10px 5px;
 }
