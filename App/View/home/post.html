@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        <title><?=$info['title']?> | <?=$info['author']?> - imeiwen.org</title>
+        <title><?=$info['author']?>：<?=$info['title']?> - imeiwen.org</title>
         <meta name="keywords" content="爱美文,爱美文网,<?=$info['keywords']?>">
         <meta name="description" content="<?=$info['description']?>">
         <link rel="shortcut icon" href="/favicon.png?2" type="image/x-icon" />
@@ -35,10 +35,14 @@
                     </div>
                     <!--文章配图-->
                     <div class="post-image">
+                        <?php if ($isShare): ?>
+                        <img id="post-image-id"  src="<?=$post_image_url?>" data-attr="<?=$post_image_url?>" alt="<?=$info['author']?>：<?=$info['title']?>">
+                        <?php else: ?>
                         <div class="image-loading">
                             图加载中...
                         </div>
-                        <img id="post-image-id"  src="" data-attr="<?=\Config\Qiniu::$domain . $info['image_url']?>?imageView2/2/w/780/<?=$info['image_up_time']?>">
+                        <img id="post-image-id"  src="" data-attr="<?=$post_image_url?>">
+                        <?php endif; ?>
                     </div>
 
                     <div class="author">文/<?=$info['author']?></div>
@@ -63,6 +67,13 @@
                         <?php endif; ?>
                     </div>
                     <?php endif; ?>
+
+                    <div class="share">
+                        <span class="layui-icon"><i style="font-size: 22px; font-style: normal">&#xe641;</i>分享到：</span>
+                        <a href="<?=$wb_share_url?>" target="_blank" rel="nofollow">微薄</a>
+                        <a href="<?=$qq_share_url?>" target="_blank" rel="nofollow">QQ空间</a>
+                        <a href="<?=$wx_post_url?>" target="_blank" rel="nofollow">微信</a>
+                    </div>
 
                     <!--推荐阅读-->
                     <?php if ($info['relation']): ?>
