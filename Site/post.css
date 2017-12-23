@@ -70,6 +70,7 @@
 .share a {
     display: inline-block;
     margin-right: 10px;
+    color: #607fa6;
 }
 .more-read-container {
     margin-top: 40px;
@@ -113,6 +114,7 @@
     text-align: center;
     color: #333;
     line-height: 26px;
+    margin: 6px 0;
 }
 .wx_share p {
     padding: 6px;
