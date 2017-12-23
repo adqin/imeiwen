@@ -40,7 +40,7 @@
                     <!--文章配图-->
                     <div class="post-image">
                         <?php if ($isShare): ?>
-                        <img id="post-image-id"  src="<?=$post_image_url?>" data-attr="<?=$post_image_url?>" alt="<?=$info['author']?>：<?=$info['title']?>">
+                        <img src="<?=$post_image_url?>" data-attr="<?=$post_image_url?>" alt="<?=$info['author']?>：<?=$info['title']?>" id="post-image-id">
                         <?php else: ?>
                         <div class="image-loading">
                             图加载中...
