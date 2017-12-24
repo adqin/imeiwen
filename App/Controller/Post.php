@@ -24,7 +24,7 @@ class Post extends \Controller\Base {
         $info = $itemer->get();
         $isShare = $this->getGet('share') ? true : false; // 是否是分享链接.
         
-        $share_title = urlencode("{$info['author']}：{$info['long_title']}");
+        $share_title = urlencode("{$info['author']}：{$info['long_title']}《{$info['title']}》");
         $wb_post_url = urlencode("http://imeiwen.org/post/{$post_id}?from=weibo");
         $qq_post_url = urlencode("http://imeiwen.org/post/{$post_id}?share=qq");
         $wx_post_url = "http://imeiwen.org/post/{$post_id}?share=wx";

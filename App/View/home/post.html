@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <?php if ($isShare): ?>
-        <title><?=$info['author']?>：<?=$info['long_title']?></title>
+        <title><?=$info['author']?>：<?=$info['long_title']?>《<?=$info['title']?>》</title>
         <?php else: ?>
         <title><?=$info['author']?>：<?=$info['title']?> - 爱美文网</title>
         <?php endif; ?>
@@ -15,6 +15,11 @@
         <link rel="stylesheet" href="/post.css?<?=$version?>">
     </head>
     <body>
+        <?php if ($isShare): ?>
+        <div class="sharePic" style="display: none">
+            <img src="<?=$post_image_url?>">
+        </div>
+        <?php endif; ?>
         <!-- 你的HTML代码 -->
         <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
         <!--[if lt IE 9]>
@@ -39,14 +44,10 @@
                     </div>
                     <!--文章配图-->
                     <div class="post-image">
-                        <?php if ($isShare): ?>
-                        <img src="<?=$post_image_url?>" data-attr="<?=$post_image_url?>" alt="<?=$info['author']?>：<?=$info['title']?>" id="post-image-id">
-                        <?php else: ?>
                         <div class="image-loading">
                             图加载中...
                         </div>
                         <img id="post-image-id"  src="" data-attr="<?=$post_image_url?>">
-                        <?php endif; ?>
                     </div>
 
                     <div class="author">文/<?=$info['author']?></div>
