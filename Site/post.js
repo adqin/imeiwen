@@ -33,7 +33,7 @@ layui.use(['jquery', 'element', 'util', 'layer'], function () {
         qr_src = '/qr.php?url=' + wx_url;
         layer.open({
             type: 1,
-            title: '<b>微信</b>',
+            title: '<b>微信分享</b>',
             closeBtn: 1,
             shadeClose: true,
             content: '<div class="wx_share"><p>打开微信“扫一扫”，页面加载完成后点击屏幕右上角分享按钮分享</p><img src="' + qr_src + '"></div>'
