@@ -22,7 +22,8 @@ class Post extends \Controller\Base {
         $post_id = isset($this->param['post_id']) && $this->param['post_id'] ? $this->param['post_id'] : '';        
         $itemer = new \Logic\PostItemer($post_id);
         $info = $itemer->get();
-        $isShare = $this->getGet('share') ? true : false; // 是否是分享链接.
+        $share = $this->getGet('share');
+        $share = $share ? $share : ''; // qq或微信分享.
         
         $share_title = urlencode("{$info['author']}：{$info['long_title']}《{$info['title']}》");
         $wb_post_url = urlencode("http://imeiwen.org/post/{$post_id}?from=weibo");
@@ -34,7 +35,7 @@ class Post extends \Controller\Base {
         $qq_share_url  = 'https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=' . $qq_post_url . '&title=' . $share_title;
 
         $this->assign('info', $info);
-        $this->assign('isShare', $isShare);
+        $this->assign('share', $share);
         $this->assign('post_image_url', $post_image_url);
         $this->assign('wb_share_url', $wb_share_url);
         $this->assign('qq_share_url', $qq_share_url);

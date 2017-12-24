@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        <?php if ($isShare): ?>
+        <?php if ($share): ?>
         <title><?=$info['author']?>：<?=$info['long_title']?></title>
         <?php else: ?>
         <title><?=$info['author']?>：<?=$info['title']?> - 爱美文网</title>
@@ -39,7 +39,7 @@
                     </div>
                     <!--文章配图-->
                     <div class="post-image">
-                        <?php if ($isShare): ?>
+                        <?php if ($share): ?>
                         <img src="<?=$post_image_url?>" data-attr="<?=$post_image_url?>" alt="<?=$info['author']?>：<?=$info['title']?>" id="post-image-id">
                         <?php else: ?>
                         <div class="image-loading">
@@ -103,6 +103,7 @@
             <img src="/weixin_gzh.jpg" alt="爱美文公众号二维码" />
             <p>微信扫一扫<br>关注爱美文</p>
         </div>
+        <?php if ($share == 'wx'): ?>
         <script src="/jquery-3.2.1.min.js"></script>
         <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
         <script>
@@ -118,7 +119,7 @@
                     type: "POST",
                     dataType: "json",
                     success: function (ress) {//成功则执行JS-SDK
-                        console.log(ress);//查看返回结果
+                        //console.log(ress);//查看返回结果
                         // 执行JS_SDK
                         wx.config({
                             debug: true,
@@ -130,11 +131,12 @@
                         });
                     }
                     , error: function (ress) {
-                        console.log(ress);
+                        //console.log(ress);
                     }
                 });
             }
         </script>
+        <?php endif; ?>
         <script src="/layui/dist/layui.js?<?=$version?>"></script>
         <script src="/post.js?<?=$version?>"></script>
     </body>
