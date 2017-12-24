@@ -2,6 +2,7 @@
 
 //微信JSDK验证.
 $appid = 'wx5123033be8c14a8a';
+$secret = '26000e76b7db9e90598d0cff21616b32';
 $url = $_POST['thisurl']; //获取当前页面的url，接收请求参数
 $root['url'] = $url;
 //获取access_token，并缓存
@@ -19,8 +20,7 @@ if (file_exists($file)) {
     $token = null;
 }
 if (!$token || strlen($token) < 6) {
-    $res = file_get_contents("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx5123033be8c14a8a&secret=28f8569d2e540b7256e0dd7ca209d26c"); //自己的appid,通过微信公众平台查看appid和AppSecret
-    var_dump($res);
+    $res = file_get_contents("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={$appid}&secret={$secret}"); //自己的appid,通过微信公众平台查看appid和AppSecret
     $res = json_decode($res, true);
     $token = $res['access_token'];
     @file_put_contents($file, $token);
