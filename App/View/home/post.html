@@ -103,6 +103,38 @@
             <img src="/weixin_gzh.jpg" alt="爱美文公众号二维码" />
             <p>微信扫一扫<br>关注爱美文</p>
         </div>
+        <script src="/jquery-3.2.1.min.js"></script>
+        <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+        <script>
+            window.onload = function () {//进入页面就执行ajax，目的为了传送当前页面url#前的完整url
+                var ajaxurl = '/wxSign.php';
+                var query = new Object();
+                var thisurl = location.href.split('#')[0]; //页面url#前的完整url,可alert弹出查看
+                query.thisurl = $.trim(thisurl);
+                query.post_type = "json";
+                $.ajax({
+                    url: ajaxurl,
+                    data: query,
+                    type: "POST",
+                    dataType: "json",
+                    success: function (ress) {//成功则执行JS-SDK
+                        console.log(ress);//查看返回结果
+                        // 执行JS_SDK
+                        wx.config({
+                            debug: true,
+                            appId: ress.appid,
+                            timestamp: ress.timestamp,
+                            nonceStr: ress.nonceStr,
+                            signature: ress.signature,
+                            jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage']
+                        });
+                    }
+                    , error: function (ress) {
+                        console.log(ress);
+                    }
+                });
+            }
+        </script>
         <script src="/layui/dist/layui.js?<?=$version?>"></script>
         <script src="/post.js?<?=$version?>"></script>
     </body>
