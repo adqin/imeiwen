@@ -95,7 +95,6 @@ class PostItemer {
             'input_time' => $info['input_time'],
             'update_time' => $info['update_time'],
             'page_view' => $view ? $view['views'] : 0,
-            'weixin_post_url' => $info['weixin_post_url'],
             'relation' => $relation,
             'relate_pt' => $relate_pt,
         ];

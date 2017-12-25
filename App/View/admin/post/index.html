@@ -73,6 +73,16 @@
                                     </div>
                                 </div>
                                 <div class="layui-inline">
+                                    <label class="layui-form-label">头条发布</label>
+                                    <div class="layui-input-inline">
+                                        <select name="toutiao_post">
+                                            <option value="">全部</option>
+                                            <option value="1">未发布</option>
+                                            <option value="2">已发布</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
                                     <button class="layui-btn" lay-submit lay-filter="*">查询</button></div>
                             </div>
                         </form>
@@ -108,6 +118,7 @@
                             {field: 'keywords', title: '关键词', width: 240},
                             {field: 'status', title: '状态', width: 100},
                             {field: 'weixin_post', title: '微信发布', width: 100},
+                            {field: 'toutiao_post', title: '头条发布', width: 100},
                             {field: 'views', title: '浏览量', width: 100},
                             {field: 'op_string', title: '操作', width: 150}
                         ]]
