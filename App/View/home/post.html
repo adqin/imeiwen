@@ -35,7 +35,7 @@
                     <div class="author-indexlink">
                         <div class="date"><?=date('Y-m-d', $info['input_time'])?></div>
                         <div class="index-link"><a href="/" title="返回爱美文网首页">爱美文网</a></div>
-                        <div class="views"<?php if($info['page_view'] <= 200): ?> style="display: none;"<?php endif; ?>>阅读(<span id="page_view"><?=$info['page_view']?></span>)</div>
+                        <div class="views"<?php if($info['page_view'] < 30): ?> style="display: none;"<?php endif; ?>>阅读(<span id="page_view"><?=$info['page_view']?></span>)</div>
                     </div>
                     <!--文章配图-->
                     <div class="post-image">
