@@ -24,9 +24,12 @@
             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
                 <legend>随机看看</legend>
             </fieldset>
-            
+
             <?php require TPL_PATH . 'home/post_item.html'; ?>
-                        
+
+            <?php if ($is_mobile): ?>
+            <div style="text-align: center; margin-top: 30px;"><button class="layui-btn layui-btn-normal" id="up-random">点击换一批</button></div>
+            <?php endif; ?>
             <?php require TPL_PATH . 'home/footer.html'; ?>
 
         </div>
