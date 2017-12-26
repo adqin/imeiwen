@@ -31,10 +31,14 @@ layui.use(['jquery', 'element', 'form', 'util'], function () {
         url = '/recommend/' + page;
         window.location.href = url;
     });
-    
+
+    $('#up-random').click(function () {
+        window.location.reload();
+    });
+
     var topic_item_id = $('#topic_item_id').val();
     if (topic_item_id) {
-        $.get('/index/topicview', {topic_id: topic_item_id}, function(re){});
+        $.get('/index/topicview', {topic_id: topic_item_id}, function (re) {});
     }
 
     // 回到顶部.
@@ -54,11 +58,11 @@ layui.use(['jquery', 'element', 'form', 'util'], function () {
             $(this).width(tw);
         });
         /*var win_w = $(window).width();
-        if (win_w < 400) {
-            $('#logo').hide();
-        } else {
-            $('#logo').show();
-        }*/
+         if (win_w < 400) {
+         $('#logo').hide();
+         } else {
+         $('#logo').show();
+         }*/
     }
 
     function lazyRender() {
