@@ -32,10 +32,6 @@ layui.use(['jquery', 'element', 'form', 'util'], function () {
         window.location.href = url;
     });
 
-    $('#up-random').click(function () {
-        window.location.reload();
-    });
-
     var topic_item_id = $('#topic_item_id').val();
     if (topic_item_id) {
         $.get('/index/topicview', {topic_id: topic_item_id}, function (re) {});
