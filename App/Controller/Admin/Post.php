@@ -111,6 +111,7 @@ class Post extends \Controller\Admin\Init {
         // 查询条件.
         $title = $this->getPost('title');
         $author = $this->getPost('author');
+        $keyword = $this->getPost('keyword');
         $category = $this->getPost('category');
         $isWeixinPost = $this->getPost('weixin_post');
         $isToutiaoPost = $this->getPost('toutiao_post');
@@ -126,6 +127,10 @@ class Post extends \Controller\Admin\Init {
         }
         if ($category) {
             $where .= " and `category` = '$category'";
+        }
+        if ($keyword) {
+            $keyword = ',' . $keyword . ',';
+            $where .= "and `keywords` like '%$keyword%'";
         }
         if ($status !== '') {
             $where .= " and `status` = '$status'";
