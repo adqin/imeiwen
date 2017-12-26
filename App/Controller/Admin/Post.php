@@ -130,7 +130,7 @@ class Post extends \Controller\Admin\Init {
         }
         if ($keyword) {
             $keyword = ',' . $keyword . ',';
-            $where .= "and `keywords` like '%$keyword%'";
+            $where .= " and `keywords` like '%$keyword%'";
         }
         if ($status !== '') {
             $where .= " and `status` = '$status'";
