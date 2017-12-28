@@ -139,7 +139,7 @@ class PostItemer {
         $return = $list = [];
 
         if ($post_ids) {
-            $where = "`post_id` in('" . implode("','", $post_ids) . "') and `status` in('2','3') and `post_id` <> '$this->post_id'";
+            $where = "`post_id` in('" . implode("','", $post_ids) . "') and `status` in(2,3) and `post_id` <> '$this->post_id'";
             $list = \Db::instance()->getList("select `post_id`,`title`,`author` from `post` where $where");
         }
 
@@ -173,7 +173,7 @@ class PostItemer {
         if ($list) {
             $post_ids[] = $this->post_id;
             $post_ids_str = "('" . implode("','", $post_ids) . "')";
-            $where .= " and `post_id` not in{$post_ids_str} and `status` in('2','3')";
+            $where .= " and `post_id` not in{$post_ids_str} and `status` in(2,3)";
         }
 
         $rs = \Db::instance()->getList("select `post_id`,`title`,`author` from `post` where $where order by rand() limit 10");
