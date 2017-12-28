@@ -166,15 +166,13 @@ class PostItemer {
      */
     private function getMoreByCategory($list = [], $info = []) {
         $post_ids = array_column($list, 'post_id');
+        $post_ids[] = $this->post_id;
         $category = $info['category'];
         $count = count($list);
 
         $where = "`category` = '$category' and `status` in('2','3')";
-        if ($list) {
-            $post_ids[] = $this->post_id;
-            $post_ids_str = "('" . implode("','", $post_ids) . "')";
-            $where .= " and `post_id` not in{$post_ids_str}";
-        }
+        $post_ids_str = "('" . implode("','", $post_ids) . "')";
+        $where .= " and `post_id` not in{$post_ids_str}";
 
         $rs = \Db::instance()->getList("select `post_id`,`title`,`author` from `post` where $where order by rand() limit 10");
 
