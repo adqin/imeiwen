@@ -110,7 +110,7 @@ class Update extends \Controller\Admin\Init {
         }
 
         $limit = 20;
-        $where = "`status` = '1' and `count` >= 9";
+        $where = "`status` = '1' and `count` >= 3";
         $count = \Db::instance()->count("select count(1) from `topic` where $where");
         $total_page = ceil($count / $limit);
         file_put_contents($cache_dir . 'cache.topiclist.num', $total_page);

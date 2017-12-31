@@ -214,8 +214,8 @@ class Topicer {
         $this->getRealPost();
         
         if ($this->param['status']) {
-            if ($this->count < 9) {
-                \Common::ajaxReturnFalse("主题关联的有效文章数量小于9条，不能显示");
+            if ($this->count < 3) {
+                \Common::ajaxReturnFalse("主题关联的有效文章数量小于3条，不能显示");
             }
         }
 
