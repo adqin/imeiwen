@@ -137,6 +137,11 @@ class Topic extends \Controller\Admin\Init {
             1 => '显示',
         );
         $return = array();
+        
+        $topic_ids = array_column($data, 'topic_id');
+        $where = "`topic_id` in('" . implode("','", $topic_ids) . "')";
+        $views = \Db::instance()->getList("select `topic_id`,`views` from `topic_view` where $where", 'topic_id');
+        
         foreach ($data as $d) {
             $return[] = array(
                 'id' => $d['id'],
@@ -147,6 +152,7 @@ class Topic extends \Controller\Admin\Init {
                 'post_keyword' => $d['post_keyword'],
                 'post_status' => trim($d['post_status'], ','),
                 'count' => $d['count'],
+                'views' => isset($views[$d['topic_id']]) ? $views[$d['topic_id']]['views'] : 0,
                 'status' => $status_title[$d['status']],
                 'op_string' => '<a href="/admin/topic/edit?id=' . $d['id'] . '" class="layui-btn">修改<i class="layui-icon">&#xe642;</i></a>',
             );
