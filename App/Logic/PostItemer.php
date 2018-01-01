@@ -175,10 +175,11 @@ class PostItemer {
         $where .= " and `post_id` not in{$post_ids_str}";
 
         $rs = \Db::instance()->getList("select `post_id`,`title`,`author` from `post` where $where order by rand() limit 10");
-
+        $j = 0;
         for ($i = $count; $i < 10; $i++) {
-            if (isset($rs[$i])) {
-                $list[$i] = $rs[$i];
+            if (isset($rs[$j])) {
+                $list[$i] = $rs[$j];
+                $j++;
             }
         }
 
