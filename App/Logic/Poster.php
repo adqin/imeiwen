@@ -129,7 +129,6 @@ class Poster {
             'description' => $this->param['description'],
             'status' => $this->param['status'],
             'weixin_post_url' => $this->param['weixin_post_url'],
-            'toutiao_post_url' => $this->param['toutiao_post_url'],
         );
 
         if ($this->id) {

@@ -46,7 +46,6 @@ class Post extends \Controller\Admin\Init {
             $param['description'] = $this->getPost('description');
             $param['status'] = $this->getPost('status');
             $param['weixin_post_url'] = $this->getPost('weixin_post_url');
-            $param['toutiao_post_url'] = $this->getPost('toutiao_post_url');
 
             $poster = new \Logic\Poster($id = 0, $param);
             $poster->add();
@@ -77,7 +76,6 @@ class Post extends \Controller\Admin\Init {
             $param['description'] = $this->getPost('description');
             $param['status'] = $this->getPost('status');
             $param['weixin_post_url'] = $this->getPost('weixin_post_url');
-            $param['toutiao_post_url'] = $this->getPost('toutiao_post_url');
 
             $poster = new \Logic\Poster($id, $param);
             $poster->edit();
@@ -141,12 +139,6 @@ class Post extends \Controller\Admin\Init {
         if ($isWeixinPost == 2) {
             $where .= " and `weixin_post_url` <> ''";
         }
-        if ($isToutiaoPost == 1) {
-            $where .= " and `toutiao_post_url` = ''";
-        }
-        if ($isToutiaoPost == 2) {
-            $where .= " and `toutiao_post_url` <> ''";
-        }
 
         // 计算总的条数.
         $count = \Db::instance()->count("select count(`id`) from `post` where $where");
@@ -200,7 +192,6 @@ class Post extends \Controller\Admin\Init {
                 'keywords' => trim($d['keywords'], ','),
                 'status' => $status_title[$d['status']],
                 'weixin_post' => $d['weixin_post_url'] ? '已发布' : '未发布',
-                'toutiao_post' => $d['toutiao_post_url'] ? '已发布' : '未发布',
                 'views' => isset($views[$d['post_id']]) ? $views[$d['post_id']]['views'] : 0,
                 'op_string' => '<a href="/admin/post/edit?id=' . $d['id'] . '" class="layui-btn">修改<i class="layui-icon">&#xe642;</i></a>',
             );
