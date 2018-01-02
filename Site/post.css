@@ -28,6 +28,7 @@
 }
 .post-image img {
     border: 1px solid #d9dadc;
+    box-shadow: 0 1px 3px rgba(0,0,0,.1);
 }
 .image-loading {
     text-align: center;
@@ -108,6 +109,7 @@
     background-color: #fff;
     width: 140px;
     padding: 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.1);
 }
 .wx_share {
     font-size: 14px;

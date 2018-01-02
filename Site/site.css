@@ -54,6 +54,7 @@
 .item {
     border: 1px solid #d2d2d2;
     padding: 1px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.1);
 }
 .thumb {
     overflow: hidden;
@@ -106,6 +107,7 @@
 .index-topic-item {
     border: 1px solid #d2d2d2;
     padding: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.1);
 }
 .topic-title {
     margin: 14px 0;
@@ -143,4 +145,5 @@
 }
 .page-content img {
     border: 1px solid #d2d2d2;
+    box-shadow: 0 1px 3px rgba(0,0,0,.1);
 }
