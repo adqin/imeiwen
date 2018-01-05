@@ -196,6 +196,33 @@ class Update extends \Controller\Admin\Init {
     }
 
     /**
+     * 微信文章列表缓存.
+     */
+    public function wxPostList() {
+        $cache_dir = CACHE_PATH . 'wx/';
+        if (!file_exists($cache_dir)) {
+            mkdir($cache_dir, 0777);
+        }
+
+        $where = "p.post_id = v.post_id and p.status in('2','3')";
+        $sql = "select count(1) from `post` as p, `post_view` as v where $where";
+        $total_count = \Db::instance()->count($sql);
+        $limit = 12;
+
+        $total_page = ceil($total_count / $limit);
+        for ($i = 1; $i <= $total_page; $i++) {
+            $offset = ($i - 1) * $limit;
+            $sql = "select p.`post_id`,p.`title`,p.`author`,p.`image_url`,p.`image_up_time`,p.`long_title` from `post` as p, `post_view` as v where $where order by v.`views` asc limit $limit offset $offset";
+            $list = \Db::instance()->getList($sql);
+            file_put_contents($cache_dir . 'post.list.' . $i, json_encode($list));
+        }
+
+        file_put_contents($cache_dir . 'total.page', $total_page);
+        $this->assign('message', '微信文章列表数据更新完成');
+        $this->display('admin/middle');
+    }
+
+    /**
      * 清理缓存.
      * 
      * @return void.
