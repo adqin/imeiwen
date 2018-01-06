@@ -1,7 +1,7 @@
 <?php
 
 /**
- * 查询用户的weixin user_union_id.
+ * 查询用户的weixin user_openid.
  * url = app.imeiwen.org.
  */
 // 返回实例
@@ -10,15 +10,15 @@ require_once "./aes/wxBizDataCrypt.php";
 $appid = 'wx809054e9326721af';
 $appsecret = "28f8569d2e540b7256e0dd7ca209d26c";
 $code = isset($_GET['code']) ? trim($_GET['code']) : '';
-$res = [];
+$res = '';
 if ($code) {
     $getSessionUrl = "https://api.weixin.qq.com/sns/jscode2session?appid={$appid}&secret={$appsecret}&js_code={$code}&grant_type=authorization_code";
     $res = file_get_contents($getSessionUrl);
-    echo $res;exit;
-    $res = $res ? json_decode($res, true) : [];
 }
-$sessionKey = $res && isset($res['session_key']) ? $res['session_key'] : '';
+echo $res;
+exit;
 
+$sessionKey = $res && isset($res['session_key']) ? $res['session_key'] : '';
 $encryptedData = isset($_GET['data']) ? trim($_GET['data']) : '';
 $encryptedData = str_replace(" ", "+", $encryptedData);
 $iv = isset($_GET['iv']) ? trim($_GET['iv']) : '';
