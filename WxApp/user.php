@@ -14,6 +14,7 @@ $res = [];
 if ($code) {
     $getSessionUrl = "https://api.weixin.qq.com/sns/jscode2session?appid={$appid}&secret={$appsecret}&js_code={$code}&grant_type=authorization_code";
     $res = file_get_contents($getSessionUrl);
+    echo $res;exit;
     $res = $res ? json_decode($res, true) : [];
 }
 $sessionKey = $res && isset($res['session_key']) ? $res['session_key'] : '';
