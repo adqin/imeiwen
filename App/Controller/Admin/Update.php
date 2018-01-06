@@ -204,20 +204,34 @@ class Update extends \Controller\Admin\Init {
             mkdir($cache_dir, 0777);
         }
 
-        $where = "p.post_id = v.post_id and p.status in('2','3')";
-        $sql = "select count(1) from `post` as p, `post_view` as v where $where";
+        $where = "status in('2','3')";
+        $sql = "select count(1) from `post` where $where";
         $total_count = \Db::instance()->count($sql);
         $limit = 12;
 
         $total_page = ceil($total_count / $limit);
+        // 总页数
+        file_put_contents($cache_dir . 'total.page', $total_page);
+
+        // 每页记录.
         for ($i = 1; $i <= $total_page; $i++) {
             $offset = ($i - 1) * $limit;
-            $sql = "select p.`post_id`,p.`title`,p.`author`,p.`image_url`,p.`image_up_time`,p.`long_title` from `post` as p, `post_view` as v where $where order by v.`views` asc limit $limit offset $offset";
+            $sql = "select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`description` from `post` where $where order by `input_time` desc limit $limit offset $offset";
             $list = \Db::instance()->getList($sql);
+            foreach ($list as $k => $v) {
+                $list[$k]['image_url'] = 'http://st.imeiwen.org/' . $v['image_url'] . '?imageView2/2/w/600/' . $v['image_up_time'];
+            }
             file_put_contents($cache_dir . 'post.list.' . $i, json_encode($list));
         }
 
-        file_put_contents($cache_dir . 'total.page', $total_page);
+        // 头条推荐
+        $sql = "select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`description` from `post` where `status` = 3 order by `update_time` desc limit 31";
+        $list = \Db::instance()->getList($sql);
+        foreach ($list as $k => $v) {
+            $list[$k]['image_url'] = 'http://st.imeiwen.org/' . $v['image_url'] . '?imageView2/2/w/600/' . $v['image_up_time'];
+        }
+        file_put_contents($cache_dir . 'tui.list', json_encode($list));
+
         $this->assign('message', '微信文章列表数据更新完成');
         $this->display('admin/middle');
     }
