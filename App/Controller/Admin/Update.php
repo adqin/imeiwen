@@ -219,7 +219,7 @@ class Update extends \Controller\Admin\Init {
             $sql = "select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`description` from `post` where $where order by `input_time` desc limit $limit offset $offset";
             $list = \Db::instance()->getList($sql);
             foreach ($list as $k => $v) {
-                $list[$k]['image_url'] = 'http://st.imeiwen.org/' . $v['image_url'] . '?imageView2/2/w/600/' . $v['image_up_time'];
+                $list[$k]['image_url'] = 'http://st.imeiwen.org/' . $v['image_url'] . '?imageView2/2/w/780/' . $v['image_up_time'];
             }
             file_put_contents($cache_dir . 'post.list.' . $i, json_encode($list));
         }
@@ -228,7 +228,7 @@ class Update extends \Controller\Admin\Init {
         $sql = "select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`description` from `post` where `status` = 3 order by `update_time` desc limit 31";
         $list = \Db::instance()->getList($sql);
         foreach ($list as $k => $v) {
-            $list[$k]['image_url'] = 'http://st.imeiwen.org/' . $v['image_url'] . '?imageView2/2/w/600/' . $v['image_up_time'];
+            $list[$k]['image_url'] = 'http://st.imeiwen.org/' . $v['image_url'] . '?imageView2/2/w/780/' . $v['image_up_time'];
         }
         file_put_contents($cache_dir . 'tui.list', json_encode($list));
 
