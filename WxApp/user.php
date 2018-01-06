@@ -7,7 +7,8 @@
 // 返回实例
 //echo '﻿﻿{"openId":"ogfoT0V91Vcq-omBc2vUvp0sS540","nickName":"阿D","gender":1,"language":"zh_CN","city":"","province":"","country":"Vanuatu","avatarUrl":"https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIkMt27C2AF1mUz6iaV1z5T8Tgj2KUgvpAA1nkXZe640FJqPMVD3FmcW7UHL0MGMF887AzZgnicMkvw/0","unionId":"owotc1i2RoZRz3lrx__ONALRPDCY","watermark":{"timestamp":1515133339,"appid":"wx809054e9326721af"}}';
 require_once "./aes/wxBizDataCrypt.php";
-
+var_dump($_GET);
+exit;
 $appid = 'wx809054e9326721af';
 $appsecret = "28f8569d2e540b7256e0dd7ca209d26c";
 $code = isset($_GET['code']) ? trim($_GET['code']) : '';
