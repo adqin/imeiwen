@@ -10,12 +10,17 @@ require_once "./aes/wxBizDataCrypt.php";
 $appid = 'wx809054e9326721af';
 $appsecret = "28f8569d2e540b7256e0dd7ca209d26c";
 $code = isset($_GET['code']) ? trim($_GET['code']) : '';
-$res = '';
+$res = [];
 if ($code) {
     $getSessionUrl = "https://api.weixin.qq.com/sns/jscode2session?appid={$appid}&secret={$appsecret}&js_code={$code}&grant_type=authorization_code";
     $res = file_get_contents($getSessionUrl);
+    $res = $res ? json_decode($res, true) : [];
+    if ($res && isset($res['openid']) && $res['openid']) {
+        echo $res['openid'];
+        exit;
+    }
 }
-echo $res;
+echo '';
 exit;
 
 $sessionKey = $res && isset($res['session_key']) ? $res['session_key'] : '';
