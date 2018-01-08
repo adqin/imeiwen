@@ -9,9 +9,6 @@ require_once '../App/Db.php';
 $openid = isset($_GET['openid']) && $_GET['openid'] ? $_GET['openid'] : '';
 $type = isset($_GET['type']) && $_GET['type'] ? $_GET['type'] : '';
 $page = isset($_GET['page']) && $_GET['page'] ? $_GET['page'] : 1;
-$page = 2;
-$type = 'connect';
-$openid = 'ogfoT0V91Vcq-omBc2vUvp0sS540';
 if (!$openid || !$type) {
     echo '';
     exit;
