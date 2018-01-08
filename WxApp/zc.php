@@ -36,7 +36,7 @@ $row = \Db::instance()->getRow($sql);
 if ($type == 'zan' && $op == 'add') {
     // 点赞
     if ($row) {
-        $ret = \Db::instance()->updateById('connect_zan', ['zan' => 1], $row['id']);
+        $ret = \Db::instance()->updateById('connect_zan', ['zan' => 1, 'up_time' => time()], $row['id']);
         if ($ret === true) {
             echo 1;
         } else {
@@ -44,7 +44,7 @@ if ($type == 'zan' && $op == 'add') {
         }
         exit;
     } else {
-        $ret = \Db::instance()->insert('connect_zan', ['user_id' => $openid, 'post_id' => $post_id, 'zan' => 1, 'connect' => 0]);
+        $ret = \Db::instance()->insert('connect_zan', ['user_id' => $openid, 'post_id' => $post_id, 'zan' => 1, 'connect' => 0, 'up_time' => time()]);
         if (!$ret || !is_numeric($ret)) {
             echo 0;
         } else {
@@ -60,7 +60,7 @@ if ($type == 'zan' && $op == 'del') {
         echo 1;
         exit;
     } else {
-        $ret = \Db::instance()->updateById('connect_zan', ['zan' => 0], $row['id']);
+        $ret = \Db::instance()->updateById('connect_zan', ['zan' => 0, 'up_time' => time()], $row['id']);
         if ($ret === false) {
             echo 0;
         } else {
@@ -73,7 +73,7 @@ if ($type == 'zan' && $op == 'del') {
 if ($type == 'connect' && $op == 'add') {
     // 收藏
     if ($row) {
-        $ret = \Db::instance()->updateById('connect_zan', ['connect' => 1], $row['id']);
+        $ret = \Db::instance()->updateById('connect_zan', ['connect' => 1, 'up_time' => time()], $row['id']);
         if ($ret === true) {
             echo 1;
         } else {
@@ -81,7 +81,7 @@ if ($type == 'connect' && $op == 'add') {
         }
         exit;
     } else {
-        $ret = \Db::instance()->insert('connect_zan', ['user_id' => $openid, 'post_id' => $post_id, 'zan' => 0, 'connect' => 1]);
+        $ret = \Db::instance()->insert('connect_zan', ['user_id' => $openid, 'post_id' => $post_id, 'zan' => 0, 'connect' => 1, 'up_time' => time()]);
         if (!$ret || !is_numeric($ret)) {
             echo 0;
         } else {
@@ -97,7 +97,7 @@ if ($type == 'connect' && $op == 'del') {
         echo 1;
         exit;
     } else {
-        $ret = \Db::instance()->updateById('connect_zan', ['connect' => 0], $row['id']);
+        $ret = \Db::instance()->updateById('connect_zan', ['connect' => 0, 'up_time' => time()], $row['id']);
         if ($ret === false) {
             echo 0;
         } else {
