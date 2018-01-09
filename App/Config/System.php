@@ -54,7 +54,7 @@ class System {
             'recent' => ['title' => '最近发布', 'url' => '/recent', 'note' => '最近发布'],
         ],
         'more' => [
-            'weixindingyue' => ['title' => '微信订阅', 'url' => '/page/weixindingyue', 'note' => '微信订阅'],
+            'gongzhonghao' => ['title' => '微信公众号', 'url' => '/page/gongzhonghao', 'note' => '微信公众号'],
             'contact' => ['title' => '联系方式', 'url' => '/page/contact', 'note' => '联系方式'],
             'about' => ['title' => '关于', 'url' => '/page/about', 'note' => '关于']
         ],
