@@ -56,7 +56,7 @@ class System {
         'more' => [
             'weixindingyue' => ['title' => '微信订阅', 'url' => '/page/weixindingyue', 'note' => '微信订阅'],
             'contact' => ['title' => '联系方式', 'url' => '/page/contact', 'note' => '联系方式'],
-            'about' => ['title' => '关于我们', 'url' => '/page/about', 'note' => '关于我们']
+            'about' => ['title' => '关于', 'url' => '/page/about', 'note' => '关于']
         ],
     );
 
