@@ -227,6 +227,7 @@ class Update extends \Controller\Admin\Init {
         // 头条推荐
         $sql = "select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`description` from `post` where `status` = 3 order by `input_time` desc limit 60";
         $list = \Db::instance()->getList($sql);
+        shuffle($list);
         foreach ($list as $k => $v) {
             $list[$k]['image_url'] = 'http://st.imeiwen.org/' . $v['image_url'] . '?imageView2/2/w/780/' . $v['image_up_time'];
         }
