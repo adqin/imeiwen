@@ -214,7 +214,7 @@ class Homer {
      * @return array.
      */
     private static function getIndexPost() {
-        $sql = "select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`long_title` from `post` where `status` = '3' order by `update_time` desc limit 30";
+        $sql = "select `post_id`,`title`,`author`,`image_url`,`image_up_time`,`long_title` from `post` where `status` = '3' order by `update_time` desc limit 60";
         return \Db::instance()->getList($sql);
     }
 

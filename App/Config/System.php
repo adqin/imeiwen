@@ -56,7 +56,7 @@ class System {
         'more' => [
             'gongzhonghao' => ['title' => '微信公众号', 'url' => '/page/gongzhonghao', 'note' => '微信公众号'],
             'contact' => ['title' => '联系方式', 'url' => '/page/contact', 'note' => '联系方式'],
-            'about' => ['title' => '关于', 'url' => '/page/about', 'note' => '关于']
+            'about' => ['title' => '关于爱美文', 'url' => '/page/about', 'note' => '关于爱美文']
         ],
     );
 
