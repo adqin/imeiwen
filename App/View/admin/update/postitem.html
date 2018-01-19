@@ -44,8 +44,8 @@
                 var element = layui.element, $ = layui.$;
                 
                 var page = $('#page').val();
-                var totalPage = $('#totalPage').val();
-                var nextPage = $('#nextPage').val();
+                var totalPage = parseInt($('#totalPage').val());
+                var nextPage = parseInt($('#nextPage').val());
                 
                 if (nextPage <= totalPage) {
                     var url = '/admin/update/postitem?page=' + nextPage;
